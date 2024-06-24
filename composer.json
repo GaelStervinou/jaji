@@ -66,5 +66,10 @@
             "require": "7.1.*",
             "docker": true
         }
+    },
+    "require-dev": {
+        "doctrine/doctrine-migrations-bundle": "*",
+        "doctrine/orm": "^3.2",
+        "symfony/maker-bundle": "^1.60"
     }
 }

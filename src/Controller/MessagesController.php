@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Events;
+use App\Entity\MessageMedia;
 use App\Entity\Messages;
+use App\Event\MessageCreatedEvent;
 use App\Form\MessagesType;
 use App\Repository\MessagesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,15 +27,25 @@ class MessagesController extends AbstractController
     }
 
     #[Route('/new', name: 'app_messages_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher): Response
     {
         $message = new Messages();
         $form = $this->createForm(MessagesType::class, $message);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $mediaType = $message->getMedia();
+            if ($mediaType === MessageMedia::AUDIO || $mediaType === MessageMedia::IMAGE) {
+                $file = $form->get('file')->getData();
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                $file->move($this->getParameter('kernel.project_dir') . '/public/uploads', $fileName);
+                $message->setPath($fileName);
+            }
             $entityManager->persist($message);
             $entityManager->flush();
+
+            $eventDispatcher->dispatch(new MessageCreatedEvent($message->getId()));
 
             return $this->redirectToRoute('app_messages_index', [], Response::HTTP_SEE_OTHER);
         }

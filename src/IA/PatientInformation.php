@@ -39,21 +39,21 @@ class PatientInformation
 
     private static function retrieveMessages(int $patientId, EntityManagerInterface $entityManager): array
     {
-        return (new ArrayCollection($entityManager->getRepository(Messages::class)->findBy(['patient' => $patientId])))->map(function (Messages $message) {
+        return (new ArrayCollection($entityManager->getRepository(Messages::class)->findBy(['patient' => $patientId], ['createdAt' => 'DESC'])))->map(function (Messages $message) {
             return $message->getContent();
         })->toArray();
     }
 
     private static function retrieveEvents(int $patientId, EntityManagerInterface $entityManager): array
     {
-        return (new ArrayCollection($entityManager->getRepository(Events::class)->findBy(['patient' => $patientId])))->map(function (Events $event) {
+        return (new ArrayCollection($entityManager->getRepository(Events::class)->findBy(['patient' => $patientId], ['date' => 'DESC'])))->map(function (Events $event) {
             return $event->getValue();
         })->toArray();
     }
 
     private static function retrieveWeights(int $patientId, EntityManagerInterface $entityManager): array
     {
-        return (new ArrayCollection($entityManager->getRepository(Weights::class)->findBy(['patient' => $patientId])))->map(function (Weights $weight) {
+        return (new ArrayCollection($entityManager->getRepository(Weights::class)->findBy(['patient' => $patientId], ['date' => 'DESC'])))->map(function (Weights $weight) {
             return [
                 'weight' => $weight->getValue(),
                 'date' => $weight->getDate()?->format('Y-m-d H:i:s'),

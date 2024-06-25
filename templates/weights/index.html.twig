@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Weights index{% endblock %}
+
+{% block body %}
+    <h1>Weights index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Value</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for weight in weights %}
+            <tr>
+                <td>{{ weight.id }}</td>
+                <td>{{ weight.value }}</td>
+                <td>{{ weight.date ? weight.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_weights_show', {'id': weight.id}) }}">show</a>
+                    <a href="{{ path('app_weights_edit', {'id': weight.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_weights_new') }}">Create new</a>
+{% endblock %}

@@ -49,9 +49,16 @@ class Patient
     #[ORM\OneToMany(targetEntity: Events::class, mappedBy: 'patient', orphanRemoval: true)]
     private Collection $events;
 
+    /**
+     * @var Collection<int, Weights>
+     */
+    #[ORM\OneToMany(targetEntity: Weights::class, mappedBy: 'patient', orphanRemoval: true)]
+    private Collection $weights;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
+        $this->weights = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -191,6 +198,36 @@ class Patient
             // set the owning side to null (unless already changed)
             if ($event->getPatient() === $this) {
                 $event->setPatient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Weights>
+     */
+    public function getWeights(): Collection
+    {
+        return $this->weights;
+    }
+
+    public function addWeight(Weights $weight): static
+    {
+        if (!$this->weights->contains($weight)) {
+            $this->weights->add($weight);
+            $weight->setPatient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWeight(Weights $weight): static
+    {
+        if ($this->weights->removeElement($weight)) {
+            // set the owning side to null (unless already changed)
+            if ($weight->getPatient() === $this) {
+                $weight->setPatient(null);
             }
         }
 

@@ -4,6 +4,7 @@ namespace App\IA;
 
 use App\Entity\Events;
 use App\Entity\Messages;
+use App\Entity\Patient;
 use App\Entity\Weights;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,21 +17,24 @@ class PatientInformation
     private array $events;
     /** @var $weights Weights[] */
     private array $weights;
+    private string $observations;
 
-    private function __construct(array $messages = [], array $events = [], array $weights = [])
+    private function __construct(array $messages = [], array $events = [], array $weights = [], string $observations = '')
     {
         $this->messages = $messages;
         $this->events = $events;
         $this->weights = $weights;
+        $this->observations = $observations;
     }
 
-    public static function retrievePatientInformation(int $patientId, EntityManagerInterface $entityManager): self
+    public static function retrievePatientInformation(Patient $patient, EntityManagerInterface $entityManager): self
     {
-        $messages = self::retrieveMessages($patientId, $entityManager);
-        $events = self::retrieveEvents($patientId, $entityManager);
-        $weights = self::retrieveWeights($patientId, $entityManager);
+        $messages = self::retrieveMessages($patient->getId(), $entityManager);
+        $events = self::retrieveEvents($patient->getId(), $entityManager);
+        $weights = self::retrieveWeights($patient->getId(), $entityManager);
+        $observations = $patient->getObservation();
 
-        return new self($messages, $events, $weights);
+        return new self($messages, $events, $weights, $observations);
     }
 
     private static function retrieveMessages(int $patientId, EntityManagerInterface $entityManager): array

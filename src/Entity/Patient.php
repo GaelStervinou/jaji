@@ -55,6 +55,21 @@ class Patient
     #[ORM\OneToMany(targetEntity: Weights::class, mappedBy: 'patient', orphanRemoval: true)]
     private Collection $weights;
 
+    /**
+     * @var Collection<int, DiagnosticMentalHealth>
+     */
+    #[ORM\OneToMany(targetEntity: DiagnosticMentalHealth::class, mappedBy: 'patient', orphanRemoval: true)]
+    private Collection $diagnosticMentalHealth;
+
+    /**
+     * @var Collection<int, DiagnosticRisks>
+     */
+    #[ORM\OneToMany(targetEntity: DiagnosticRisks::class, mappedBy: 'patient', orphanRemoval: true)]
+    private Collection $diagnosticRisks;
+
+    private ?int $lastDiagnosticMentalHealthScore = null;
+    private ?int $lastDiagnosticRisksScore = null;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -232,5 +247,45 @@ class Patient
         }
 
         return $this;
+    }
+
+    public function getLastDiagnosticMentalHealthScore(): int
+    {
+        return $this->getDiagnosticMentalHealth()->last()?->getValue();
+    }
+
+    public function setLastDiagnosticMentalHealthScore(int $lastDiagnosticMentalHealthScore): static
+    {
+        $this->lastDiagnosticMentalHealthScore = $lastDiagnosticMentalHealthScore;
+
+        return $this;
+    }
+
+    public function getLastDiagnosticRisksScore(): ?int
+    {
+        return $this->getDiagnosticsRisks()->last()?->getValue();
+    }
+
+    public function setLastDiagnosticRisksScore(int $lastDiagnosticRisksScore): static
+    {
+        $this->lastDiagnosticRisksScore = $lastDiagnosticRisksScore;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DiagnosticMentalHealth>
+     */
+    public function getDiagnosticMentalHealth(): Collection
+    {
+        return $this->diagnosticMentalHealth;
+    }
+
+    /**
+     * @return Collection<int, DiagnosticRisks>
+     */
+    public function getDiagnosticsRisks(): Collection
+    {
+        return $this->diagnosticRisks;
     }
 }

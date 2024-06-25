@@ -44,9 +44,11 @@ class DiagnosticRisksFixtures extends Fixture implements DependentFixtureInterfa
 
         foreach ($patients as $patient) {
             $diagnosticMentalHealth = (new DiagnosticMentalHealth())
-                ->setValue($faker->randomElement($fakeValues))
+                ->setValue($faker->numberBetween(0, 10))
+                ->setContent($faker->randomElement($fakeValues))
                 ->setReasons($faker->randomElement($fakeReasons))
                 ->setPatient($patient)
+                ->setCreatedAt(new \DateTimeImmutable($faker->dateTimeBetween('-10 years', 'now')->format('Y-m-d H:i:s')))
             ;
             $manager->persist($diagnosticMentalHealth);
         }

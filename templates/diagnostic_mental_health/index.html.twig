@@ -23,7 +23,7 @@
                 <td>{{ diagnostic_mental_health.value }}</td>
                 <td>{{ diagnostic_mental_health.content }}</td>
                 <td>{{ diagnostic_mental_health.reasons }}</td>
-                <td>{{ diagnostic_mental_health.date ? diagnostic_mental_health.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ diagnostic_mental_health.createdAt ? diagnostic_mental_health.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_diagnostic_mental_health_show', {'id': diagnostic_mental_health.id}) }}">show</a>
                     <a href="{{ path('app_diagnostic_mental_health_edit', {'id': diagnostic_mental_health.id}) }}">edit</a>

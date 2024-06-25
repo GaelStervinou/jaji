@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\DiagnosticMentalHealth;
 use App\Form\DiagnosticMentalHealthType;
+use App\Repository\DiagnosticMentalHealthRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,9 +15,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DiagnosticMentalHealthController extends AbstractController
 {
     #[Route('/', name: 'app_diagnostic_mental_health_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(DiagnosticMentalHealthRepository $diagnosticMentalHealthRepository): Response
     {
         return $this->render('diagnostic_mental_health/index.html.twig', [
+            'diagnostic_mental_healths' => $diagnosticMentalHealthRepository->findAll(),
             'controller_name' => 'DiagnosticMentalHealthController',
         ]);
     }

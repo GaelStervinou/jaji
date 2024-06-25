@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\DiagnosticRisks;
 use App\Form\DiagnosticRisksType;
+use App\Repository\DiagnosticRisksRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,9 +15,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DiagnosticRisksController extends AbstractController
 {
     #[Route('/', name: 'app_diagnostic_risks_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(DiagnosticRisksRepository $diagnosticRisksRepository): Response
     {
         return $this->render('diagnostic_risks/index.html.twig', [
+            'diagnostic_risks' => $diagnosticRisksRepository->findAll(),
             'controller_name' => 'DiagnosticRisksController',
         ]);
     }

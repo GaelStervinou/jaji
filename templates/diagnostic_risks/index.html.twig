@@ -23,7 +23,7 @@
                 <td>{{ diagnostic_risk.value }}</td>
                 <td>{{ diagnostic_risk.content }}</td>
                 <td>{{ diagnostic_risk.reasons }}</td>
-                <td>{{ diagnostic_risk.date ? diagnostic_risk.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ diagnostic_risk.createdAt ? diagnostic_risk.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_diagnostic_risks_show', {'id': diagnostic_risk.id}) }}">show</a>
                     <a href="{{ path('app_diagnostic_risks_edit', {'id': diagnostic_risk.id}) }}">edit</a>

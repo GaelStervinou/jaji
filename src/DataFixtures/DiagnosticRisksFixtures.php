@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\DiagnosticMentalHealth;
+use App\Entity\DiagnosticRisks;
 use App\Entity\Patient;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -43,7 +44,7 @@ class DiagnosticRisksFixtures extends Fixture implements DependentFixtureInterfa
         $faker = \Faker\Factory::create('fr_FR');
 
         foreach ($patients as $patient) {
-            $diagnosticMentalHealth = (new DiagnosticMentalHealth())
+            $diagnosticMentalHealth = (new DiagnosticRisks())
                 ->setValue($faker->numberBetween(0, 10))
                 ->setContent($faker->randomElement($fakeValues))
                 ->setReasons($faker->randomElement($fakeReasons))

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Diagnostic Risk{% endblock %}
+
+{% block body %}
+    <h1>Create new Diagnostic Risk</h1>
+
+    {{ include('diagnostic_risks/_form.html.twig') }}
+
+    <a href="{{ path('app_diagnostic_risks_index') }}">back to list</a>
+{% endblock %}

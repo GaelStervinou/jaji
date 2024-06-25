@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Diagnostic Risks{% endblock %}
+
+{% block body %}
+    <h1>Diagnostic Risks</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ diagnostic_risk.id }}</td>
+            </tr>
+            <tr>
+                <th>Value</th>
+                <td>{{ diagnostic_risk.value }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ diagnostic_risk.content }}</td>
+            </tr>
+            <tr>
+                <th>Reasons</th>
+                <td>{{ diagnostic_risk.reasons }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ diagnostic_risk.date ? diagnostic_risk.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_diagnostic_risks_index') }}">back to list</a>
+
+    <a href="{{ path('app_diagnostic_risks_edit', {'id': diagnostic_risk.id}) }}">edit</a>
+
+    {{ include('diagnostic_risks/_delete_form.html.twig') }}
+{% endblock %}

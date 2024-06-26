@@ -40,14 +40,23 @@ class PatientInformation
     private static function retrieveMessages(int $patientId, EntityManagerInterface $entityManager): array
     {
         return (new ArrayCollection($entityManager->getRepository(Messages::class)->findBy(['patient' => $patientId], ['createdAt' => 'DESC'])))->map(function (Messages $message) {
-            return $message->getContent();
+            return [
+                'content' => $message->getContent(),
+                'type' => $message->getMedia(), // 'text', 'audio', 'image
+                'date' => $message->getCreatedAt()?->format('Y-m-d H:i:s'),
+                'path' => $message->getPath() ?? '',
+            ];
         })->toArray();
     }
 
     private static function retrieveEvents(int $patientId, EntityManagerInterface $entityManager): array
     {
         return (new ArrayCollection($entityManager->getRepository(Events::class)->findBy(['patient' => $patientId], ['date' => 'DESC'])))->map(function (Events $event) {
-            return $event->getValue();
+            return [
+                'description' => $event->getValue(),
+                'type' => 'event',
+                'date' => $event->getDate()?->format('Y-m-d H:i:s'),
+            ];
         })->toArray();
     }
 
@@ -56,6 +65,7 @@ class PatientInformation
         return (new ArrayCollection($entityManager->getRepository(Weights::class)->findBy(['patient' => $patientId], ['date' => 'DESC'])))->map(function (Weights $weight) {
             return [
                 'weight' => $weight->getValue(),
+                'type' => 'weight',
                 'date' => $weight->getDate()?->format('Y-m-d H:i:s'),
             ];
         })->toArray();

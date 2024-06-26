@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="{{ asset('build/images/favicon.png') }}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,300,1,0" />
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -12,34 +13,42 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
-        <header>
-            <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-                <div class="flex items-center flex-shrink-0 text-white mr-6">
-                    <a href="">
-                        <img class="logo" src="{{ asset('build/images/logo.png') }}" width="120" alt="logo">
+    <body class="flex">
+        <header class="h-[100dvh] w-28 flex flex-col justify-between items-center max-sm:hidden fixed">
+            <nav class="flex flex-col gap-12 items-center p-3">
+                <div class="flex items-center flex-shrink-0 text-white p-6">
+                    <a href="{{ path('app_patient_index') }}">
+                        <img class="logo" src="{{ asset('build/images/favicon.png') }}" width="40" alt="logo">
                     </a>
                 </div>
-                <div class="block lg:hidden">
-                    <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-primary-cm hover:border-primary">
-                        <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-                    </button>
-                </div>
-                <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-                    <div class="text-sm lg:flex-grow">
-                        <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-primary-cm mr-4">
-                            Docs
-                        </a>
-                        <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-primary-cm mr-4">
-                            Examples
-                        </a>
-                        <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-primary-cm">
-                            Blog
-                        </a>
-                    </div>
+                <div class="flex-grow flex flex-col text-sm font-medium gap-8 w-full items-center">
+                    <a href="{{ path('app_patient_index') }}" class="block p-4 lg:inline-block text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                        {{ include('/icons/icon-home.html.svg', {size: '26'} ) }}
+                    </a>
+                    <a href="{{ path('app_patient_index') }}" class="block p-4 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                        {{ include('/icons/icon-users.html.svg', {size: '26'} ) }}
+                    </a>
                 </div>
             </nav>
+            <a href="#responsive-header" class="block p-4 mb-8 text-teal-200 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                {{ include('/icons/icon-logout.html.svg', {size: '24'} ) }}
+            </a>
         </header>
-        {% block body %}{% endblock %}
+        <main class="w-full ml-28 max-sm:ml-0 flex justify-center">
+            <div class="container px-20 py-12 mx-auto max-sm:px-4 max-sm:py-8">
+                {% block body %}{% endblock %}
+            </div>
+        </main>
+        <div class="btm-nav md:hidden visible">
+            <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                {{ include('/icons/icon-home.html.svg', {size: '26'} ) }}
+            </button>
+            <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                {{ include('/icons/icon-users.html.svg', {size: '26'} ) }}
+            </button>
+            <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                {{ include('/icons/icon-logout.html.svg', {size: '24'} ) }}
+            </button>
+        </div>
     </body>
 </html>

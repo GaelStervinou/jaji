@@ -3,11 +3,11 @@
 {% block title %}Edit Patient{% endblock %}
 
 {% block body %}
-    <h1>Edit Patient</h1>
+    <div class="flex justify-between flex-row items-center mb-12 max-lg:flex-col max-lg:mb-6">
+        <h1 class="text-2xl font-bold max-lg:w-full">{{ patient.ipp }} - {{ patient.lastname }} {{ patient.firstname }}</h1>
+        {{ include('patient/_delete_form.html.twig') }}
+    </div>
 
     {{ include('patient/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_patient_index') }}">back to list</a>
-
-    {{ include('patient/_delete_form.html.twig') }}
 {% endblock %}

@@ -29,5 +29,8 @@
         "build": "encore production --progress",
         "tailwind-watch": "tailwindcss -i ./assets/styles/input.css -o ./assets/styles/output.css --watch",
         "tailwind-build": "tailwindcss -i ./assets/styles/input.css -o ./assets/styles/output.css"
+    },
+    "dependencies": {
+        "chart.js": "^4.4.3"
     }
 }

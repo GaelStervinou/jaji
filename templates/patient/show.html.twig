@@ -3,52 +3,204 @@
 {% block title %}Patient{% endblock %}
 
 {% block body %}
-    <h1>Patient</h1>
+    <div class="flex justify-between flex-row items-center mb-12 max-lg:flex-col max-lg:mb-6">
+        <h1 class="text-2xl font-bold max-lg:w-full">{{ patient.ipp }} - {{ patient.lastname }} {{ patient.firstname }}</h1>
+        <div class="flex justify-end w-fit max-lg:w-full">
+            <div class="flex items-center gap-1 rounded-xl shadow bg-primary-cm-200 p-2 max-lg:w-full max-lg:mt-4 max-lg:justify-between">
+                <a class="text-primary-cm p-2 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
+                   href="{{ path('app_patient_show', {'id': patient.id}) }}">
+                    <span class="material-symbols-rounded font-bold">
+                        arrow_left
+                    </span>
+                </a>
+                <p class="font-bold text-base p-1.5 px-2 rounded-xl bg-primary-cm-200 text-primary-cm">12/02/2023</p>
+                <a class="text-primary-cm p-2 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
+                   href="{{ path('app_patient_edit', {'id': patient.id}) }}">
+                    <span class="material-symbols-rounded font-bold">
+                        arrow_right
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-6">
+        <section class="flex gap-6 flex-row max-lg:flex-col">
+            <div class="stats shadow w-1/3 max-lg:w-full">
+                <div class="stat overflow-hidden bg-secondary-cm text-white">
+                    <div class="stat-title text-white font-bold align-middle flex items-start gap-1">
+                        <div>
+                            <span class="material-symbols-rounded text-base-200">
+                                email
+                            </span>
+                        </div>
+                        <p>
+                            {{ patient.email }}
+                        </p>
+                    </div>
+                    <div class="stat-title text-white font-bold align-middle flex items-start gap-1">
+                        <div>
+                            <span class="material-symbols-rounded text-base-200">
+                                phone
+                            </span>
+                        </div>
+                        <p>
+                            {{ patient.phone }}
+                        </p>
+                    </div>
+                    <div class="flex gap-2 mt-2">
+                        {% if patient.iaEnabled %}
+                            <div class="badge-sm font-bold text-white rounded-full items-center flex gap-1" style="background: rgb(0,0,0); background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(62,62,62,1) 51%, rgba(138,138,138,1) 100%);">
+                                <div>IA</div>
+                                <div>
+                                    <span class="material-symbols-rounded text-sm font-extrabold">
+                                        check
+                                    </span>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <span class="badge badge-ghost badge-sm p-1.5 font-semibold border-accent-cm-100 text-accent-cm bg-accent-cm-200">
+                            {% if patient.gender == 'H'%}
+                                Homme
+                            {% elseif patient.gender == 'F'%}
+                                Femme
+                            {% else %}
+                                Autre
+                            {% endif %}
+                        </span>
+                        <span class="badge badge-ghost badge-sm p-1.5 font-semibold border-accent-cm-100 text-accent-cm bg-accent-cm-200">
+                            {{ patient.birthDate ? patient.birthDate|date('d/m/Y') : '' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="stats shadow w-1/3 max-lg:w-full">
+                <div class="stat overflow-hidden">
+                    <div class="stat-title">Santé mentale</div>
+                    <div class="stat-value flex gap-6 items-center">
+                        <p>89,400</p>
+                        <div>
+                            <span class="material-symbols-rounded font-bold">
+                                trending_up
+                            </span>
+                        </div>
+                    </div>
+                    <div class="stat-desc">21% more than last month</div>
+                </div>
+            </div>
+            <div class="stats shadow w-1/3 max-lg:w-full">
+                <div class="stat overflow-hidden">
+                    <div class="stat-title">Risques</div>
+                    <div class="stat-value flex gap-6 items-center">
+                        <p>89,400</p>
+                        <div>
+                            <span class="material-symbols-rounded font-bold">
+                                trending_down
+                            </span>
+                        </div>
+                    </div>
+                    <div class="stat-desc">21% more than last month</div>
+                </div>
+            </div>
+        </section>
+        <section class="w-full flex flex-row max-lg:flex-col gap-6">
+            <div class="w-full flex flex-col gap-6">
+                <div class="stats shadow w-full">
+                    <div class="stat relative aspect-square overflow-hidden">
+                        <p class="text-neutral-500 font-bold text-lg">
+                            Courbe santé mentale
+                        </p>
+                        <div class="absolute bottom-0 m-[-10px]" style="width: calc(100% + 30px); height: calc(100% + 30px);">
+                            <div class="h-full pr-10 font-bold flex flex-col items-end justify-between" style="color:rgba(131,43,13,0.5)">
+                                <p>10</p>
+                                <p>10</p>
+                                <p>9</p>
+                                <p>8</p>
+                                <p>7</p>
+                                <p>6</p>
+                                <p>5</p>
+                                <p>4</p>
+                                <p>3</p>
+                                <p>2</p>
+                                <p>1</p>
+                                <p>0</p>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 m-[-10px]" style="width: calc(100% + 30px); height: calc(100% + 30px);">
+                            <canvas id="mental-health"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats shadow w-full">
+                    <div class="stat overflow-hidden">
+                        <p class="text-neutral-500 font-bold text-lg">
+                            Diagnostic santé mentale
+                        </p>
+                        <section class="flex flex-col gap-6 mt-6">
+                            <div class="collapse bg-base-200 cursor-default">
+                                <div class="collapse-title text-xl font-medium cursor-default flex gap-4">
+                                <span class=" material-symbols-rounded">
+                                    warning
+                                </span>
+                                    <p>
+                                        1 - Dépression
+                                    </p>
+                                </div>
+                                <hr>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet purus et odio.
+                                </p>
+                                <hr>
+                                <div>
+                                    <p class="font-bold text-neutral">
+                                        Source
+                                    </p>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet purus et odio.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full flex flex-col gap-6">
+                <div class="stats shadow w-full">
+                <div class="stat relative aspect-square overflow-hidden">
+                    <p class="text-neutral-500 font-bold text-lg">
+                        Courbe risques
+                    </p>
+                    <div class="absolute bottom-0 m-[-10px]" style="width: calc(100% + 30px); height: calc(100% + 30px);">
+                        <div class="h-full pr-10 font-bold flex flex-col items-end justify-between" style="color:rgba(131,43,13,0.5)">
+                            <p>10</p>
+                            <p>10</p>
+                            <p>9</p>
+                            <p>8</p>
+                            <p>7</p>
+                            <p>6</p>
+                            <p>5</p>
+                            <p>4</p>
+                            <p>3</p>
+                            <p>2</p>
+                            <p>1</p>
+                            <p>0</p>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 m-[-10px]" style="width: calc(100% + 30px); height: calc(100% + 30px);">
+                        <canvas id="risk"></canvas>
+                    </div>
+                </div>
+            </div>
+                <div class="stats shadow w-full">
+                    <div class="stat overflow-hidden">
+                        <p class="text-neutral-500 font-bold text-lg">
+                            Diagnostic santé mentale
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ patient.id }}</td>
-            </tr>
-            <tr>
-                <th>Ipp</th>
-                <td>{{ patient.ipp }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ patient.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{ patient.lastname }}</td>
-            </tr>
-            <tr>
-                <th>Phone</th>
-                <td>{{ patient.phone }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ patient.email }}</td>
-            </tr>
-            <tr>
-                <th>Gender</th>
-                <td>{{ patient.gender }}</td>
-            </tr>
-            <tr>
-                <th>BirthDate</th>
-                <td>{{ patient.birthDate ? patient.birthDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>IaEnabled</th>
-                <td>{{ patient.iaEnabled ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Observation</th>
-                <td>{{ patient.observation }}</td>
-            </tr>
-        </tbody>
-    </table>
 
     <a href="{{ path('app_patient_index') }}">back to list</a>
 

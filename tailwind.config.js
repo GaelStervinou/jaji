@@ -17,7 +17,27 @@ module.exports = {
       'lightgrey': '#EBEBEB',
       'grey': '#7E7E7E',
       'primary-cm': '#fb4f14',
-      'secondary': '#55afb9',
+      'primary-cm-200': 'rgba(251,79,20,0.2)',
+      'primary-cm-300': 'rgba(251,79,20,0.3)',
+      'primary-cm-400': 'rgba(251,79,20,0.4)',
+      'primary-cm-500': 'rgba(251,79,20,0.5)',
+      'primary-cm-600': 'rgba(251,79,20,0.6)',
+      'primary-cm-700': 'rgba(251,79,20,0.7)',
+      'primary-cm-800': 'rgba(251,79,20,0.8)',
+      'secondary-cm': '#55afb9',
+      'secondary-cm-200': 'rgba(85,175,185,0.2)',
+      'secondary-cm-300': 'rgba(85,175,185,0.3)',
+      'secondary-cm-400': 'rgba(85,175,185,0.4)',
+      'secondary-cm-500': 'rgba(85,175,185,0.5)',
+      'secondary-cm-600': 'rgba(85,175,185,0.6)',
+      'secondary-cm-700': 'rgba(85,175,185,0.7)',
+      'secondary-cm-800': 'rgba(85,175,185,0.8)',
+      'accent-cm': '#264f52',
+      'accent-cm-100': 'rgba(38,79,82,0.1)',
+      'accent-cm-200': 'rgba(38,79,82,0.2)',
+      'accent-cm-300': 'rgba(38,79,82,0.3)',
+      'accent-cm-400': 'rgba(38,79,82,0.4)',
+      'accent-cm-500': 'rgba(38,79,82,0.5)',
       'success': '#3ABA6B',
       'red': '#EB334B',
       'warning': '#FFA630',
@@ -32,36 +52,4 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('daisyui'),
   ],
-  daisyui: {
-    themes: [
-      // light theme
-      {
-        light: {
-          ...require("daisyui/src/theming/themes")["[data-theme=light]"],
-          "--primary-cm": "#fb4f14"
-        },
-      },
-      // cupcake theme
-      {
-        cupcake: {
-          ...require("daisyui/src/theming/themes")["[data-theme=cupcake]"],
-          "--primary-cm": "#fb4f14"
-        },
-      },
-      // dark theme
-      {
-        dark: {
-          ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
-          "--primary-cm": "#fb4f14"
-        },
-      },
-    ],
-    darkTheme: "light", // name of one of the included themes for dark mode
-    base: true, // applies background color and foreground color for root element by default
-    styled: true, // include daisyUI colors and design decisions for all components
-    utils: true, // adds responsive and modifier utility classes
-    prefix: "", // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
-    logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
-    themeRoot: ":root", // The element that receives theme color CSS variables
-  },
 }

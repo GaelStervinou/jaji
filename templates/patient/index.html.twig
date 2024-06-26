@@ -3,41 +3,90 @@
 {% block title %}Patient index{% endblock %}
 
 {% block body %}
-    <h1 class="text-red">Patient index</h1>
-    {{ include('/components/button.html.twig', {text:'super', pathParams: btnPathParams is defined ? btnPathParams : {} }) }}
-    <div class="overflow-x-auto">
+    <div class="flex gap-6 mb-12">
+        <div class="flex flex-grow">
+            <form class="relative w-full">
+                <input class="w-full h-full rounded-lg bg-neutral-100 border-0" type="text" class="input " placeholder="Recherche..." />
+                <button class="absolute top-0 right-0 rounded-l-none btn">
+                    {{ include('/icons/icon-search.html.svg', {size: '14'} ) }}
+                </button>
+            </form>
+        </div>
+        <a href="{{ path('app_patient_new') }}">
+            <button class="btn bg-primary-cm-200 text-primary-cm transition-colors duration-300 hover:bg-primary-cm hover:text-white">Ajouter</button>
+        </a>
+    </div>
+    <div class="overflow-x-auto rounded-xl shadow">
         <table class="table">
-            <thead>
+            <thead class="tep-3">
                 <tr>
-                    <th>Id</th>
                     <th>Ipp</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Gender</th>
-                    <th>BirthDate</th>
-                    <th>IaEnabled</th>
-                    <th>Observation</th>
-                    <th>actions</th>
+                    <th>Identité</th>
+                    <th>Contact</th>
+                    <th>Risks Score</th>
+                    <th>Mental Health Score</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
             {% for patient in patients %}
                 <tr>
-                    <td>{{ patient.id }}</td>
                     <td>{{ patient.ipp }}</td>
-                    <td>{{ patient.firstname }}</td>
-                    <td>{{ patient.lastname }}</td>
-                    <td>{{ patient.phone }}</td>
-                    <td>{{ patient.email }}</td>
-                    <td>{{ patient.gender }}</td>
-                    <td>{{ patient.birthDate ? patient.birthDate|date('Y-m-d') : '' }}</td>
-                    <td>{{ patient.iaEnabled ? 'Yes' : 'No' }}</td>
-                    <td>{{ patient.observation }}</td>
                     <td>
-                        <a href="{{ path('app_patient_show', {'id': patient.id}) }}">show</a>
-                        <a href="{{ path('app_patient_edit', {'id': patient.id}) }}">edit</a>
+                        {{ patient.firstname }} {{ patient.lastname }}
+                        <br>
+                        <div class="flex gap-2 mt-2">
+                            {% if patient.iaEnabled %}
+                                <div class="badge-sm font-bold text-white rounded-full flex gap-1 items-center" style="background: rgb(0,0,0); background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(62,62,62,1) 51%, rgba(138,138,138,1) 100%);">
+                                    <div>IA</div>
+                                    <div>
+                                        <span class="material-symbols-rounded text-sm font-extrabold">
+                                            check
+                                        </span>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <span class="badge badge-ghost badge-sm">
+                                {% if patient.gender == 'H'%}
+                                    Homme
+                                {% elseif patient.gender == 'F'%}
+                                    Femme
+                                {% else %}
+                                    Autre
+                                {% endif %}
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <div class="font-bold">{{ patient.email }}</div>
+                            <div class="text-sm opacity-50">{{ patient.phone }}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="radial-progress text-sm" style="--value:77; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">77%</div>
+                    </td>
+                    <td>
+                        <div class="radial-progress text-sm" style="--value:46; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">46%</div>
+                    </td>
+                    <td>
+                        <div class="flex justify-end">
+                            <div class="flex items-center gap-2 rounded-xl shadow bg-primary-cm-200 p-2">
+                                <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
+                                   href="{{ path('app_patient_show', {'id': patient.id}) }}">
+                                    <span class="material-symbols-rounded font-bold">
+                                        visibility
+                                    </span>
+                                </a>
+                                <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
+                                   href="{{ path('app_patient_edit', {'id': patient.id}) }}">
+                                    <span class="material-symbols-rounded font-bold">
+                                        edit
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+
                     </td>
                 </tr>
             {% else %}
@@ -48,6 +97,4 @@
             </tbody>
         </table>
     </div>
-
-    <a href="{{ path('app_patient_new') }}">Create new</a>
 {% endblock %}

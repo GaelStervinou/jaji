@@ -1,0 +1,1 @@
+<svg height="{{ size is defined ? size : '48' }}" width="{{ size is defined ? size : '48' }}" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 96 960 960"><path class="fill-current" d="M400 976 0 576l400-400 56 57-343 343 343 343-56 57Z"/></svg>

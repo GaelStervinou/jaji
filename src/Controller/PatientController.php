@@ -17,6 +17,7 @@ class PatientController extends AbstractController
     #[Route('/', name: 'app_patient_index', methods: ['GET'])]
     public function index(Request $request, PatientRepository $patientRepository): Response
     {
+        //pagination marche pas
         $page = $request->query->get('page') ?? 1;
         $search = $request->query->get('search');
 
@@ -32,7 +33,7 @@ class PatientController extends AbstractController
         $patients = $patientRepository->indexSearch($page, $search, $lastDiagnosticRisksSortBy, $lastDiagnosticMentalHealthSortBy);
         return $this->render('patient/index.html.twig', [
             'patients' => $patients['results'],
-            'total' => $patients['total'],
+            'total' => $patients['count'],
         ]);
     }
 

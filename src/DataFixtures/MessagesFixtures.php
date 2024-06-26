@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\MessageMedia;
 use App\Entity\Messages;
 use App\Entity\Patient;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -69,12 +70,94 @@ class MessagesFixtures extends Fixture implements DependentFixtureInterface
             "Les soins étaient excellents, mais je me sens très seul et anxieux."
         ];
 
+        $imageMessages = [
+            [
+                'content' => 'Cette image montre une cicatrice en train de suinter',
+                'path' => 'https://shorturl.at/9SGc1',
+            ],
+            [
+                'content' => 'Cette image montre une personne en train de sourire',
+                'path' => 'https://t.ly/fkW0G',
+            ],
+            [
+                'content' => 'Cette image montre une personne en train de pleurer',
+                'path' => 'https://t.ly/RDQ60',
+            ],
+            [
+                'content' => 'Cette image montre une plaie infectée',
+                'path' => 'https://t.ly/7HE_s',
+            ],
+            [
+                'content' => 'Cette image montre une plaie parfaitement cicatrisée',
+                'path' => 'https://t.ly/Ai7v-',
+            ],
+            [
+                'content' => 'Cette image montre une corde accrochée au plafond au-dessus d\'un tabouret',
+                'path' => 'https://t.ly/PbjJ_',
+            ],
+        ];
+
+        $audioMessages = [
+            [
+                'content' => 'Je suis triste et désespéré',
+                'path' => 'test',
+            ],
+            [
+                'content' => 'J\'ai très mal aux dents',
+                'path' => 'test',
+            ],
+            [
+                'content' => 'Je me sens très fatigué',
+                'path' => 'test',
+            ],
+            [
+                'content' => 'Je peine à respirer depuis mon opération',
+                'path' => 'test',
+            ],
+            [
+                'content' => 'Je suis l\'heureux propriétaire d\'un petit chien trop mignon',
+                'path' => 'test',
+            ],
+            [
+                'content' => 'Je pense à voter Bardella',
+                'path' => 'test',
+            ],
+            [
+                'content' => 'Mélenchon m\'a convaincu',
+                'path' => 'test',
+            ],
+            [
+                'content' => 'Le Zimbabwé est un pays magnifique',
+                'path' => 'test',
+            ],
+        ];
+
         $faker = \Faker\Factory::create('fr_FR');
         foreach ($patients as $patient) {
             for ($i = 0; $i < 5; $i++) {
                 $message = (new Messages())
                     ->setContent($faker->randomElement($messages))
                     ->setPatient($patient);
+                $manager->persist($message);
+            }
+
+            for ($i = 0; $i < 2; $i++) {
+                $image = $faker->randomElement($imageMessages);
+                $message = (new Messages())
+                    ->setContent($image['content'])
+                    ->setPatient($patient)
+                    ->setMedia(MessageMedia::IMAGE)
+                    ->setPath($image['path']);
+                $manager->persist($message);
+            }
+
+            for ($i = 0; $i < 2; $i++) {
+                $audio = $faker->randomElement($audioMessages);
+                $message = (new Messages())
+                    ->setContent($audio['content'])
+                    ->setPatient($patient)
+                    ->setMedia(MessageMedia::AUDIO)
+                    ->setPath($audio['path']);
                 $manager->persist($message);
             }
         }

@@ -14,12 +14,12 @@ class MessageCreatedSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            MessageCreatedEvent::NAME => 'onMessageCreated',
+            MessageCreatedEvent::class => 'onMessageCreated',
         ];
     }
 
     public function onMessageCreated(MessageCreatedEvent $event)
     {
-        //$this->iaService->generateMessageContent($event->getMessageId());
+        $this->iaService->generateMessageContent($event->getMessageId());
     }
 }

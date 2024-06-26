@@ -6,6 +6,7 @@ use App\Entity\Events;
 use App\Entity\MessageMedia;
 use App\Entity\Messages;
 use App\Event\MessageCreatedEvent;
+use App\Event\PatientDataUpdatedEvent;
 use App\Form\MessagesType;
 use App\Repository\MessagesRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,6 +47,7 @@ class MessagesController extends AbstractController
             $entityManager->flush();
 
             $eventDispatcher->dispatch(new MessageCreatedEvent($message->getId()));
+            $eventDispatcher->dispatch(new PatientDataUpdatedEvent($message->getPatient()->getId()));
 
             return $this->redirectToRoute('app_messages_index', [], Response::HTTP_SEE_OTHER);
         }

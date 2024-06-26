@@ -16,6 +16,34 @@ class PatientRepository extends ServiceEntityRepository
         parent::__construct($registry, Patient::class);
     }
 
+    public function indexSearch(
+        int $page = 1,
+        ?string $search = null,
+        ?string $lastDiagnosticRisksSortBy = null,
+        ?string $lastDiagnosticMentalHealthSortBy = null,
+    ): array
+    {
+        $query = $this->createQueryBuilder('p');
+        if ($search) {
+            $query->andWhere("p.firstname LIKE :search OR p.lastname LIKE :search OR CONCAT(p.firstname, ' ', p.lastname) LIKE :search OR p.ipp LIKE :search OR p.email LIKE :search")
+                ->setParameter('search', "%$search%");
+        }
+
+        if ($lastDiagnosticRisksSortBy) {
+            $query->orderBy('p.lastDiagnosticRisks', $lastDiagnosticRisksSortBy);
+        } elseif ($lastDiagnosticMentalHealthSortBy) {
+            $query->orderBy('p.lastDiagnosticMentalHealth', $lastDiagnosticMentalHealthSortBy);
+        }
+
+        $query->setFirstResult(($page - 1) * 25)
+            ->setMaxResults(25);
+
+        return [
+            'results' => $query->getQuery()->getResult(),
+            'total' => $query->select('COUNT(p.id)')->getQuery()->getSingleScalarResult(),
+        ];
+    }
+
     //    /**
     //     * @return Patient[] Returns an array of Patient objects
     //     */

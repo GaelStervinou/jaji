@@ -15,10 +15,24 @@ use Symfony\Component\Routing\Attribute\Route;
 class PatientController extends AbstractController
 {
     #[Route('/', name: 'app_patient_index', methods: ['GET'])]
-    public function index(PatientRepository $patientRepository): Response
+    public function index(Request $request, PatientRepository $patientRepository): Response
     {
+        $page = $request->query->get('page') ?? 1;
+        $search = $request->query->get('search');
+
+        $lastDiagnosticRisksSortBy = $request->query->get('lastDiagnosticRisksSortBy');
+        $lastDiagnosticMentalHealthSortBy = $request->query->get('lastDiagnosticMentalHealthSortBy');
+
+        if ($lastDiagnosticRisksSortBy && !in_array($lastDiagnosticRisksSortBy, ['ASC', 'DESC'])) {
+            $lastDiagnosticRisksSortBy = null;
+        }
+        if ($lastDiagnosticMentalHealthSortBy && !in_array($lastDiagnosticMentalHealthSortBy, ['ASC', 'DESC'])) {
+            $lastDiagnosticMentalHealthSortBy = null;
+        }
+        $patients = $patientRepository->indexSearch($page, $search, $lastDiagnosticRisksSortBy, $lastDiagnosticMentalHealthSortBy);
         return $this->render('patient/index.html.twig', [
-            'patients' => $patientRepository->findAll(),
+            'patients' => $patients['results'],
+            'total' => $patients['total'],
         ]);
     }
 

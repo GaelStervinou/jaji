@@ -4,8 +4,11 @@ namespace App\IA;
 
 use App\Entity\DiagnosticMentalHealth;
 use App\Entity\DiagnosticRisks;
+use App\Entity\MessageMedia;
+use App\Entity\Messages;
 use App\Entity\Patient;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -13,11 +16,13 @@ final class Service
 {
     private EntityManagerInterface $entityManager;
     private HttpClientInterface $httpClient;
+    private ParameterBagInterface $params;
 
-    public function __construct(EntityManagerInterface $entityManager, HttpClientInterface $httpClient)
+    public function __construct(EntityManagerInterface $entityManager, HttpClientInterface $httpClient, ParameterBagInterface $params)
     {
         $this->entityManager = $entityManager;
         $this->httpClient = $httpClient;
+        $this->params = $params;
     }
 
     public function generateDiagnostics(int $patientId): void
@@ -89,5 +94,46 @@ final class Service
         $this->entityManager->persist($mentalHealthDescription);
         $this->entityManager->persist($risksDescription);
         $this->entityManager->flush();
+    }
+
+    public function generateMessageContent(int $messageId): void
+    {
+        $message = $this->entityManager->getRepository(Messages::class)->find($messageId);
+        if (!$message) {
+            throw new NotFoundHttpException('Message not found');
+        }
+        if ($message->getMedia() === MessageMedia::IMAGE) {
+            $filePath = $this->params->get('kernel.project_dir') . '/public/uploads/' . $message->getPath();
+            if (file_exists($filePath)) {
+                $fileContent = file_get_contents($filePath);
+                $base64Image = base64_encode($fileContent);
+                try {
+                    $response = $this->httpClient->request('POST', 'http://host.docker.internal:11434/api/generate', [
+                        'json' => [
+                            'model' => 'llava',
+                            'prompt' => "You are a doctor who has received an image of a wound. Describe only the picture by only summarizing the conclusions no need to provide context, not exceeding 255 characters. Respond in French.",
+                            'stream' => false,
+                            'images' => [
+                                $base64Image
+                            ],
+                        ],
+                        'timeout' => 120,
+                    ]);
+                } catch (\Throwable $e) {
+                    throw new \Exception('Unable to generate diagnostics', 0, $e);
+                }
+
+                try {
+                    $content = json_decode($response->getContent(), false, 512, JSON_THROW_ON_ERROR);
+
+                    $message->setContent($content->response);
+                    $this->entityManager->flush();
+                } catch (\Throwable $e) {
+                    throw new \RuntimeException('Unable to decode response', 0, $e);
+                }
+            } else {
+                throw new \Exception('File not found');
+            }
+        }
     }
 }

@@ -35,12 +35,12 @@ class PatientRepository extends ServiceEntityRepository
             $query->orderBy('p.lastDiagnosticMentalHealth', $lastDiagnosticMentalHealthSortBy);
         }
 
-        $query->setFirstResult(($page - 1) * 25)
-            ->setMaxResults(25);
+        $query->setFirstResult(($page - 1) * 10)
+            ->setMaxResults(10);
 
         return [
             'results' => $query->getQuery()->getResult(),
-            'total' => $query->select('COUNT(p.id)')->getQuery()->getSingleScalarResult(),
+            'count' => $query->select('COUNT(p.id)')->getQuery()->getSingleScalarResult(),
         ];
     }
 

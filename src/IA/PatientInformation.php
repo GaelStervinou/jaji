@@ -77,6 +77,7 @@ class PatientInformation
             'messages' => $this->messages,
             'events' => $this->events,
             'weights' => $this->weights,
+            'observations' => $this->observations,
         ], JSON_THROW_ON_ERROR);
     }
 }

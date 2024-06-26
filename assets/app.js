@@ -53,6 +53,14 @@ import Chart from 'chart.js/auto'
                 labels: data.map(row => row.year),
                 datasets: [
                     {
+                        label: 'Score actuel',
+                        data: [, , , , , 22, ],
+                        cubicInterpolationMode: 'monotone',
+                        tension: 0.4,
+                        fill: false,
+                        borderColor: 'rgb(69,141,142)',
+                        borderWidth: 14
+                    }, {
                         label: 'score',
                         data: data.map(row => row.count),
                         cubicInterpolationMode: 'monotone',
@@ -119,6 +127,14 @@ import Chart from 'chart.js/auto'
                 labels: dataRisk.map(row => row.year),
                 datasets: [
                     {
+                        label: 'Score actuel',
+                        data: [, , , , , 30, ],
+                        cubicInterpolationMode: 'monotone',
+                        tension: 0.4,
+                        fill: false,
+                        borderColor: 'rgb(69,141,142)',
+                        borderWidth: 14
+                    }, {
                         label: 'score',
                         data: dataRisk.map(row => row.count),
                         cubicInterpolationMode: 'monotone',

@@ -64,10 +64,20 @@
                         </div>
                     </td>
                     <td>
-                        <div class="radial-progress text-sm" style="--value:77; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">77%</div>
+                        {% if patient.lastDiagnosticRisksScore %}
+                            {% set lastDiagnosticRisksScore = patient.lastDiagnosticRisksScore / 10 * 100 %}
+                            <div class="radial-progress text-sm {% if lastDiagnosticRisksScore > 70 %}text-success{% elseif lastDiagnosticRisksScore > 40 %}text-warning{% else %}text-error{% endif %}" style="--value:{{ lastDiagnosticRisksScore }}; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">{{ lastDiagnosticRisksScore }}%</div>
+                        {% else %}
+                            -
+                        {% endif %}
                     </td>
                     <td>
-                        <div class="radial-progress text-sm" style="--value:46; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">46%</div>
+                        {% if patient.lastDiagnosticMentalHealthScore %}
+                            {% set lastDiagnosticMentalHealthScore = patient.lastDiagnosticMentalHealthScore / 10 * 100 %}
+                            <div class="radial-progress text-sm {% if lastDiagnosticMentalHealthScore > 70 %}text-success{% elseif lastDiagnosticMentalHealthScore > 40 %}text-warning{% else %}text-error{% endif %}" style="--value:{{ lastDiagnosticMentalHealthScore }}; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">{{ lastDiagnosticMentalHealthScore }}%</div>
+                        {% else %}
+                            -
+                        {% endif %}
                     </td>
                     <td>
                         <div class="flex justify-end">
@@ -96,5 +106,72 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+
+    <select id="countries" class="bg-gray-50 border-0 text-grey hover:text-primary text-md font-medium rounded-lg focus:ring-none focus:border-0 block w-32 p-0.5 href-select" onchange="location = this.value;">
+        {% if app.request.get('byDate') is not defined and app.request.get('byName') is not defined %}
+        <option selected hidden>{{ trieDefaultValue }}</option>
+        {% endif %}
+        <option value="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: 'DESC'} ) }}" {% if app.request.get('lastDiagnosticRisksSortBy') is defined and app.request.get('lastDiagnosticRisksSortBy') == 'DESC' %}selected{% endif %}">lastDiagnosticRisksSortBy</option>
+        <option value="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: 'ASC'} ) }}" {% if app.request.get('lastDiagnosticRisksSortBy') is defined and app.request.get('lastDiagnosticRisksSortBy') == 'ASC' %}selected{% endif %}>plus ancien</option>
+        <option value="{{ path('app_patient_index', { lastDiagnosticMentalHealthSortBy: 'ASC'} ) }}" {% if app.request.get('lastDiagnosticMentalHealthSortBy') is defined and app.request.get('lastDiagnosticMentalHealthSortBy') == 'ASC' %}selected{% endif %}>lastDiagnosticMentalHealthSortBy</option>
+        <option value="{{ path('app_patient_index', { lastDiagnosticMentalHealthSortBy: 'DESC'} ) }}" {% if app.request.get('lastDiagnosticMentalHealthSortBy') is defined and app.request.get('lastDiagnosticMentalHealthSortBy') == 'DESC' %}selected{% endif %}>lastDiagnosticMentalHealthSortBy</option>
+    </select>
+
+    <div class="flex justify-between py-6 items-center">
+        <div>
+            <span class="text-sm text-neutral-500">Showing 1 to 10 of {{ total }} entries</span>
+        </div>
+        <div class="join">
+
+            {% set params = app.request.query.all() %}
+            {% set num_pages = (total / 10)|round(0, 'ceil') %}
+
+            <div class="flex">
+                <a>
+                    <button class="join-item btn btn-md btn-active">
+                        {% if app.request.get('page') is not defined or app.request.get('page') is null %}
+                            1
+                        {% else %}
+                            {{ app.request.get('page') }}
+                        {% endif %}
+                    </button>
+                </a>
+
+                {% set p = app.request.get('page') is not defined or app.request.get('page') is null ? 2 : app.request.get('page') + 1 %}
+                {%  if p != num_pages and p < num_pages %}
+
+                    <a href="{{ path(app.request.get('_route'), params|merge({'page': p})) }}">
+                        <button class="join-item btn btn-md">
+                            {% if app.request.get('page') is not defined or app.request.get('page') is null %}
+                                2
+                            {% else %}
+                                {{ app.request.get('page') + 1 }}
+                            {% endif %}
+                        </button>
+                    </a>
+                {% endif %}
+
+                {% set p = app.request.get('page') is not defined or app.request.get('page') is null ? 3 : app.request.get('page') + 2 %}
+                {%  if p != num_pages and p < num_pages %}
+                    <a href="{{ path(app.request.get('_route'), params|merge({'page': p})) }}">
+                        <button class="join-item btn btn-md">
+                            {% if app.request.get('page') is not defined or app.request.get('page') is null %}
+                                3
+                            {% else %}
+                                {{ app.request.get('page') + 2 }}
+                            {% endif %}
+                        </button>
+                    </a>
+                {% endif %}
+                {%  if app.request.get('page') != num_pages %}
+                    <a href="{{ path(app.request.get('_route'), params|merge({'page': num_pages })) }}">
+                        <button class="join-item btn btn-md">
+                            {{ num_pages }}
+                        </button>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
     </div>
 {% endblock %}

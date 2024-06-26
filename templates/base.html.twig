@@ -22,16 +22,22 @@
                     </a>
                 </div>
                 <div class="flex-grow flex flex-col text-sm font-medium gap-8 w-full items-center">
-                    <a href="{{ path('app_patient_index') }}" class="block p-4 lg:inline-block text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
-                        {{ include('/icons/icon-home.html.svg', {size: '26'} ) }}
+                    <a href="{{ path('app_patient_index') }}" class="block">
+                        <span class=" material-symbols-rounded p-4 mb-8 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                            home
+                        </span>
                     </a>
-                    <a href="{{ path('app_patient_index') }}" class="block p-4 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
-                        {{ include('/icons/icon-users.html.svg', {size: '26'} ) }}
+                    <a href="{{ path('app_patient_index') }}" class="block">
+                        <span class=" material-symbols-rounded p-4 mb-8 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                            group
+                        </span>
                     </a>
                 </div>
             </nav>
-            <a href="#responsive-header" class="block p-4 mb-8 text-teal-200 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
-                {{ include('/icons/icon-logout.html.svg', {size: '24'} ) }}
+            <a href="{{ path('app_patient_index') }}" class="block">
+                <span class=" material-symbols-rounded font-bold p-4 mb-8 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                    logout
+                </span>
             </a>
         </header>
         <main class="w-full ml-28 max-sm:ml-0 flex justify-center">
@@ -40,15 +46,21 @@
             </div>
         </main>
         <div class="btm-nav md:hidden visible">
-            <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
-                {{ include('/icons/icon-home.html.svg', {size: '26'} ) }}
-            </button>
-            <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
-                {{ include('/icons/icon-users.html.svg', {size: '26'} ) }}
-            </button>
-            <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
-                {{ include('/icons/icon-logout.html.svg', {size: '24'} ) }}
-            </button>
+            <a href="{{ path('app_patient_index') }}" class="">
+                <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                    {{ include('/icons/icon-home.html.svg', {size: '26'} ) }}
+                </button>
+            </a>
+            <a href="{{ path('app_patient_index') }}" class="">
+                <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                    {{ include('/icons/icon-users.html.svg', {size: '26'} ) }}
+                </button>
+            </a>
+            <a href="{{ path('app_patient_index') }}" class="">
+                <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                    {{ include('/icons/icon-logout.html.svg', {size: '24'} ) }}
+                </button>
+            </a>
         </div>
     </body>
 </html>

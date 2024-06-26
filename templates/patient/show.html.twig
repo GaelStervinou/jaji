@@ -125,7 +125,7 @@
                                 <p>0</p>
                             </div>
                         </div>
-                        <div class="absolute bottom-0 m-[-10px]" style="width: calc(100% + 30px); height: calc(100% + 30px);">
+                        <div class="absolute bottom-0 m-[-18px]" style="width: calc(100% + 38px); height: calc(100% + 38px);">
                             <canvas id="mental-health"></canvas>
                         </div>
                     </div>
@@ -136,30 +136,60 @@
                             Diagnostic santé mentale
                         </p>
                         <section class="flex flex-col gap-6 mt-6">
-                            <div class="collapse bg-base-200 cursor-default">
-                                <div class="collapse-title text-xl font-medium cursor-default flex gap-4">
-                                <span class=" material-symbols-rounded">
-                                    warning
-                                </span>
-                                    <p>
-                                        1 - Dépression
-                                    </p>
+                            <details class="bg-base-200 w-full rounded-xl group [&_summary::-webkit-details-marker]:hidden">
+                                <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900">
+                                    <div class="font-bold text-neutral-600 flex gap-4 items-center">
+                                        <div>
+                                            <span class=" material-symbols-rounded">
+                                                warning
+                                            </span>
+                                        </div>
+                                        <p>Where does the information come from?</p>
+                                    </div>
+                                    <svg class="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </summary>
+                                <div class="mt-4 px-4 leading-relaxed text-gray-500">
+                                    <div class="mb-6">
+                                        <p class="font-bold text-sm mb-2 text-neutral-700">Diagnostic</p>
+                                        <p>Thronway is first and foremost a community. Anyone can contribute. If you'd like to add a toilet, change a piece of information or share a tip, go for it! Your opinion and that of others is very important. That's why you can share it through different rating criteria, but also post a comment to share your feelings.</p>
+                                    </div>
+                                    <div class="mb-6">
+                                        <p class="font-bold text-sm my-2 text-neutral-700">Source</p>
+                                        <p class="mb-6">Thronway is first and foremost a community. Anyone can contribute. If you'd like to add a toilet, change a piece of information or share a tip, go for it! Your opinion and that of others is very important. That's why you can share it through different rating criteria, but also post a comment to share your feelings.</p>
+                                    </div>
                                 </div>
-                                <hr>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet purus et odio.
-                                </p>
-                                <hr>
-                                <div>
-                                    <p class="font-bold text-neutral">
-                                        Source
-                                    </p>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet purus et odio.
-                                    </p>
-                                </div>
-                            </div>
+                            </details>
                         </section>
+                        <section class="flex flex-col gap-6 mt-6">
+                            <details class="bg-base-200 w-full rounded-xl group [&_summary::-webkit-details-marker]:hidden">
+                                <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900">
+                                    <div class="font-bold text-neutral-600 flex gap-4 items-center">
+                                        <div>
+                                            <span class=" material-symbols-rounded">
+                                                dangerous
+                                            </span>
+                                        </div>
+                                        <p>Where does the information come from?</p>
+                                    </div>
+                                    <svg class="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </summary>
+                                <div class="mt-4 px-4 leading-relaxed text-gray-500">
+                                    <div class="mb-6">
+                                        <p class="font-bold text-sm mb-2 text-neutral-700">Diagnostic</p>
+                                        <p>Thronway is first and foremost a community. Anyone can contribute. If you'd like to add a toilet, change a piece of information or share a tip, go for it! Your opinion and that of others is very important. That's why you can share it through different rating criteria, but also post a comment to share your feelings.</p>
+                                    </div>
+                                    <div class="mb-6">
+                                        <p class="font-bold text-sm my-2 text-neutral-700">Source</p>
+                                        <p class="mb-6">Thronway is first and foremost a community. Anyone can contribute. If you'd like to add a toilet, change a piece of information or share a tip, go for it! Your opinion and that of others is very important. That's why you can share it through different rating criteria, but also post a comment to share your feelings.</p>
+                                    </div>
+                                </div>
+                            </details>
+                        </section>
+
                     </div>
                 </div>
             </div>
@@ -185,7 +215,7 @@
                             <p>0</p>
                         </div>
                     </div>
-                    <div class="absolute bottom-0 m-[-10px]" style="width: calc(100% + 30px); height: calc(100% + 30px);">
+                    <div class="absolute bottom-0 m-[-18px]" style="width: calc(100% + 38px); height: calc(100% + 38px);">
                         <canvas id="risk"></canvas>
                     </div>
                 </div>

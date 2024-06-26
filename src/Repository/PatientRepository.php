@@ -30,17 +30,26 @@ class PatientRepository extends ServiceEntityRepository
         }
 
         if ($lastDiagnosticRisksSortBy) {
-            $query->orderBy('p.lastDiagnosticRisks', $lastDiagnosticRisksSortBy);
+            $query->innerJoin('p.diagnosticRisks', 'd')
+                ->addSelect('d')
+                ->orderBy('d.value', $lastDiagnosticRisksSortBy)
+                ->groupBy('p.id, d.id')
+            ;
         } elseif ($lastDiagnosticMentalHealthSortBy) {
-            $query->orderBy('p.lastDiagnosticMentalHealth', $lastDiagnosticMentalHealthSortBy);
+            $query->innerJoin('p.diagnosticMentalHealth', 'd')
+                ->addSelect('d')
+                ->orderBy('d.value', $lastDiagnosticMentalHealthSortBy)
+                ->groupBy('p.id, d.id');
         }
+
+        $count = count($query->getQuery()->getResult());
 
         $query->setFirstResult(($page - 1) * 10)
             ->setMaxResults(10);
 
         return [
             'results' => $query->getQuery()->getResult(),
-            'count' => $query->select('COUNT(p.id)')->getQuery()->getSingleScalarResult(),
+            'count' => $count,
         ];
     }
 

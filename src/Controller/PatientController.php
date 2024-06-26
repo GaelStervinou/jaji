@@ -33,7 +33,7 @@ class PatientController extends AbstractController
         $patients = $patientRepository->indexSearch($page, $search, $lastDiagnosticRisksSortBy, $lastDiagnosticMentalHealthSortBy);
         return $this->render('patient/index.html.twig', [
             'patients' => $patients['results'],
-            'count' => $patients['count'],
+            'total' => $patients['count'],
         ]);
     }
 

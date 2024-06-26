@@ -28,7 +28,9 @@ class MessagesType extends AbstractType
                 'expanded' => true,
                 'data' => MessageMedia::TEXT,
             ])
-            ->add('content')
+            ->add('content', null, [
+                'required' => false,
+            ])
             ->add('subject')
             ->add('file', FileType::class, [
                 'mapped' => false,

@@ -20,7 +20,7 @@ class Messages
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'messages')]
@@ -55,7 +55,7 @@ class Messages
         return $this->content;
     }
 
-    public function setContent(string $content): static
+    public function setContent(?string $content): static
     {
         $this->content = $content;
 

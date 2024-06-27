@@ -12,6 +12,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 final class Service
 {
@@ -162,6 +164,40 @@ final class Service
                     $this->entityManager->flush();
                 } catch (\Throwable $e) {
                     throw new \RuntimeException('Unable to decode response', 0, $e);
+                }
+            } else {
+                throw new \Exception('File not found');
+            }
+        } else if ($message->getMedia() === MessageMedia::AUDIO) {
+            $filePath = $this->params->get('kernel.project_dir') . '/public/uploads/' . $message->getPath();
+            if (file_exists($filePath)) {
+                try {
+                    $url = 'https://api.openai.com/v1/audio/transcriptions';
+
+                    $token = getenv('OPENAI_API_KEY');
+                    
+                    $formData = [
+                        'file' => fopen($filePath, 'r'),
+                        'model' => 'whisper-1',
+                        'response_format' => 'text',
+                    ];
+            
+                    $response = $this->httpClient->request('POST', $url, [
+                        'headers' => [
+                            'Authorization' => 'Bearer ' . $token,
+                            'Content-Type' => 'multipart/form-data',
+                        ],
+                        'body' => $formData,
+                    ]);
+            
+                    $transcription = $response->getContent();
+
+                    $message->setContent($transcription);
+
+                    $this->entityManager->flush();
+
+                } catch (TransportExceptionInterface $e) {
+                    throw new \Exception('Error: ' . $e->getMessage());
                 }
             } else {
                 throw new \Exception('File not found');

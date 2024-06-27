@@ -108,8 +108,9 @@ LIMIT %d;", $searchQuery, $lastDiagnosticMentalHealthSortBy, ($page - 1) * 10, 1
         $sql = sprintf(
             "SELECT p.id, COUNT(*) OVER () AS total_count
 FROM patient p
+%s
 OFFSET %d
-LIMIT %d;", ($page - 1) * 10, 10);
+LIMIT %d;",$searchQuery, ($page - 1) * 10, 10);
 
         $stmt = $conn->prepare($sql);
 

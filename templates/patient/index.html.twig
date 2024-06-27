@@ -6,10 +6,11 @@
     <div class="flex gap-6 mb-12">
         <div class="flex flex-grow">
             <form class="relative w-full">
-                    <input class="w-full h-full rounded-lg bg-neutral-100 border-0" name="search" type="text" placeholder="Recherche..." />
+                    <input value="{{ app.request.get('search') }}" class="w-full h-full rounded-lg bg-neutral-100 border-0" name="search" type="text" placeholder="Rechercher un nom, un prénom, un email, un nuémro de téléphone, ou un IPP" />
                 <button class="absolute top-0 right-0 rounded-l-none btn">
                     {{ include('/icons/icon-search.html.svg', {size: '14'} ) }}
                 </button>
+
             </form>
         </div>
         <a href="{{ path('app_patient_new') }}">

@@ -25,10 +25,10 @@
                     <th>Contact</th>
                     <th>
                         {% set lastDiagnosticRisksSortByValue = 'DESC' %}
-                        {% set lastDiagnosticRisksSortByArrow = 'arrow_drop_down' %}
+                        {% set lastDiagnosticRisksSortByArrow = 'arrow_drop_up' %}
                         {% if app.request.get('lastDiagnosticRisksSortBy') and  app.request.get('lastDiagnosticRisksSortBy') == 'DESC' %}
                             {% set lastDiagnosticRisksSortByValue = 'ASC' %}
-                            {% set lastDiagnosticRisksSortByArrow = 'arrow_drop_up' %}
+                            {% set lastDiagnosticRisksSortByArrow = 'arrow_drop_down' %}
                         {% endif %}
                             <a href="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: lastDiagnosticRisksSortByValue }) }}" class="align-center flex gap-1">
                                 Risk Score
@@ -39,12 +39,12 @@
                     </th>
                     <th>
                         {% set lastDiagnosticMentalHealthSortByValue = 'DESC' %}
-                        {% set lastDiagnosticMentalHealthSortByArrow = 'arrow_drop_down' %}
-                        {% if app.request.get('lastDiagnosticRisksSortBy') and  app.request.get('lastDiagnosticRisksSortBy') == 'DESC' %}
+                        {% set lastDiagnosticMentalHealthSortByArrow = 'arrow_drop_up' %}
+                        {% if app.request.get('lastDiagnosticMentalHealthSortBy') and  app.request.get('lastDiagnosticMentalHealthSortBy') == 'DESC' %}
                             {% set lastDiagnosticMentalHealthSortByValue = 'ASC' %}
-                            {% set lastDiagnosticMentalHealthSortByArrow = 'arrow_drop_up' %}
+                            {% set lastDiagnosticMentalHealthSortByArrow = 'arrow_drop_down' %}
                         {% endif %}
-                        <a href="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: lastDiagnosticMentalHealthSortByValue }) }}" class="align-center flex gap-1">
+                        <a href="{{ path('app_patient_index', { lastDiagnosticMentalHealthSortBy: lastDiagnosticMentalHealthSortByValue }) }}" class="align-center flex gap-1">
                             Mental Health Score
                             <span class="material-symbols-rounded font-bold">
                                 {{ lastDiagnosticMentalHealthSortByArrow }}

@@ -251,9 +251,14 @@ class Patient
         return $this;
     }
 
-    public function getLastDiagnosticMentalHealthScore(): int
+    public function getLastDiagnosticMentalHealthScore(): ?int
     {
-        return $this->getDiagnosticMentalHealth()->last()?->getValue();
+        $iterator = $this->getDiagnosticMentalHealth()->getIterator();
+        $iterator->uasort(function (DiagnosticMentalHealth $a, DiagnosticMentalHealth $b) {
+            return ($a->getCreatedAt() < $b->getCreatedAt()) ? -1 : 1;
+        });
+        $collection = new ArrayCollection(iterator_to_array($iterator));
+        return $collection->last()?->getValue();
     }
 
     public function setLastDiagnosticMentalHealthScore(int $lastDiagnosticMentalHealthScore): static
@@ -265,7 +270,12 @@ class Patient
 
     public function getLastDiagnosticRisksScore(): ?int
     {
-        return $this->getDiagnosticsRisks()->last()?->getValue();
+        $iterator = $this->getDiagnosticsRisks()->getIterator();
+        $iterator->uasort(function (DiagnosticRisks $a, DiagnosticRisks $b) {
+            return ($a->getCreatedAt() < $b->getCreatedAt()) ? -1 : 1;
+        });
+        $collection = new ArrayCollection(iterator_to_array($iterator));
+        return $collection->last()?->getValue();
     }
 
     public function setLastDiagnosticRisksScore(int $lastDiagnosticRisksScore): static

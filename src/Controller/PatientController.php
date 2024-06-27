@@ -59,6 +59,23 @@ class PatientController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/{id}/edit', name: 'app_patient_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(PatientType::class, $patient);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_patient_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('patient/edit.html.twig', [
+            'patient' => $patient,
+            'form' => $form,
+        ]);
+    }
 
     #[Route('/{id}', name: 'app_patient_show', methods: ['GET'])]
     public function show(Patient $patient): Response
@@ -90,24 +107,6 @@ class PatientController extends AbstractController
             'lastDiagnosticRisk' => $lastDiagnosticRisk,
             'patientMentalHealDiagnosticsGraph' => $patientMentalHealDiagnosticsGraph,
             'patientRisksDiagnoticsGraph' => $patientRisksDiagnoticsGraph,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_patient_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(PatientType::class, $patient);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_patient_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('patient/edit.html.twig', [
-            'patient' => $patient,
-            'form' => $form,
         ]);
     }
 

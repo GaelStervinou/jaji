@@ -18,7 +18,7 @@ class WeightsFixtures extends Fixture implements DependentFixtureInterface
         $faker = \Faker\Factory::create('fr_FR');
 
         foreach ($patients as $patient) {
-            $randomTimes = $faker->numberBetween(1, 10);
+            $randomTimes = $faker->numberBetween(1, 3);
             for ($i = 0; $i < $randomTimes; $i++) {
                 $weight = (new Weights())
                     ->setDate($faker->dateTimeBetween('-10 years', 'now'))

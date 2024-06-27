@@ -16,4 +16,16 @@ class DiagnosticRisksRepository extends ServiceEntityRepository
         parent::__construct($registry, DiagnosticRisks::class);
     }
 
+    public function findLastDiagnosticRisk($diagnoticId): array
+    {
+        return $this->createQueryBuilder('dr')
+            ->select('dr')
+            ->where('dr.id = :diagnoticId')
+            ->setParameter('diagnoticId', $diagnoticId)
+            ->orderBy('dr.createdAt', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

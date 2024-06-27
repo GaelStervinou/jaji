@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\DiagnosticMentalHealth;
 use App\Entity\Patient;
 use App\Form\PatientType;
+use App\Repository\DiagnosticMentalHealthRepository;
+use App\Repository\DiagnosticRisksRepository;
 use App\Repository\PatientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -60,6 +63,18 @@ class PatientController extends AbstractController
     #[Route('/{id}', name: 'app_patient_show', methods: ['GET'])]
     public function show(Patient $patient): Response
     {
+        return $this->render('patient/show.html.twig', [
+            'patient' => $patient,
+        ]);
+    }
+
+    #[Route('/{id}/{diagnosticId}', name: 'app_patient_show_details', methods: ['GET'])]
+    public function showPatient(Patient $patient, DiagnosticMentalHealth $diagnosticId, DiagnosticMentalHealthRepository $diagnosticMentalHealthRepository, DiagnosticRisksRepository $diagnosticRisksRepository): Response
+    {
+        $diagnosticMentalHealthRepository = $diagnosticMentalHealthRepository->findListDiagnosticMentalHealth(['id' => $diagnosticId->getId()]);
+        $diagnosticRisk = $diagnosticRisksRepository->findOneBy(['patient' => $patient->getId(), 'createdAt' => $diagnosticId->getCreatedAt()]);
+        $lastDiagnosticRisk = $diagnosticRisksRepository->findLastDiagnosticRisk($diagnosticId->getId());
+        dd($diagnosticMentalHealthRepository, $diagnosticRisk, $lastDiagnosticRisk);
         return $this->render('patient/show.html.twig', [
             'patient' => $patient,
         ]);

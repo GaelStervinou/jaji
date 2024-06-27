@@ -37,33 +37,29 @@ final class Service
             throw new \RuntimeException('Unable to retrieve patient information', 0, $e);
         }
         try {
-            /*$finalObject = json_encode((object)[
-                "mental_health_score" => 4,
-                "mental_health_description" => "Le patient semble avoir des troubles de santé mentale, il est recommandé de consulter un professionnel de la santé mentale.",
-                "mental_health_reason" => [
-                    [
-                        "title" => "Dépression",
-                        "conclusion" => "Le patient semble dépressif au vu du message qu'il nous envoie ici",
-                        "source" => "Je me sens triste tout le temps, je n'ai plus goût à rien",
-                        "type" => "text",
-                        "severity" => 3
-                    ],
-                    [
-                        "title" => "Pensées suicidaires",
-                        "conclusion" => "Le patient semble vouloir passer à l'acte en se pednant.",
-                        "source" => "Cette image montre un tabouret ainsi qu'une corde au-dessus.",
-                        "type" => "image",
-                        "severity" => 3
-                    ]
-                ],
-                "risk_score" => 0,
-                "risk_description" => "Aucun risque n'a été identifié",
-                "risk_reason" => []
-            ], JSON_THROW_ON_ERROR);*/
             $response = $this->httpClient->request('POST', 'http://host.docker.internal:11434/api/generate', [
                 'json' => [
                     'model' => 'mistral',
-                    'system' => "You are a hospital doctor. You will find, in a JSON object, a list of information about a patient. The first JSON key contains all the messages the patient as sent to the hospital. The second key contains all the events concerning this patient (surgeries, medical consultations...) briefly describe. The third key contains all the weights record received directly from the patient smart weighing scale, if patient has one. The fourth JSON key contains a list of observations made by doctors about the patient. With all those information, you will give a score concerning the patient mental health, from 0 to 10, 0 is a perfect mental health and 10 is a terrible one, needing help, in a JSON key name mental_health_score. You will also write a summary that will cite the elements that allowed you to give this score in the JSON key mental_health_reason. This summary has to be a JSON object containing an array of objects . You will also write a short summary of the state of the patient's mental health, in a few words inside the JSON key mental_health_description. You will also give a score from 0 to 10 concerning the risks are the complications the patient may encounter, 0 is no risk at all and 10 is very risky in the JSON key risks_score and write a summary that will cite the elements that allowed you to give this score in the JSON key risk_reason.You will also write a short summary of the state of the patient's mental health, in a few words inside the JSON key risk_description. Please, answer in french only!",
+                    'system' => "You are a hospital doctor. You will find, in a JSON object, a list of information about a patient. The first JSON key contains all the messages the patient as sent to the hospital. The second key contains all the events concerning this patient (surgeries, medical consultations...) briefly describe. The third key contains all the weights record received directly from the patient smart weighing scale, if patient has one. The fourth JSON key contains a list of observations made by doctors about the patient. With all those information, you will give a score concerning the patient mental health, from 0 to 10, 0 is a perfect mental health and 10 is a terrible one, needing help, in a JSON key name mental_health_score. You will also write a summary that will cite the elements that allowed you to give this score in the JSON key mental_health_reason. 
+                    This summary has to be a JSON object containing an array of objects (diagnostic item) containing a title ( the diagnostic name in one or two word ), a short conclusion on this specific element ( a few words ), the element you cite, the type of the element ( image, audio, text or weight, event), a severity score from 1 to 3, and finnaly the path linked to the media if it's an audio or an image. A diagnostic item looks like this, and will be in french only: 
+                    {
+                        title: Dépression,
+                        conclusion: Le patient semble dépressif au vu du message qu'il nous envoie ici,
+                        source: Je me sens triste tout le temps, je n'ai plus goût à rien,
+                        type: text,
+                        severity: 3
+                    }.
+                     You will also write a short summary of the state of the patient's mental health, in a few words inside the JSON key mental_health_description. You will also give a score from 0 to 10 concerning the risks are the complications the patient may encounter, 0 is no risk at all and 10 is very risky in the JSON key risks_score and write a summary that will cite the elements that allowed you to give this score in the JSON key risk_reason.
+                     This summary has to be a JSON object containing an array of objects (diagnostic item) containing a title ( the diagnostic name in one or two word ), a short conclusion on this specific element ( a few words ), the element you cite, the type of the element ( image, audio, text or weight, event), a severity score from 1 to 3, and finnaly the path linked to the media if it's an audio or an image. A diagnostic item looks like this, and will be in french only: 
+                    {
+                        title: Infection,
+                        conclusion: Le patient semble avoir une infection au vu de la photo de sa cicatrice,
+                        source: Cette image montre une cicatrice en train de suinter,
+                        type: image,
+                        severity: 2,
+                        path: /path/to/image.jpg
+                    }.
+                    You will also write a short summary of the state of the patient's mental health, in a few words inside the JSON key risk_description. Please, answer in french only!",
                     'prompt' => $patientInformation,
                     'stream' => false,
                 ],
@@ -74,26 +70,24 @@ final class Service
             throw new \Exception('Unable to generate diagnostics', 0, $e);
         }
 
-
-
         try {
             $content = json_decode($response->getContent(), false, 512, JSON_THROW_ON_ERROR);
             $decodedResponse = json_decode($content->response, false, 512, JSON_THROW_ON_ERROR);
+            $currentDate = new \DateTimeImmutable();
             $mentalHealthDescription = (new DiagnosticMentalHealth())
                 ->setValue($decodedResponse->mental_health_score)
                 ->setReasons(json_encode($decodedResponse->mental_health_reason, JSON_THROW_ON_ERROR))
                 ->setContent($decodedResponse->mental_health_description)
                 ->setPatient($patient)
-                ->setCreatedAt(new \DateTimeImmutable());
+                ->setCreatedAt($currentDate);
 
             $risksDescription = (new DiagnosticRisks())
                 ->setValue($decodedResponse->risks_score)
                 ->setReasons(json_encode($decodedResponse->risk_reason, JSON_THROW_ON_ERROR))
                 ->setContent($decodedResponse->risk_description)
                 ->setPatient($patient)
-                ->setCreatedAt(new \DateTimeImmutable());
+                ->setCreatedAt($currentDate);
         } catch (\Throwable $e) {
-            dd($e, $content);
             throw new \RuntimeException('Unable to decode response', 0, $e);
         }
 

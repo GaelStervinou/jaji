@@ -31,7 +31,7 @@
                             {% set lastDiagnosticRisksSortByArrow = 'arrow_drop_down' %}
                         {% endif %}
                             <a href="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: lastDiagnosticRisksSortByValue }) }}" class="align-center flex gap-1">
-                                Risk Score
+                                Santé physique à risque
                                 <span class="material-symbols-rounded font-bold">
                                     {{ lastDiagnosticRisksSortByArrow }}
                                 </span>
@@ -45,7 +45,7 @@
                             {% set lastDiagnosticMentalHealthSortByArrow = 'arrow_drop_down' %}
                         {% endif %}
                         <a href="{{ path('app_patient_index', { lastDiagnosticMentalHealthSortBy: lastDiagnosticMentalHealthSortByValue }) }}" class="align-center flex gap-1">
-                            Mental Health Score
+                            Santé mentale à risque
                             <span class="material-symbols-rounded font-bold">
                                 {{ lastDiagnosticMentalHealthSortByArrow }}
                             </span>

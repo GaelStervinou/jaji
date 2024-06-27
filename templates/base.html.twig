@@ -24,12 +24,17 @@
                 <div class="flex-grow flex flex-col text-sm font-medium gap-8 w-full items-center">
                     <a href="{{ path('app_patient_index') }}" class="block">
                         <span class=" material-symbols-rounded p-4 mb-8 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
-                            home
+                            group
                         </span>
                     </a>
-                    <a href="{{ path('app_patient_index') }}" class="block">
+                    <a href="{{ path('app_messages_new') }}" class="block">
                         <span class=" material-symbols-rounded p-4 mb-8 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
-                            group
+                            maps_ugc
+                        </span>
+                    </a>
+                    <a href="{{ path('app_events_new') }}" class="block">
+                        <span class=" material-symbols-rounded p-4 mb-8 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                            note_add
                         </span>
                     </a>
                 </div>
@@ -48,17 +53,23 @@
         <div class="btm-nav md:hidden visible">
             <a href="{{ path('app_patient_index') }}" class="">
                 <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
-                    {{ include('/icons/icon-home.html.svg', {size: '26'} ) }}
+                    <span class=" material-symbols-rounded p-4 mb-8 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                        group
+                    </span>
+                </button>
+            </a>
+            <a href="{{ path('app_messages_new') }}" class="">
+                <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                     <span class=" material-symbols-rounded p-4 mb-8 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                        maps_ugc
+                    </span>
                 </button>
             </a>
             <a href="{{ path('app_patient_index') }}" class="">
                 <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
-                    {{ include('/icons/icon-users.html.svg', {size: '26'} ) }}
-                </button>
-            </a>
-            <a href="{{ path('app_patient_index') }}" class="">
-                <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
-                    {{ include('/icons/icon-logout.html.svg', {size: '24'} ) }}
+                    <span class=" material-symbols-rounded font-bold p-4 mb-8 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
+                        note_add
+                    </span>
                 </button>
             </a>
         </div>

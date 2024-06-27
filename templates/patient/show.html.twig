@@ -5,25 +5,41 @@
 {% block body %}
     <div class="flex justify-between flex-row items-center mb-12 max-lg:flex-col max-lg:mb-6">
         <h1 class="text-2xl font-bold max-lg:w-full">{{ patient.ipp }} - {{ patient.lastname }} {{ patient.firstname }}</h1>
-        <div class="flex justify-end w-fit max-lg:w-full">
-            <div class="flex items-center gap-1 rounded-xl shadow bg-primary-cm-200 p-2 max-lg:w-full max-lg:mt-4 max-lg:justify-between">
-                {% if diagnosticMentalHealth.last %}
-                    <a class="text-primary-cm p-2 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
-                        href="{{ path('app_patient_show_details', {'id': patient.id, 'mentalHealthDiagnosticId': diagnosticMentalHealth.last[0].id}) }}">
+        <div class="flex gap-2 items-end">
+            <a href="{{ path('app_patient_edit', {'id': patient.id}) }}">
+                <button class="w-full btn bg-primary-cm-200 rounded-xl text-primary-cm p-4 h-fit transition-colors duration-300 hover:bg-primary-cm hover:text-white">
+                    <span class="material-symbols-rounded font-bold">
+                        download
+                    </span>
+                </button>
+            </a>
+            <a href="{{ path('app_patient_edit', {'id': patient.id}) }}">
+                <button class="w-full btn bg-primary-cm-200 rounded-xl text-primary-cm p-4 h-fit transition-colors duration-300 hover:bg-primary-cm hover:text-white">
+                    <span class="material-symbols-rounded font-bold">
+                        restart_alt
+                    </span>
+                </button>
+            </a>
+            <div class="flex justify-end w-fit max-lg:w-full">
+                <div class="flex items-center gap-1 rounded-xl shadow bg-primary-cm-200 p-2 max-lg:w-full max-lg:mt-4 max-lg:justify-between">
+                    {% if diagnosticMentalHealth.last %}
+                        <a class="text-primary-cm p-2 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
+                           href="{{ path('app_patient_show_details', {'id': patient.id, 'mentalHealthDiagnosticId': diagnosticMentalHealth.last[0].id}) }}">
                         <span class="material-symbols-rounded font-bold">
                             arrow_left
                         </span>
-                    </a>
-                {% endif %}
-                <p class="font-bold text-base p-1.5 px-2 rounded-xl bg-primary-cm-200 text-primary-cm">{{ diagnosticMentalHealth.current[0].createdAt|date('d/m/Y') }}</p>
-                {% if diagnosticMentalHealth.next %}
-                    <a class="text-primary-cm p-2 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
-                       href="{{ path('app_patient_show_details', {'id': patient.id, 'mentalHealthDiagnosticId': diagnosticMentalHealth.next[0].id}) }}">
+                        </a>
+                    {% endif %}
+                    <p class="font-bold text-base p-1.5 px-2 rounded-xl bg-primary-cm-200 text-primary-cm">{{ diagnosticMentalHealth.current[0].createdAt|date('d/m/Y') }}</p>
+                    {% if diagnosticMentalHealth.next %}
+                        <a class="text-primary-cm p-2 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
+                           href="{{ path('app_patient_show_details', {'id': patient.id, 'mentalHealthDiagnosticId': diagnosticMentalHealth.next[0].id}) }}">
                         <span class="material-symbols-rounded font-bold">
                             arrow_right
                         </span>
-                    </a>
-                {% endif %}
+                        </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
@@ -156,7 +172,7 @@
                             {% for reason in diagnosticMentalHealthReasons %}
                                 <details class="bg-base-200 w-full rounded-xl group [&_summary::-webkit-details-marker]:hidden">
                                     <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900">
-                                        <div class="font-bold text-neutral-600 flex gap-4 items-center">
+                                        <div class="font-bold text-neutral-600 flex gap-4 items-start">
                                             <div>
                                                 <span class=" material-symbols-rounded">
                                                     {% if reason['severity'] == 1 %}
@@ -237,12 +253,12 @@
                         </p>
                         <section class="flex flex-col gap-6 mt-6">
                             <p>
-                                {{ diagnosticMentalHealth.current[0].content }}
+                                {{ diagnosticRisk.content }}
                             </p>
                             {% for reason in diagnosticRiskReasons %}
                                 <details class="bg-base-200 w-full rounded-xl group [&_summary::-webkit-details-marker]:hidden">
                                     <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900">
-                                        <div class="font-bold text-neutral-600 flex gap-4 items-center">
+                                        <div class="font-bold text-neutral-600 flex gap-4 items-start">
                                             <div>
                                                 <span class=" material-symbols-rounded">
                                                     {% if reason['severity'] == 1 %}
@@ -291,4 +307,27 @@
             </div>
         </section>
     </div>
+    <script>
+        let chartsLabels = [{% for date in patientMentalHealDiagnosticsGraph['dates'] %}"{{ date|date('d/m') }}", {% endfor %}];
+        let patientMentalHealDiagnosticsValues = [{{patientMentalHealDiagnosticsGraph['values']|join(', ')}}];
+        let patientRiskDiagnosticsValues = [{{patientRisksDiagnoticsGraph['values']|join(', ')}}];
+        let currentMentalHealthDiagnostic = [
+            {% for  date in patientMentalHealDiagnosticsGraph['dates'] %}
+                {% if date == diagnosticMentalHealth.current[0].createdAt %}
+                    {{ diagnosticMentalHealth.current[0].value }},
+                {% else %}
+                    ,
+                {% endif %}
+            {% endfor %}
+        ];
+        let currentRiskDiagnostic = [
+            {% for  date in patientRisksDiagnoticsGraph['dates'] %}
+                {% if date == diagnosticRisk.createdAt %}
+                    {{ diagnosticRisk.value }},
+                {% else %}
+                    ,
+                {% endif %}
+            {% endfor %}
+        ];
+    </script>
 {% endblock %}

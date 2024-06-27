@@ -3,16 +3,6 @@ import './styles/app.scss';
 import Chart from 'chart.js/auto'
 
 (async function() {
-    const data = [
-        { year: 2010, count: 10 },
-        { year: 2011, count: 20 },
-        { year: 2012, count: 15 },
-        { year: 2013, count: 25 },
-        { year: 2014, count: 22 },
-        { year: 2015, count: 22 },
-        { year: 2016, count: 28 },
-    ];
-
     new Chart(
         document.getElementById('mental-health'),
         {
@@ -50,11 +40,11 @@ import Chart from 'chart.js/auto'
                 }
             },
             data: {
-                labels: data.map(row => row.year),
+                labels: chartsLabels,
                 datasets: [
                     {
                         label: 'Score actuel',
-                        data: [, , , , , 22, ],
+                        data: currentMentalHealthDiagnostic,
                         cubicInterpolationMode: 'monotone',
                         tension: 0.4,
                         fill: false,
@@ -62,7 +52,7 @@ import Chart from 'chart.js/auto'
                         borderWidth: 14
                     }, {
                         label: 'score',
-                        data: data.map(row => row.count),
+                        data: patientMentalHealDiagnosticsValues,
                         cubicInterpolationMode: 'monotone',
                         tension: 0.4,
                         fill: true,
@@ -75,17 +65,6 @@ import Chart from 'chart.js/auto'
             }
         }
     );
-
-
-    const dataRisk = [
-        { year: 2010, count: 30 },
-        { year: 2011, count: 12 },
-        { year: 2012, count: 15 },
-        { year: 2013, count: 20 },
-        { year: 2014, count: 22 },
-        { year: 2015, count: 30 },
-        { year: 2016, count: 28 },
-    ];
 
     new Chart(
         document.getElementById('risk'),
@@ -124,11 +103,11 @@ import Chart from 'chart.js/auto'
                 }
             },
             data: {
-                labels: dataRisk.map(row => row.year),
+                labels: chartsLabels,
                 datasets: [
                     {
                         label: 'Score actuel',
-                        data: [, , , , , 30, ],
+                        data: currentRiskDiagnostic,
                         cubicInterpolationMode: 'monotone',
                         tension: 0.4,
                         fill: false,
@@ -136,7 +115,7 @@ import Chart from 'chart.js/auto'
                         borderWidth: 14
                     }, {
                         label: 'score',
-                        data: dataRisk.map(row => row.count),
+                        data: patientRiskDiagnosticsValues,
                         cubicInterpolationMode: 'monotone',
                         tension: 0.4,
                         fill: true,

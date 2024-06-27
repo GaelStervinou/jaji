@@ -64,7 +64,7 @@ class PatientFixtures extends Fixture
             "Symptôme: Vision floue"
         ];
 
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 150; $i++) {
             $patient = (new Patient())
                 ->setIpp($faker->unique()->isbn13)
                 ->setFirstname($faker->firstName)

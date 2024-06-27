@@ -29,18 +29,31 @@ class DiagnosticFixtures extends Fixture implements DependentFixtureInterface
             "Trouble de la consommation de substances avec une dépendance à l'alcool et aux drogues.",
             "Trouble du spectre autistique avec des difficultés de communication et des comportements répétitifs.",
         ];
-
         $mentalHealthFakeReasons = [
-            "Antécédents familiaux de troubles mentaux.",
-            "Événements de vie stressants ou traumatisants.",
-            "Problèmes de santé physique ou mentale sous-jacents.",
-            "Utilisation de substances psychoactives ou de médicaments.",
-            "Facteurs environnementaux ou sociaux défavorables.",
-            "Troubles neurodéveloppementaux ou génétiques.",
-            "Traumatisme crânien ou lésion cérébrale.",
-            "Maltraitance ou négligence dans l'enfance.",
-            "Isolation sociale ou manque de soutien.",
-            "Stigmatisation ou discrimination liée à la santé mentale.",
+            json_encode([
+                "title" => "Dépression",
+                "conclusion" => "Le patient semble se sentir triste et désespéré selon ses propres mots.",
+                "source" => "Je suis triste et désespéré",
+                "type" => "audio",
+                "severity" => 3,
+                "path" => "https://samples.audible.fr/bk/adfr/002605/bk_adfr_002605_sample.mp3"
+            ], JSON_THROW_ON_ERROR),
+            json_encode([
+                "title" => "Pensées suicidaires",
+                "conclusion" => "Le patient semble avoir des pensées suicidaires.",
+                "source" => "Cette image montre une corde accrochée au plafond au-dessus d'un tabouret.",
+                "type" => "image",
+                "severity" => 3,
+                "path" => "https://t.ly/PbjJ_"
+            ], JSON_THROW_ON_ERROR),
+            json_encode([
+                "title" => "Fatigue",
+                "conclusion" => "Le patient mentionne se sentir très fatigué.",
+                "source" => "Je me sens très fatigué",
+                "type" => "audio",
+                "severity" => 2,
+                "path" => "https://samples.audible.fr/bk/adfr/002605/bk_adfr_002605_sample.mp3"
+            ], JSON_THROW_ON_ERROR)
         ];
 
         $risksFakeValues = [
@@ -55,18 +68,22 @@ class DiagnosticFixtures extends Fixture implements DependentFixtureInterface
             "Risque de rechute de trouble de la consommation de substances en raison d'une exposition à des déclencheurs.",
             "Risque de crise de panique en raison d'une exposition à des situations phobiques.",
         ];
-
         $risksFakeReasons = [
-            "Antécédents personnels de troubles de santé mentale.",
-            "Antécédents familiaux de troubles de santé mentale.",
-            "Événements de vie stressants ou traumatisants.",
-            "Problèmes de santé physique ou mentale sous-jacents.",
-            "Utilisation de substances psychoactives ou de médicaments.",
-            "Facteurs environnementaux ou sociaux défavorables.",
-            "Troubles neurodéveloppementaux ou génétiques.",
-            "Traumatisme crânien ou lésion cérébrale.",
-            "Maltraitance ou négligence dans l'enfance.",
-            "Isolation sociale ou manque de soutien.",
+            json_encode([
+                "title" => "Hypocalcémie post-thyroïdectomie",
+                "conclusion" => "Le patient a développé une hypocalcémie après la thyroïdectomie, nécessitant une surveillance étroite.",
+                "source" => "Thyroïdectomie : Le patient souffrant de nodules thyroïdiens a subi une thyroïdectomie. Le patient a développé une hypocalcémie après la chirurgie, nécessitant une supplémentation en calcium et une surveillance étroite.",
+                "type" => "event",
+                "severity" => 3
+            ] , JSON_THROW_ON_ERROR),
+            json_encode([
+                "title" => "Plaie infectée",
+                "conclusion" => "Le patient présente une plaie infectée nécessitant une attention médicale immédiate.",
+                "source" => "Cette image montre une plaie infectée.",
+                "type" => "image",
+                "severity" => 2,
+                "path" => "https://t.ly/7HE_s"
+            ], JSON_THROW_ON_ERROR),
         ];
 
         $faker = Factory::create('fr_FR');

@@ -74,9 +74,11 @@ class PatientController extends AbstractController
         $diagnosticMentalHealthRepository = $diagnosticMentalHealthRepository->findListDiagnosticMentalHealth(['id' => $diagnosticId->getId()]);
         $diagnosticRisk = $diagnosticRisksRepository->findOneBy(['patient' => $patient->getId(), 'createdAt' => $diagnosticId->getCreatedAt()]);
         $lastDiagnosticRisk = $diagnosticRisksRepository->findLastDiagnosticRisk($diagnosticId->getId());
-        dd($diagnosticMentalHealthRepository, $diagnosticRisk, $lastDiagnosticRisk);
         return $this->render('patient/show.html.twig', [
             'patient' => $patient,
+            'diagnosticMentalHealth' => $diagnosticMentalHealthRepository,
+            'diagnosticRisk' => $diagnosticRisk,
+            'lastDiagnosticRisk' => $lastDiagnosticRisk,
         ]);
     }
 

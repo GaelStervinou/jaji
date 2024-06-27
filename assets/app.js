@@ -35,7 +35,7 @@ import Chart from 'chart.js/auto'
                     y: {
                         display: false,
                         suggestedMin: 0,
-                        suggestedMax: 55
+                        suggestedMax: 10
                     }
                 }
             },
@@ -98,7 +98,7 @@ import Chart from 'chart.js/auto'
                     y: {
                         display: false,
                         suggestedMin: 0,
-                        suggestedMax: 50
+                        suggestedMax: 10
                     }
                 }
             },

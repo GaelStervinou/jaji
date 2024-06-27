@@ -123,14 +123,14 @@ class DiagnosticFixtures extends Fixture implements DependentFixtureInterface
                 $currentDate = new \DateTimeImmutable($faker->dateTimeBetween('-10 years', 'now')->format('Y-m-d H:i:s'));
                 $randomReasonsNumber = $faker->numberBetween(1, 2);
                 $diagnosticMentalHealth = (new DiagnosticMentalHealth())
-                    ->setValue($faker->numberBetween(2, 10))
+                    ->setValue($faker->numberBetween(3, 8))
                     ->setContent($faker->randomElement($mentalHealthFakeValues))
                     ->setReasons("[".implode(",", $faker->randomElements($mentalHealthFakeReasons, $randomReasonsNumber))."]")
                     ->setPatient($patient)
                     ->setCreatedAt($currentDate)
                 ;
                 $diagnosticRisks = (new DiagnosticRisks())
-                    ->setValue($faker->numberBetween(2, 10))
+                    ->setValue($faker->numberBetween(3, 8))
                     ->setContent($faker->randomElement($risksFakeValues))
                     ->setReasons("[".implode(",", $faker->randomElements($risksFakeReasons, $randomReasonsNumber))."]")
                     ->setPatient($patient)

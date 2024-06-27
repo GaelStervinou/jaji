@@ -56,4 +56,25 @@ class DiagnosticMentalHealthRepository extends ServiceEntityRepository
         return ['current' => $current, 'last' => $last, 'next' => $next];
     }
 
+    public function findDatesAndValuesByPatient($patientId): array
+    {
+        $results = $this->createQueryBuilder('dmh')
+            ->select('dmh.createdAt', 'dmh.value')
+            ->where('dmh.patient = :patient')
+            ->setParameter('patient', $patientId)
+            ->orderBy('dmh.createdAt', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $dates = array_map(function($item) {
+            return $item['createdAt'];
+        }, $results);
+
+        $values = array_map(function($item) {
+            return $item['value'];
+        }, $results);
+
+        return ['dates' => $dates, 'values' => $values];
+    }
+
 }

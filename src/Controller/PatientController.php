@@ -71,14 +71,20 @@ class PatientController extends AbstractController
     #[Route('/{id}/{diagnosticId}', name: 'app_patient_show_details', methods: ['GET'])]
     public function showPatient(Patient $patient, DiagnosticMentalHealth $diagnosticId, DiagnosticMentalHealthRepository $diagnosticMentalHealthRepository, DiagnosticRisksRepository $diagnosticRisksRepository): Response
     {
-        $diagnosticMentalHealthRepository = $diagnosticMentalHealthRepository->findListDiagnosticMentalHealth(['id' => $diagnosticId->getId()]);
+        $diagnosticMentalHealth = $diagnosticMentalHealthRepository->findListDiagnosticMentalHealth(['id' => $diagnosticId->getId()]);
         $diagnosticRisk = $diagnosticRisksRepository->findOneBy(['patient' => $patient->getId(), 'createdAt' => $diagnosticId->getCreatedAt()]);
         $lastDiagnosticRisk = $diagnosticRisksRepository->findLastDiagnosticRisk($diagnosticId->getId());
+
+        $patientMentalHealDiagnosticsGraph = $diagnosticMentalHealthRepository->findDatesAndValuesByPatient($patient->getId());
+        $patientRisksDiagnoticsGraph = $diagnosticRisksRepository->findDatesAndValuesByPatient($patient->getId());
+
         return $this->render('patient/show.html.twig', [
             'patient' => $patient,
-            'diagnosticMentalHealth' => $diagnosticMentalHealthRepository,
+            'diagnosticMentalHealth' => $diagnosticMentalHealth,
             'diagnosticRisk' => $diagnosticRisk,
             'lastDiagnosticRisk' => $lastDiagnosticRisk,
+            'patientMentalHealDiagnosticsGraph' => $patientMentalHealDiagnosticsGraph,
+            'patientRisksDiagnoticsGraph' => $patientRisksDiagnoticsGraph,
         ]);
     }
 

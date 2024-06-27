@@ -78,9 +78,14 @@ class PatientController extends AbstractController
         $patientMentalHealDiagnosticsGraph = $diagnosticMentalHealthRepository->findDatesAndValuesByPatient($patient);
         $patientRisksDiagnoticsGraph = $diagnosticRisksRepository->findDatesAndValuesByPatient($patient);
 
+        $diagnosticMentalHealthReasons = json_decode($diagnosticMentalHealth['current'][0]->getReasons(), true);
+        $diagnosticRiskReasons = json_decode($diagnosticRisk->getReasons(), true);
+
         return $this->render('patient/show.html.twig', [
             'patient' => $patient,
             'diagnosticMentalHealth' => $diagnosticMentalHealth,
+            'diagnosticMentalHealthReasons' => $diagnosticMentalHealthReasons,
+            'diagnosticRiskReasons' => $diagnosticRiskReasons,
             'diagnosticRisk' => $diagnosticRisk,
             'lastDiagnosticRisk' => $lastDiagnosticRisk,
             'patientMentalHealDiagnosticsGraph' => $patientMentalHealDiagnosticsGraph,

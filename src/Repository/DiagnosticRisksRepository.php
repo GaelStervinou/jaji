@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\DiagnosticMentalHealth;
 use App\Entity\DiagnosticRisks;
+use App\Entity\Patient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,24 +18,24 @@ class DiagnosticRisksRepository extends ServiceEntityRepository
         parent::__construct($registry, DiagnosticRisks::class);
     }
 
-    public function findLastDiagnosticRisk($diagnoticId): array
+    public function findLastDiagnosticRiskByCurrentDiagnostic(DiagnosticMentalHealth $diagnostic): array
     {
         return $this->createQueryBuilder('dr')
             ->select('dr')
             ->where('dr.id = :diagnoticId')
-            ->setParameter('diagnoticId', $diagnoticId)
+            ->setParameter('diagnoticId', $diagnostic->getId())
             ->orderBy('dr.createdAt', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getResult();
     }
 
-    public function findDatesAndValuesByPatient($patientId): array
+    public function findDatesAndValuesByPatient(Patient $patient): array
     {
         $results = $this->createQueryBuilder('dr')
             ->select('dr.createdAt', 'dr.value')
             ->where('dr.patient = :patient')
-            ->setParameter('patient', $patientId)
+            ->setParameter('patient', $patient->getId())
             ->orderBy('dr.createdAt', 'ASC')
             ->getQuery()
             ->getResult();

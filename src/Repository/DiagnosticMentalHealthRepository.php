@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\DiagnosticMentalHealth;
 use App\Entity\DiagnosticRisks;
+use App\Entity\Patient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -56,12 +57,12 @@ class DiagnosticMentalHealthRepository extends ServiceEntityRepository
         return ['current' => $current, 'last' => $last, 'next' => $next];
     }
 
-    public function findDatesAndValuesByPatient($patientId): array
+    public function findDatesAndValuesByPatient(Patient $patient): array
     {
         $results = $this->createQueryBuilder('dmh')
             ->select('dmh.createdAt', 'dmh.value')
             ->where('dmh.patient = :patient')
-            ->setParameter('patient', $patientId)
+            ->setParameter('patient', $patient->getId())
             ->orderBy('dmh.createdAt', 'ASC')
             ->getQuery()
             ->getResult();

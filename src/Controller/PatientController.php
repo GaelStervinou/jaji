@@ -68,15 +68,15 @@ class PatientController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/{diagnosticId}', name: 'app_patient_show_details', methods: ['GET'])]
-    public function showPatient(Patient $patient, DiagnosticMentalHealth $diagnosticId, DiagnosticMentalHealthRepository $diagnosticMentalHealthRepository, DiagnosticRisksRepository $diagnosticRisksRepository): Response
+    #[Route('/{id}/{mentalHealthDiagnosticId}', name: 'app_patient_show_details', methods: ['GET'])]
+    public function showPatient(Patient $patient, DiagnosticMentalHealth $mentalHealthDiagnosticId, DiagnosticMentalHealthRepository $diagnosticMentalHealthRepository, DiagnosticRisksRepository $diagnosticRisksRepository): Response
     {
-        $diagnosticMentalHealth = $diagnosticMentalHealthRepository->findListDiagnosticMentalHealth(['id' => $diagnosticId->getId()]);
-        $diagnosticRisk = $diagnosticRisksRepository->findOneBy(['patient' => $patient->getId(), 'createdAt' => $diagnosticId->getCreatedAt()]);
-        $lastDiagnosticRisk = $diagnosticRisksRepository->findLastDiagnosticRisk($diagnosticId->getId());
+        $diagnosticMentalHealth = $diagnosticMentalHealthRepository->findListDiagnosticMentalHealth(['id' => $mentalHealthDiagnosticId->getId()]);
+        $diagnosticRisk = $diagnosticRisksRepository->findOneBy(['patient' => $patient->getId(), 'createdAt' => $mentalHealthDiagnosticId->getCreatedAt()]);
+        $lastDiagnosticRisk = $diagnosticRisksRepository->findLastDiagnosticRiskByCurrentDiagnostic($mentalHealthDiagnosticId);
 
-        $patientMentalHealDiagnosticsGraph = $diagnosticMentalHealthRepository->findDatesAndValuesByPatient($patient->getId());
-        $patientRisksDiagnoticsGraph = $diagnosticRisksRepository->findDatesAndValuesByPatient($patient->getId());
+        $patientMentalHealDiagnosticsGraph = $diagnosticMentalHealthRepository->findDatesAndValuesByPatient($patient);
+        $patientRisksDiagnoticsGraph = $diagnosticRisksRepository->findDatesAndValuesByPatient($patient);
 
         return $this->render('patient/show.html.twig', [
             'patient' => $patient,

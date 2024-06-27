@@ -6,7 +6,7 @@
     <div class="flex gap-6 mb-12">
         <div class="flex flex-grow">
             <form class="relative w-full">
-                <input class="w-full h-full rounded-lg bg-neutral-100 border-0" type="text" class="input " placeholder="Recherche..." />
+                    <input class="w-full h-full rounded-lg bg-neutral-100 border-0" name="search" type="text" placeholder="Recherche..." />
                 <button class="absolute top-0 right-0 rounded-l-none btn">
                     {{ include('/icons/icon-search.html.svg', {size: '14'} ) }}
                 </button>
@@ -23,8 +23,35 @@
                     <th>Ipp</th>
                     <th>Identité</th>
                     <th>Contact</th>
-                    <th>Risks Score</th>
-                    <th>Mental Health Score</th>
+                    <th>
+                        {% set lastDiagnosticRisksSortByValue = 'DESC' %}
+                        {% set lastDiagnosticRisksSortByArrow = 'arrow_drop_down' %}
+                        {% if app.request.get('lastDiagnosticRisksSortBy') and  app.request.get('lastDiagnosticRisksSortBy') == 'DESC' %}
+                            {% set lastDiagnosticRisksSortByValue = 'ASC' %}
+                            {% set lastDiagnosticRisksSortByArrow = 'arrow_drop_up' %}
+                        {% endif %}
+                            <a href="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: lastDiagnosticRisksSortByValue }) }}" class="align-center flex gap-1">
+                                Risk Score
+                                <span class="material-symbols-rounded font-bold">
+                                    {{ lastDiagnosticRisksSortByArrow }}
+                                </span>
+                            </a>
+                    </th>
+                    <th>
+                        {% set lastDiagnosticMentalHealthSortByValue = 'DESC' %}
+                        {% set lastDiagnosticMentalHealthSortByArrow = 'arrow_drop_down' %}
+                        {% if app.request.get('lastDiagnosticRisksSortBy') and  app.request.get('lastDiagnosticRisksSortBy') == 'DESC' %}
+                            {% set lastDiagnosticMentalHealthSortByValue = 'ASC' %}
+                            {% set lastDiagnosticMentalHealthSortByArrow = 'arrow_drop_up' %}
+                        {% endif %}
+                        <a href="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: lastDiagnosticMentalHealthSortByValue }) }}" class="align-center flex gap-1">
+                            Mental Health Score
+                            <span class="material-symbols-rounded font-bold">
+                                {{ lastDiagnosticMentalHealthSortByArrow }}
+                            </span>
+                        </a>
+                    </th>
+                    <th></th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -107,16 +134,6 @@
             </tbody>
         </table>
     </div>
-
-    <select id="countries" class="bg-gray-50 border-0 text-grey hover:text-primary text-md font-medium rounded-lg focus:ring-none focus:border-0 block w-32 p-0.5 href-select" onchange="location = this.value;">
-        {% if app.request.get('byDate') is not defined and app.request.get('byName') is not defined %}
-        <option selected hidden>{{ trieDefaultValue }}</option>
-        {% endif %}
-        <option value="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: 'DESC'} ) }}" {% if app.request.get('lastDiagnosticRisksSortBy') is defined and app.request.get('lastDiagnosticRisksSortBy') == 'DESC' %}selected{% endif %}">lastDiagnosticRisksSortBy</option>
-        <option value="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: 'ASC'} ) }}" {% if app.request.get('lastDiagnosticRisksSortBy') is defined and app.request.get('lastDiagnosticRisksSortBy') == 'ASC' %}selected{% endif %}>plus ancien</option>
-        <option value="{{ path('app_patient_index', { lastDiagnosticMentalHealthSortBy: 'ASC'} ) }}" {% if app.request.get('lastDiagnosticMentalHealthSortBy') is defined and app.request.get('lastDiagnosticMentalHealthSortBy') == 'ASC' %}selected{% endif %}>lastDiagnosticMentalHealthSortBy</option>
-        <option value="{{ path('app_patient_index', { lastDiagnosticMentalHealthSortBy: 'DESC'} ) }}" {% if app.request.get('lastDiagnosticMentalHealthSortBy') is defined and app.request.get('lastDiagnosticMentalHealthSortBy') == 'DESC' %}selected{% endif %}>lastDiagnosticMentalHealthSortBy</option>
-    </select>
 
     <div class="flex justify-between py-6 items-center">
         <div>

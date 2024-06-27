@@ -25,34 +25,33 @@
                     <th>Identité</th>
                     <th>Contact</th>
                     <th>
-                        {% set lastDiagnosticRisksSortByValue = 'DESC' %}
-                        {% set lastDiagnosticRisksSortByArrow = 'arrow_drop_up' %}
-                        {% if app.request.get('lastDiagnosticRisksSortBy') and  app.request.get('lastDiagnosticRisksSortBy') == 'DESC' %}
-                            {% set lastDiagnosticRisksSortByValue = 'ASC' %}
-                            {% set lastDiagnosticRisksSortByArrow = 'arrow_drop_down' %}
-                        {% endif %}
-                            <a href="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: lastDiagnosticRisksSortByValue }) }}" class="align-center flex gap-1">
-                                Santé physique à risque
-                                <span class="material-symbols-rounded font-bold">
-                                    {{ lastDiagnosticRisksSortByArrow }}
-                                </span>
-                            </a>
-                    </th>
-                    <th>
                         {% set lastDiagnosticMentalHealthSortByValue = 'DESC' %}
                         {% set lastDiagnosticMentalHealthSortByArrow = 'arrow_drop_up' %}
                         {% if app.request.get('lastDiagnosticMentalHealthSortBy') and  app.request.get('lastDiagnosticMentalHealthSortBy') == 'DESC' %}
                             {% set lastDiagnosticMentalHealthSortByValue = 'ASC' %}
                             {% set lastDiagnosticMentalHealthSortByArrow = 'arrow_drop_down' %}
                         {% endif %}
-                        <a href="{{ path('app_patient_index', { lastDiagnosticMentalHealthSortBy: lastDiagnosticMentalHealthSortByValue }) }}" class="align-center flex gap-1">
+                        <a href="{{ path('app_patient_index', { lastDiagnosticMentalHealthSortBy: lastDiagnosticMentalHealthSortByValue }) }}" class="items-center flex gap-1">
                             Santé mentale à risque
                             <span class="material-symbols-rounded font-bold">
                                 {{ lastDiagnosticMentalHealthSortByArrow }}
                             </span>
                         </a>
                     </th>
-                    <th></th>
+                    <th>
+                        {% set lastDiagnosticRisksSortByValue = 'DESC' %}
+                        {% set lastDiagnosticRisksSortByArrow = 'arrow_drop_up' %}
+                        {% if app.request.get('lastDiagnosticRisksSortBy') and  app.request.get('lastDiagnosticRisksSortBy') == 'DESC' %}
+                            {% set lastDiagnosticRisksSortByValue = 'ASC' %}
+                            {% set lastDiagnosticRisksSortByArrow = 'arrow_drop_down' %}
+                        {% endif %}
+                        <a href="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: lastDiagnosticRisksSortByValue }) }}" class="items-center flex gap-1">
+                            Santé physique à risque
+                            <span class="material-symbols-rounded font-bold">
+                                {{ lastDiagnosticRisksSortByArrow }}
+                            </span>
+                        </a>
+                    </th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -92,17 +91,17 @@
                         </div>
                     </td>
                     <td>
-                        {% if patient.lastDiagnosticRisksScore %}
-                            {% set lastDiagnosticRisksScore = patient.lastDiagnosticRisksScore / 10 * 100 %}
-                            <div class="radial-progress text-sm {% if lastDiagnosticRisksScore > 70 %}text-success{% elseif lastDiagnosticRisksScore > 40 %}text-warning{% else %}text-error{% endif %}" style="--value:{{ lastDiagnosticRisksScore }}; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">{{ lastDiagnosticRisksScore }}%</div>
+                        {% if patient.lastDiagnosticMentalHealthScore %}
+                            {% set lastDiagnosticMentalHealthScore = patient.lastDiagnosticMentalHealthScore / 10 * 100 %}
+                            <div class="radial-progress text-sm {% if lastDiagnosticMentalHealthScore > 70 %}text-error{% elseif lastDiagnosticMentalHealthScore > 40 %}text-warning{% else %}text-success{% endif %}" style="--value:{{ lastDiagnosticMentalHealthScore }}; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">{{ lastDiagnosticMentalHealthScore }}%</div>
                         {% else %}
                             -
                         {% endif %}
                     </td>
                     <td>
-                        {% if patient.lastDiagnosticMentalHealthScore %}
-                            {% set lastDiagnosticMentalHealthScore = patient.lastDiagnosticMentalHealthScore / 10 * 100 %}
-                            <div class="radial-progress text-sm {% if lastDiagnosticMentalHealthScore > 70 %}text-success{% elseif lastDiagnosticMentalHealthScore > 40 %}text-warning{% else %}text-error{% endif %}" style="--value:{{ lastDiagnosticMentalHealthScore }}; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">{{ lastDiagnosticMentalHealthScore }}%</div>
+                        {% if patient.lastDiagnosticRisksScore %}
+                            {% set lastDiagnosticRisksScore = patient.lastDiagnosticRisksScore / 10 * 100 %}
+                            <div class="radial-progress text-sm {% if lastDiagnosticRisksScore > 70 %}text-error{% elseif lastDiagnosticRisksScore > 40 %}text-warning{% else %}text-success{% endif %}" style="--value:{{ lastDiagnosticRisksScore }}; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">{{ lastDiagnosticRisksScore }}%</div>
                         {% else %}
                             -
                         {% endif %}

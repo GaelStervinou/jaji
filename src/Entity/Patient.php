@@ -70,6 +70,8 @@ class Patient
     private ?int $lastDiagnosticMentalHealthScore = null;
     private ?int $lastDiagnosticRisksScore = null;
 
+    private ?DiagnosticMentalHealth $lastDiagnoticMentalHealth = null;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -287,5 +289,23 @@ class Patient
     public function getDiagnosticsRisks(): Collection
     {
         return $this->diagnosticRisks;
+    }
+
+    public function getLastDiagnoticMentalHealth(): ?DiagnosticMentalHealth
+    {
+        $diagnostics = $this->getDiagnosticMentalHealth()->toArray();
+
+        usort($diagnostics, function(DiagnosticMentalHealth $a, DiagnosticMentalHealth $b) {
+            return $b->getCreatedAt() <=> $a->getCreatedAt();
+        });
+
+        return $diagnostics[0] ?? null;
+    }
+
+    public function setLastDiagnoticMentalHealth(DiagnosticMentalHealth $lastDiagnoticMentalHealth): static
+    {
+        $this->lastDiagnoticMentalHealth = $lastDiagnoticMentalHealth;
+
+        return $this;
     }
 }

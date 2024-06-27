@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class PatientController extends AbstractController
 {
     #[Route('/', name: 'app_patient_index', methods: ['GET'])]
-    public function index(Request $request, PatientRepository $patientRepository): Response
+    public function index(Request $request, PatientRepository $patientRepository, DiagnosticMentalHealthRepository $diagnosticMentalHealthRepository): Response
     {
         //pagination marche pas
         $page = $request->query->get('page') ?? 1;

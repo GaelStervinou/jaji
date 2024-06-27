@@ -136,13 +136,20 @@
             <div class="w-full flex flex-col gap-6">
                 <div class="stats shadow w-full">
                     <div class="stat relative aspect-square overflow-hidden">
-                        <p class="text-neutral-500 font-bold text-lg">
-                            Courbe santé mentale
-                        </p>
-                        <div class="absolute bottom-0 m-[-10px]" style="width: calc(100% + 30px); height: calc(100% + 30px);">
+                        <div class="absolute top-0 w-full p-4 z-50 flex justify-between">
+                            <p class="text-neutral-500 font-bold text-lg">
+                                Courbe santé mentale
+                            </p>
+                            <div class="tooltip tooltip-left cursor-pointer" data-tip="Historique des résultats des diagnostics de santé mentale du patient. Si la valeur et 0 le patient se porte très bien, plus elle se rapproche de 100 plus le patient est dans un état critique" data-for="mental-health">
+                                <span class="material-symbols-rounded text-neutral-500">
+                                   info
+                                </span>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 m-[-10px] mb-[12px]" style="width: calc(100% + 30px); height: calc(100% + 30px);">
                             <div class="h-full pr-10 font-bold flex flex-col items-end justify-between" style="color:rgba(131,43,13,0.5)">
-                                <p>10</p>
-                                <p>10</p>
+                                <p>&nbsp;</p>
+                                <p>&nbsp;</p>
                                 <p>9</p>
                                 <p>8</p>
                                 <p>7</p>
@@ -152,7 +159,7 @@
                                 <p>3</p>
                                 <p>2</p>
                                 <p>1</p>
-                                <p>0</p>
+                                <p>&nbsp;</p>
                             </div>
                         </div>
                         <div class="absolute bottom-0 m-[-18px]" style="width: calc(100% + 38px); height: calc(100% + 38px);">
@@ -163,7 +170,7 @@
                 <div class="stats shadow w-full pb-4">
                     <div class="stat overflow-hidden">
                         <p class="text-neutral-500 font-bold text-lg">
-                            Diagnostic santé mentale
+                            Santé mentale à risque
                         </p>
                         <section class="flex flex-col gap-6 mt-6">
                             <p>
@@ -206,6 +213,9 @@
                                                     <source src="{{ reason['path'] }}" type="audio/mpeg">
                                                     Your browser does not support the audio element.
                                                 </audio>
+                                                <p class="mb-6">
+                                                    {{ reason['source'] }}
+                                                </p>
                                             {% else %}
                                                 <p class="mb-6">
                                                     {{ reason['source'] }}
@@ -222,13 +232,20 @@
             <div class="w-full flex flex-col gap-6">
                 <div class="stats shadow w-full">
                 <div class="stat relative aspect-square overflow-hidden">
-                    <p class="text-neutral-500 font-bold text-lg">
-                        Courbe risques
-                    </p>
-                    <div class="absolute bottom-0 m-[-10px]" style="width: calc(100% + 30px); height: calc(100% + 30px);">
+                    <div class="absolute top-0 w-full p-4 z-50 flex justify-between">
+                        <p class="text-neutral-500 font-bold text-lg">
+                            Courbe des riques
+                        </p>
+                        <div class="tooltip tooltip-left cursor-pointer" data-tip="Historique des résultats des diagnostics de risque du patient. Si la valeur et 0 le patient ne risque rien de prévisible, plus elle se rapproche de 100 plus le patient à plus de chance d'avoir des complications" data-for="risk-health-tooltip">
+                            <span class="material-symbols-rounded text-neutral-500">
+                               info
+                            </span>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 m-[-10px] mb-[12px]" style="width: calc(100% + 30px); height: calc(100% + 30px);">
                         <div class="h-full pr-10 font-bold flex flex-col items-end justify-between" style="color:rgba(131,43,13,0.5)">
-                            <p>10</p>
-                            <p>10</p>
+                            <p>&nbsp;</p>
+                            <p>&nbsp;</p>
                             <p>9</p>
                             <p>8</p>
                             <p>7</p>
@@ -238,7 +255,7 @@
                             <p>3</p>
                             <p>2</p>
                             <p>1</p>
-                            <p>0</p>
+                            <p>&nbsp;</p>
                         </div>
                     </div>
                     <div class="absolute bottom-0 m-[-18px]" style="width: calc(100% + 38px); height: calc(100% + 38px);">
@@ -249,7 +266,7 @@
                 <div class="stats shadow w-full pb-4">
                     <div class="stat overflow-hidden">
                         <p class="text-neutral-500 font-bold text-lg">
-                            Diagnostic risques
+                            Santé physique à risque
                         </p>
                         <section class="flex flex-col gap-6 mt-6">
                             <p>
@@ -292,6 +309,9 @@
                                                     <source src="{{ reason['path'] }}" type="audio/mpeg">
                                                     Your browser does not support the audio element.
                                                 </audio>
+                                                <p class="mb-6">
+                                                    {{ reason['source'] }}
+                                                </p>
                                             {% else %}
                                                 <p class="mb-6">
                                                     {{ reason['source'] }}

@@ -30,12 +30,12 @@
                             {% set lastDiagnosticRisksSortByValue = 'ASC' %}
                             {% set lastDiagnosticRisksSortByArrow = 'arrow_drop_down' %}
                         {% endif %}
-                            <a href="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: lastDiagnosticRisksSortByValue }) }}" class="align-center flex gap-1">
-                                Santé physique à risque
-                                <span class="material-symbols-rounded font-bold">
-                                    {{ lastDiagnosticRisksSortByArrow }}
-                                </span>
-                            </a>
+                        <a href="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: lastDiagnosticRisksSortByValue }) }}" class="items-center flex gap-1">
+                            Santé physique à risque
+                            <span class="material-symbols-rounded font-bold">
+                                {{ lastDiagnosticRisksSortByArrow }}
+                            </span>
+                        </a>
                     </th>
                     <th>
                         {% set lastDiagnosticMentalHealthSortByValue = 'DESC' %}
@@ -44,7 +44,7 @@
                             {% set lastDiagnosticMentalHealthSortByValue = 'ASC' %}
                             {% set lastDiagnosticMentalHealthSortByArrow = 'arrow_drop_down' %}
                         {% endif %}
-                        <a href="{{ path('app_patient_index', { lastDiagnosticMentalHealthSortBy: lastDiagnosticMentalHealthSortByValue }) }}" class="align-center flex gap-1">
+                        <a href="{{ path('app_patient_index', { lastDiagnosticMentalHealthSortBy: lastDiagnosticMentalHealthSortByValue }) }}" class="items-center flex gap-1">
                             Santé mentale à risque
                             <span class="material-symbols-rounded font-bold">
                                 {{ lastDiagnosticMentalHealthSortByArrow }}

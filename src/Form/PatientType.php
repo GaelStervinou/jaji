@@ -6,6 +6,7 @@ use App\Entity\Patient;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class PatientType extends AbstractType
 {
@@ -37,9 +38,14 @@ class PatientType extends AbstractType
                     'placeholder' => 'Ajouter l\'adresse email...',
                 ],
             ])
-            ->add('gender', null, [
+            ->add('gender', ChoiceType::class, [
+                'choices' => [
+                    'Homme' => 'H',
+                    'Femme' => 'F',
+                    'Autre' => 'O',
+                ],
                 'attr' => [
-                    'placeholder' => 'Ajouter le genre (H/F/X)...',
+                    'placeholder' => 'Ajouter le genre (H/F/O)...',
                 ],
             ])
             ->add('birthDate', null, [

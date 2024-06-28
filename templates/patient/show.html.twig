@@ -8,20 +8,21 @@
 {% block body %}
     <section id="patient-page">
         <div class="flex justify-between flex-row items-center mb-12 max-lg:flex-col max-lg:mb-6">
-            <h1 class="text-2xl font-bold max-lg:w-full print:block">{{ patient.ipp }}
+            <h1 class="text-2xl font-bold max-lg:w-full"
+                data-export-filename="{{ patient.ipp }}-{{ patient.lastname }}-{{ patient.firstname }}">{{ patient.ipp }}
                 - {{ patient.lastname }} {{ patient.firstname }}</h1>
-            <div class="flex gap-2 items-end print:hidden">
-                {#            <a href="{{ path('app_patient_edit', {'id': patient.id}) }}"> #}
-                <span class="">
-                <button id="export-patient-diag"
-                        class="w-full btn bg-primary-cm-200 rounded-xl text-primary-cm p-4 h-fit transition-colors duration-300 hover:bg-primary-cm hover:text-white">
+            <div class="flex gap-2 items-end">
+                <span>
+                    <button id="export-patient-diag"
+                            class="w-full btn bg-primary-cm-200 rounded-xl text-primary-cm p-4 h-fit transition-colors duration-300 hover:bg-primary-cm hover:text-white">
                     <span class="material-symbols-rounded font-bold">
                         download
                     </span>
-                </button>
-            </a>
-            <a href="{{ path('app_diagnostic_generate', {'patient': patient.id}) }}" onclick="alert('La génération du diagnostic se lancera lorsque vous fermerez cette alerte')">
-                <button class="w-full btn bg-primary-cm-200 rounded-xl text-primary-cm p-4 h-fit transition-colors duration-300 hover:bg-primary-cm hover:text-white">
+                    </button>
+                </span>
+                <a href="{{ path('app_patient_edit', {'id': patient.id}) }}">
+                    <button
+                            class="w-full btn bg-primary-cm-200 rounded-xl text-primary-cm p-4 h-fit transition-colors duration-300 hover:bg-primary-cm hover:text-white">
                     <span class="material-symbols-rounded font-bold">
                         restart_alt
                     </span>
@@ -57,7 +58,7 @@
                         <div class="flex gap-2">
                             <div class="bg-accent-cm-500 rounded-xl p-2 transition-colors duration-300 hover:bg-accent-cm-700 cursor-pointer">
                                 <div class="bg-accent-cm rounded-full h-12 w-12 p-2 items-center flex justify-center transition-colors duration-300 text-base-200 hover:bg-secondary-cm hover:text-accent-cm">
-                                <span class="material-symbols-rounded transition-colors duration-300 print:block">
+                                <span class="material-symbols-rounded transition-colors duration-300">
                                     phone
                                 </span>
                                 </div>
@@ -134,73 +135,34 @@
                             <span class="material-symbols-rounded font-bold">
                                 trending_down
                             </span>
-<<<<<<< Updated upstream
-                        </div>
-                    </div>
-                    <div class="stat-desc">21% more than last month</div>
-                </div>
-            </div>
-        </section>
-        <section class="w-full flex flex-row max-lg:flex-col gap-6">
-            <div class="w-full flex flex-col gap-6">
-                <div class="stats shadow w-full">
-                    <div class="stat relative aspect-square overflow-hidden">
-                        <div class="absolute top-0 w-full p-4 z-50 flex justify-between">
-                            <p class="text-neutral-500 font-bold text-lg">
-                                Courbe santé mentale
-                            </p>
-                            <div class="tooltip tooltip-left cursor-pointer" data-tip="Historique des résultats des diagnostics de santé mentale du patient. Si la valeur et 0 le patient se porte très bien, plus elle se rapproche de 100 plus le patient est dans un état critique" data-for="mental-health">
-                                <span class="material-symbols-rounded text-neutral-500">
-                                   info
-                                </span>
-                            </div>
-                        </div>
-                        <div class="absolute bottom-0 m-[-10px] mb-[12px]" style="width: calc(100% + 30px); height: calc(100% + 30px);">
-                            <div class="h-full pr-10 font-bold flex flex-col items-end justify-between" style="color:rgba(131,43,13,0.5)">
-                                <p>&nbsp;</p>
-                                <p>&nbsp;</p>
-                                <p>9</p>
-                                <p>8</p>
-                                <p>7</p>
-                                <p>6</p>
-                                <p>5</p>
-                                <p>4</p>
-                                <p>3</p>
-                                <p>2</p>
-                                <p>1</p>
-                                <p>&nbsp;</p>
-=======
->>>>>>> Stashed changes
                             </div>
                         </div>
                         <div class="stat-desc">21% more than last month</div>
                     </div>
                 </div>
-<<<<<<< Updated upstream
-                <div class="stats shadow w-full pb-4">
-                    <div class="stat overflow-hidden">
-                        <p class="text-neutral-500 font-bold text-lg">
-                            Santé mentale à risque
-                        </p>
-                        <section class="flex flex-col gap-6 mt-6">
-                            <p>
-                                {{ diagnosticMentalHealth.current[0].content }}
-=======
             </section>
             <section class="w-full flex flex-row max-lg:flex-col gap-6">
                 <div class="w-full flex flex-col gap-6">
                     <div class="stats shadow w-full">
                         <div class="stat relative aspect-square overflow-hidden">
-                            <p class="text-neutral-500 font-bold text-lg">
-                                Courbe santé mentale
->>>>>>> Stashed changes
-                            </p>
-                            <div class="absolute bottom-0 m-[-10px]"
+                            <div class="absolute top-0 w-full p-4 z-50 flex justify-between">
+                                <p class="text-neutral-500 font-bold text-lg">
+                                    Courbe santé mentale
+                                </p>
+                                <div class="tooltip tooltip-left cursor-pointer"
+                                     data-tip="Historique des résultats des diagnostics de santé mentale du patient. Si la valeur et 0 le patient se porte très bien, plus elle se rapproche de 100 plus le patient est dans un état critique"
+                                     data-for="mental-health">
+                                <span class="material-symbols-rounded text-neutral-500">
+                                   info
+                                </span>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-0 m-[-10px] mb-[12px]"
                                  style="width: calc(100% + 30px); height: calc(100% + 30px);">
                                 <div class="h-full pr-10 font-bold flex flex-col items-end justify-between"
                                      style="color:rgba(131,43,13,0.5)">
-                                    <p>10</p>
-                                    <p>10</p>
+                                    <p>&nbsp;</p>
+                                    <p>&nbsp;</p>
                                     <p>9</p>
                                     <p>8</p>
                                     <p>7</p>
@@ -210,7 +172,7 @@
                                     <p>3</p>
                                     <p>2</p>
                                     <p>1</p>
-                                    <p>0</p>
+                                    <p>&nbsp;</p>
                                 </div>
                             </div>
                             <div class="absolute bottom-0 m-[-18px]"
@@ -222,7 +184,7 @@
                     <div class="stats shadow w-full pb-4">
                         <div class="stat overflow-hidden">
                             <p class="text-neutral-500 font-bold text-lg">
-                                Diagnostic santé mentale
+                                Santé mentale à risque
                             </p>
                             <section class="flex flex-col gap-6 mt-6">
                                 <p>
@@ -247,36 +209,6 @@
                                                 </div>
                                                 <p>{{ reason['title'] }}</p>
                                             </div>
-<<<<<<< Updated upstream
-                                            <p>{{ reason['title'] }}</p>
-                                        </div>
-                                        <svg class="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </summary>
-                                    <div class="mt-4 px-4 leading-relaxed text-gray-500">
-                                        <div class="mb-6">
-                                            <p class="font-bold text-sm mb-2 text-neutral-700">Diagnostic</p>
-                                            <p>
-                                                {{ reason['conclusion'] }}
-                                            </p>
-                                        </div>
-                                        <div class="mb-6">
-                                            <p class="font-bold text-sm my-2 text-neutral-700">Source</p>
-                                            {% if reason['type'] == 'image' %}
-                                                <img src="{{ reason['path'] }}" alt="{{ reason['title'] }}" class="w-full rounded-xl">
-                                            {% elseif reason['type'] == 'audio' %}
-                                                <audio controls class="w-full rounded-xl">
-                                                    <source src="{{ reason['path'] }}" type="audio/mpeg">
-                                                    Your browser does not support the audio element.
-                                                </audio>
-                                                <p class="mb-6">
-                                                    {{ reason['source'] }}
-                                                </p>
-                                            {% else %}
-                                                <p class="mb-6">
-                                                    {{ reason['source'] }}
-=======
                                             <svg class="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180"
                                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                  stroke="currentColor">
@@ -289,7 +221,6 @@
                                                 <p class="font-bold text-sm mb-2 text-neutral-700">Diagnostic</p>
                                                 <p>
                                                     {{ reason['conclusion'] }}
->>>>>>> Stashed changes
                                                 </p>
                                             </div>
                                             <div class="mb-6">
@@ -302,6 +233,9 @@
                                                         <source src="{{ reason['path'] }}" type="audio/mpeg">
                                                         Your browser does not support the audio element.
                                                     </audio>
+                                                    <p class="mb-6">
+                                                        {{ reason['source'] }}
+                                                    </p>
                                                 {% else %}
                                                     <p class="mb-6">
                                                         {{ reason['source'] }}
@@ -309,73 +243,33 @@
                                                 {% endif %}
                                             </div>
                                         </div>
-<<<<<<< Updated upstream
-                                    </div>
-                                </details>
-                            {% endfor %}
-                        </section>
-                    </div>
-                </div>
-            </div>
-            <div class="w-full flex flex-col gap-6">
-                <div class="stats shadow w-full">
-                <div class="stat relative aspect-square overflow-hidden">
-                    <div class="absolute top-0 w-full p-4 z-50 flex justify-between">
-                        <p class="text-neutral-500 font-bold text-lg">
-                            Courbe des riques
-                        </p>
-                        <div class="tooltip tooltip-left cursor-pointer" data-tip="Historique des résultats des diagnostics de risque du patient. Si la valeur et 0 le patient ne risque rien de prévisible, plus elle se rapproche de 100 plus le patient à plus de chance d'avoir des complications" data-for="risk-health-tooltip">
-                            <span class="material-symbols-rounded text-neutral-500">
-                               info
-                            </span>
-                        </div>
-                    </div>
-                    <div class="absolute bottom-0 m-[-10px] mb-[12px]" style="width: calc(100% + 30px); height: calc(100% + 30px);">
-                        <div class="h-full pr-10 font-bold flex flex-col items-end justify-between" style="color:rgba(131,43,13,0.5)">
-                            <p>&nbsp;</p>
-                            <p>&nbsp;</p>
-                            <p>9</p>
-                            <p>8</p>
-                            <p>7</p>
-                            <p>6</p>
-                            <p>5</p>
-                            <p>4</p>
-                            <p>3</p>
-                            <p>2</p>
-                            <p>1</p>
-                            <p>&nbsp;</p>
-=======
                                     </details>
                                 {% endfor %}
                             </section>
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
-<<<<<<< Updated upstream
-            </div>
-                <div class="stats shadow w-full pb-4">
-                    <div class="stat overflow-hidden">
-                        <p class="text-neutral-500 font-bold text-lg">
-                            Santé physique à risque
-                        </p>
-                        <section class="flex flex-col gap-6 mt-6">
-                            <p>
-                                {{ diagnosticRisk.content }}
-=======
                 <div class="w-full flex flex-col gap-6">
                     <div class="stats shadow w-full">
                         <div class="stat relative aspect-square overflow-hidden">
-                            <p class="text-neutral-500 font-bold text-lg">
-                                Courbe risques
->>>>>>> Stashed changes
-                            </p>
-                            <div class="absolute bottom-0 m-[-10px]"
+                            <div class="absolute top-0 w-full p-4 z-50 flex justify-between">
+                                <p class="text-neutral-500 font-bold text-lg">
+                                    Courbe des riques
+                                </p>
+                                <div class="tooltip tooltip-left cursor-pointer"
+                                     data-tip="Historique des résultats des diagnostics de risque du patient. Si la valeur et 0 le patient ne risque rien de prévisible, plus elle se rapproche de 100 plus le patient à plus de chance d'avoir des complications"
+                                     data-for="risk-health-tooltip">
+                            <span class="material-symbols-rounded text-neutral-500">
+                               info
+                            </span>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-0 m-[-10px] mb-[12px]"
                                  style="width: calc(100% + 30px); height: calc(100% + 30px);">
                                 <div class="h-full pr-10 font-bold flex flex-col items-end justify-between"
                                      style="color:rgba(131,43,13,0.5)">
-                                    <p>10</p>
-                                    <p>10</p>
+                                    <p>&nbsp;</p>
+                                    <p>&nbsp;</p>
                                     <p>9</p>
                                     <p>8</p>
                                     <p>7</p>
@@ -385,7 +279,7 @@
                                     <p>3</p>
                                     <p>2</p>
                                     <p>1</p>
-                                    <p>0</p>
+                                    <p>&nbsp;</p>
                                 </div>
                             </div>
                             <div class="absolute bottom-0 m-[-18px]"
@@ -397,7 +291,7 @@
                     <div class="stats shadow w-full pb-4">
                         <div class="stat overflow-hidden">
                             <p class="text-neutral-500 font-bold text-lg">
-                                Diagnostic risques
+                                Santé physique à risque
                             </p>
                             <section class="flex flex-col gap-6 mt-6">
                                 <p>
@@ -422,36 +316,6 @@
                                                 </div>
                                                 <p>{{ reason['title'] }}</p>
                                             </div>
-<<<<<<< Updated upstream
-                                            <p>{{ reason['title'] }}</p>
-                                        </div>
-                                        <svg class="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </summary>
-                                    <div class="mt-4 px-4 leading-relaxed text-gray-500">
-                                        <div class="mb-6">
-                                            <p class="font-bold text-sm mb-2 text-neutral-700">Diagnostic</p>
-                                            <p>
-                                                {{ reason['conclusion'] }}
-                                            </p>
-                                        </div>
-                                        <div class="mb-6">
-                                            <p class="font-bold text-sm my-2 text-neutral-700">Source</p>
-                                            {% if reason['type'] == 'image' %}
-                                                <img src="{{ reason['path'] }}" alt="{{ reason['title'] }}" class="w-full rounded-xl">
-                                            {% elseif reason['type'] == 'audio' %}
-                                                <audio controls class="w-full rounded-xl">
-                                                    <source src="{{ reason['path'] }}" type="audio/mpeg">
-                                                    Your browser does not support the audio element.
-                                                </audio>
-                                                <p class="mb-6">
-                                                    {{ reason['source'] }}
-                                                </p>
-                                            {% else %}
-                                                <p class="mb-6">
-                                                    {{ reason['source'] }}
-=======
                                             <svg class="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180"
                                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                  stroke="currentColor">
@@ -464,7 +328,6 @@
                                                 <p class="font-bold text-sm mb-2 text-neutral-700">Diagnostic</p>
                                                 <p>
                                                     {{ reason['conclusion'] }}
->>>>>>> Stashed changes
                                                 </p>
                                             </div>
                                             <div class="mb-6">
@@ -477,6 +340,9 @@
                                                         <source src="{{ reason['path'] }}" type="audio/mpeg">
                                                         Your browser does not support the audio element.
                                                     </audio>
+                                                    <p class="mb-6">
+                                                        {{ reason['source'] }}
+                                                    </p>
                                                 {% else %}
                                                     <p class="mb-6">
                                                         {{ reason['source'] }}

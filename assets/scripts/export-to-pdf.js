@@ -16,9 +16,10 @@ async function exportToPdf() {
                 details.setAttribute('open', 'open');
             }
         });
+        let filename = element.querySelector('h1').getAttribute('data-export-filename');
         let opt = {
             margin: 1,
-            filename: 'myfile.pdf',
+            filename: `${filename || 'diagnostic-export'}.pdf`,
             image: {type: 'jpeg', quality: 0.98},
             html2canvas: {scale: 2},
             jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}

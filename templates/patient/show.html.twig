@@ -1,131 +1,141 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Patient {{ patient.ipp }} - {{ patient.lastname }} {{ patient.firstname }}{% endblock %}
-
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('export-to-pdf') }}
+{% endblock %}
 {% block body %}
-    <div class="flex justify-between flex-row items-center mb-12 max-lg:flex-col max-lg:mb-6">
-        <h1 class="text-2xl font-bold max-lg:w-full">{{ patient.ipp }} - {{ patient.lastname }} {{ patient.firstname }}</h1>
-        <div class="flex gap-2 items-end">
-            <a href="{{ path('app_patient_edit', {'id': patient.id}) }}">
-                <button class="w-full btn bg-primary-cm-200 rounded-xl text-primary-cm p-4 h-fit transition-colors duration-300 hover:bg-primary-cm hover:text-white">
+    <section id="patient-page">
+        <div class="flex justify-between flex-row items-center mb-12 max-lg:flex-col max-lg:mb-6">
+            <h1 class="text-2xl font-bold max-lg:w-full print:block">{{ patient.ipp }}
+                - {{ patient.lastname }} {{ patient.firstname }}</h1>
+            <div class="flex gap-2 items-end print:hidden">
+                {#            <a href="{{ path('app_patient_edit', {'id': patient.id}) }}"> #}
+                <span class="">
+                <button id="export-patient-diag"
+                        class="w-full btn bg-primary-cm-200 rounded-xl text-primary-cm p-4 h-fit transition-colors duration-300 hover:bg-primary-cm hover:text-white">
                     <span class="material-symbols-rounded font-bold">
                         download
                     </span>
                 </button>
-            </a>
-            <a href="{{ path('app_patient_edit', {'id': patient.id}) }}">
-                <button class="w-full btn bg-primary-cm-200 rounded-xl text-primary-cm p-4 h-fit transition-colors duration-300 hover:bg-primary-cm hover:text-white">
+                </span>
+                {#            </a> #}
+                <a href="{{ path('app_patient_edit', {'id': patient.id}) }}" class="">
+                    <button class="w-full btn bg-primary-cm-200 rounded-xl text-primary-cm p-4 h-fit transition-colors duration-300 hover:bg-primary-cm hover:text-white">
                     <span class="material-symbols-rounded font-bold">
                         restart_alt
                     </span>
-                </button>
-            </a>
-            <div class="flex justify-end w-fit max-lg:w-full">
-                <div class="flex items-center gap-1 rounded-xl shadow bg-primary-cm-200 p-2 max-lg:w-full max-lg:mt-4 max-lg:justify-between">
-                    {% if diagnosticMentalHealth.last %}
-                        <a class="text-primary-cm p-2 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
-                           href="{{ path('app_patient_show_details', {'id': patient.id, 'mentalHealthDiagnosticId': diagnosticMentalHealth.last[0].id}) }}">
+                    </button>
+                </a>
+                <div class="flex justify-end w-fit max-lg:w-full">
+                    <div class="flex items-center gap-1 rounded-xl shadow bg-primary-cm-200 p-2 max-lg:w-full max-lg:mt-4 max-lg:justify-between">
+                        {% if diagnosticMentalHealth.last %}
+                            <a class="text-primary-cm p-2 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
+                               href="{{ path('app_patient_show_details', {'id': patient.id, 'mentalHealthDiagnosticId': diagnosticMentalHealth.last[0].id}) }}">
                         <span class="material-symbols-rounded font-bold">
                             arrow_left
                         </span>
-                        </a>
-                    {% endif %}
-                    <p class="font-bold text-base p-1.5 px-2 rounded-xl bg-primary-cm-200 text-primary-cm">{{ diagnosticMentalHealth.current[0].createdAt|date('d/m/Y') }}</p>
-                    {% if diagnosticMentalHealth.next %}
-                        <a class="text-primary-cm p-2 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
-                           href="{{ path('app_patient_show_details', {'id': patient.id, 'mentalHealthDiagnosticId': diagnosticMentalHealth.next[0].id}) }}">
+                            </a>
+                        {% endif %}
+                        <p class="font-bold text-base p-1.5 px-2 rounded-xl bg-primary-cm-200 text-primary-cm">{{ diagnosticMentalHealth.current[0].createdAt|date('d/m/Y') }}</p>
+                        {% if diagnosticMentalHealth.next %}
+                            <a class="text-primary-cm p-2 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
+                               href="{{ path('app_patient_show_details', {'id': patient.id, 'mentalHealthDiagnosticId': diagnosticMentalHealth.next[0].id}) }}">
                         <span class="material-symbols-rounded font-bold">
                             arrow_right
                         </span>
-                        </a>
-                    {% endif %}
+                            </a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="flex flex-col gap-6">
-        <section class="flex gap-6 flex-row max-lg:flex-col">
-            <div class="stats shadow w-1/3 max-lg:w-full">
-                <div class="stat overflow-hidden bg-secondary-cm text-white">
-                    <div class="flex gap-2">
-                        <div class="bg-accent-cm-500 rounded-xl p-2 transition-colors duration-300 hover:bg-accent-cm-700 cursor-pointer">
-                            <div class="bg-accent-cm rounded-full h-12 w-12 p-2 items-center flex justify-center transition-colors duration-300 text-base-200 hover:bg-secondary-cm hover:text-accent-cm">
-                                <span class="material-symbols-rounded transition-colors duration-300">
+        <div class="flex flex-col gap-6">
+            <section class="flex gap-6 flex-row max-lg:flex-col">
+                <div class="stats shadow w-1/3 max-lg:w-full">
+                    <div class="stat overflow-hidden bg-secondary-cm text-white">
+                        <div class="flex gap-2">
+                            <div class="bg-accent-cm-500 rounded-xl p-2 transition-colors duration-300 hover:bg-accent-cm-700 cursor-pointer">
+                                <div class="bg-accent-cm rounded-full h-12 w-12 p-2 items-center flex justify-center transition-colors duration-300 text-base-200 hover:bg-secondary-cm hover:text-accent-cm">
+                                <span class="material-symbols-rounded transition-colors duration-300 print:block">
                                     phone
                                 </span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="bg-accent-cm-500 rounded-xl p-2 transition-colors duration-300 hover:bg-accent-cm-700 cursor-pointer">
-                            <div class="bg-accent-cm rounded-full h-12 w-12 p-2 items-center flex justify-center transition-colors duration-300 text-base-200 hover:bg-secondary-cm hover:text-accent-cm">
+                            <div class="bg-accent-cm-500 rounded-xl p-2 transition-colors duration-300 hover:bg-accent-cm-700 cursor-pointer">
+                                <div class="bg-accent-cm rounded-full h-12 w-12 p-2 items-center flex justify-center transition-colors duration-300 text-base-200 hover:bg-secondary-cm hover:text-accent-cm">
                                 <span class="material-symbols-rounded transition-colors duration-300">
                                     email
                                 </span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col flex-grow gap-0.5 bg-accent-cm-500 rounded-xl p-2 transition-colors duration-300 hover:bg-accent-cm-700 cursor-pointer">
+                                <p>
+                                    {{ patient.email }}
+                                </p>
+                                <p>
+                                    {{ patient.phone }}
+                                </p>
                             </div>
                         </div>
-                        <div class="flex flex-col flex-grow gap-0.5 bg-accent-cm-500 rounded-xl p-2 transition-colors duration-300 hover:bg-accent-cm-700 cursor-pointer">
-                            <p>
-                                {{ patient.email }}
-                            </p>
-                            <p>
-                                {{ patient.phone }}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="flex gap-2 mt-3">
-                        {% if patient.iaEnabled %}
-                            <div class="badge-sm font-bold text-white rounded-full items-center flex gap-1" style="background: rgb(0,0,0); background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(62,62,62,1) 51%, rgba(138,138,138,1) 100%);">
-                                <div>IA</div>
-                                <div>
+                        <div class="flex gap-2 mt-3">
+                            {% if patient.iaEnabled %}
+                                <div class="badge-sm font-bold text-white rounded-full items-center flex gap-1"
+                                     style="background: rgb(0,0,0); background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(62,62,62,1) 51%, rgba(138,138,138,1) 100%);">
+                                    <div>IA</div>
+                                    <div>
                                     <span class="material-symbols-rounded text-sm font-extrabold">
                                         check
                                     </span>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endif %}
-                        <span class="badge badge-ghost badge-sm p-1.5 font-semibold border-accent-cm-100 text-accent-cm bg-accent-cm-200">
-                            {% if patient.gender == 'H'%}
+                            {% endif %}
+                            <span class="badge badge-ghost badge-sm p-1.5 font-semibold border-accent-cm-100 text-accent-cm bg-accent-cm-200">
+                            {% if patient.gender == 'H' %}
                                 Homme
-                            {% elseif patient.gender == 'F'%}
+                            {% elseif patient.gender == 'F' %}
                                 Femme
                             {% else %}
                                 Autre
                             {% endif %}
                         </span>
-                        <span class="badge badge-ghost badge-sm p-1.5 font-semibold border-accent-cm-100 text-accent-cm bg-accent-cm-200">
+                            <span class="badge badge-ghost badge-sm p-1.5 font-semibold border-accent-cm-100 text-accent-cm bg-accent-cm-200">
                             {{ patient.birthDate ? patient.birthDate|date('d/m/Y') : '' }}
                         </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="stats shadow w-1/3 max-lg:w-full">
-                <div class="stat overflow-hidden">
-                    <div class="stat-title">Santé mentale</div>
-                    <div class="stat-value flex gap-6 items-center">
-                        <p>
-                            {% set lastDiagnosticMentalHealthScore = diagnosticMentalHealth.current[0].value / 10 * 100 %}
-                            {{ lastDiagnosticMentalHealthScore }}%
-                        </p>
-                        <div>
+                <div class="stats shadow w-1/3 max-lg:w-full">
+                    <div class="stat overflow-hidden">
+                        <div class="stat-title">Santé mentale</div>
+                        <div class="stat-value flex gap-6 items-center">
+                            <p>
+                                {% set lastDiagnosticMentalHealthScore = diagnosticMentalHealth.current[0].value / 10 * 100 %}
+                                {{ lastDiagnosticMentalHealthScore }}%
+                            </p>
+                            <div>
                             <span class="material-symbols-rounded font-bold">
                                 trending_up
                             </span>
+                            </div>
                         </div>
+                        <div class="stat-desc">21% more than last month</div>
                     </div>
-                    <div class="stat-desc">21% more than last month</div>
                 </div>
-            </div>
-            <div class="stats shadow w-1/3 max-lg:w-full">
-                <div class="stat overflow-hidden">
-                    <div class="stat-title">Risques</div>
-                    <div class="stat-value flex gap-6 items-center">
-                        <p>
-                            {% set lastDiagnosticRisksScore = lastDiagnosticRisk[0].value / 10 * 100 %}
-                            {{ lastDiagnosticRisksScore }}%
-                        </p>
-                        <div>
+                <div class="stats shadow w-1/3 max-lg:w-full">
+                    <div class="stat overflow-hidden">
+                        <div class="stat-title">Risques</div>
+                        <div class="stat-value flex gap-6 items-center">
+                            <p>
+                                {% set lastDiagnosticRisksScore = lastDiagnosticRisk[0].value / 10 * 100 %}
+                                {{ lastDiagnosticRisksScore }}%
+                            </p>
+                            <div>
                             <span class="material-symbols-rounded font-bold">
                                 trending_down
                             </span>
+<<<<<<< Updated upstream
                         </div>
                     </div>
                     <div class="stat-desc">21% more than last month</div>
@@ -160,13 +170,14 @@
                                 <p>2</p>
                                 <p>1</p>
                                 <p>&nbsp;</p>
+=======
+>>>>>>> Stashed changes
                             </div>
                         </div>
-                        <div class="absolute bottom-0 m-[-18px]" style="width: calc(100% + 38px); height: calc(100% + 38px);">
-                            <canvas id="mental-health"></canvas>
-                        </div>
+                        <div class="stat-desc">21% more than last month</div>
                     </div>
                 </div>
+<<<<<<< Updated upstream
                 <div class="stats shadow w-full pb-4">
                     <div class="stat overflow-hidden">
                         <p class="text-neutral-500 font-bold text-lg">
@@ -175,12 +186,56 @@
                         <section class="flex flex-col gap-6 mt-6">
                             <p>
                                 {{ diagnosticMentalHealth.current[0].content }}
+=======
+            </section>
+            <section class="w-full flex flex-row max-lg:flex-col gap-6">
+                <div class="w-full flex flex-col gap-6">
+                    <div class="stats shadow w-full">
+                        <div class="stat relative aspect-square overflow-hidden">
+                            <p class="text-neutral-500 font-bold text-lg">
+                                Courbe santé mentale
+>>>>>>> Stashed changes
                             </p>
-                            {% for reason in diagnosticMentalHealthReasons %}
-                                <details class="bg-base-200 w-full rounded-xl group [&_summary::-webkit-details-marker]:hidden">
-                                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900">
-                                        <div class="font-bold text-neutral-600 flex gap-4 items-start">
-                                            <div>
+                            <div class="absolute bottom-0 m-[-10px]"
+                                 style="width: calc(100% + 30px); height: calc(100% + 30px);">
+                                <div class="h-full pr-10 font-bold flex flex-col items-end justify-between"
+                                     style="color:rgba(131,43,13,0.5)">
+                                    <p>10</p>
+                                    <p>10</p>
+                                    <p>9</p>
+                                    <p>8</p>
+                                    <p>7</p>
+                                    <p>6</p>
+                                    <p>5</p>
+                                    <p>4</p>
+                                    <p>3</p>
+                                    <p>2</p>
+                                    <p>1</p>
+                                    <p>0</p>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-0 m-[-18px]"
+                                 style="width: calc(100% + 38px); height: calc(100% + 38px);">
+                                <canvas id="mental-health"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats shadow w-full pb-4">
+                        <div class="stat overflow-hidden">
+                            <p class="text-neutral-500 font-bold text-lg">
+                                Diagnostic santé mentale
+                            </p>
+                            <section class="flex flex-col gap-6 mt-6">
+                                <p>
+                                    {{ diagnosticMentalHealth.current[0].content }}
+                                </p>
+                                {% for reason in diagnosticMentalHealthReasons %}
+                                    <details
+                                            class="bg-base-200 w-full rounded-xl group [&_summary::-webkit-details-marker]:hidden">
+                                        <summary
+                                                class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900">
+                                            <div class="font-bold text-neutral-600 flex gap-4 items-start">
+                                                <div>
                                                 <span class=" material-symbols-rounded">
                                                     {% if reason['severity'] == 1 %}
                                                         flag
@@ -190,7 +245,10 @@
                                                         dangerous
                                                     {% endif %}
                                                 </span>
+                                                </div>
+                                                <p>{{ reason['title'] }}</p>
                                             </div>
+<<<<<<< Updated upstream
                                             <p>{{ reason['title'] }}</p>
                                         </div>
                                         <svg class="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -219,9 +277,40 @@
                                             {% else %}
                                                 <p class="mb-6">
                                                     {{ reason['source'] }}
+=======
+                                            <svg class="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180"
+                                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M19 9l-7 7-7-7"/>
+                                            </svg>
+                                        </summary>
+                                        <div class="mt-4 px-4 leading-relaxed text-gray-500">
+                                            <div class="mb-6">
+                                                <p class="font-bold text-sm mb-2 text-neutral-700">Diagnostic</p>
+                                                <p>
+                                                    {{ reason['conclusion'] }}
+>>>>>>> Stashed changes
                                                 </p>
-                                            {% endif %}
+                                            </div>
+                                            <div class="mb-6">
+                                                <p class="font-bold text-sm my-2 text-neutral-700">Source</p>
+                                                {% if reason['type'] == 'image' %}
+                                                    <img src="{{ reason['path'] }}" alt="{{ reason['title'] }}"
+                                                         class="w-full rounded-xl">
+                                                {% elseif reason['type'] == 'audio' %}
+                                                    <audio controls class="w-full rounded-xl">
+                                                        <source src="{{ reason['path'] }}" type="audio/mpeg">
+                                                        Your browser does not support the audio element.
+                                                    </audio>
+                                                {% else %}
+                                                    <p class="mb-6">
+                                                        {{ reason['source'] }}
+                                                    </p>
+                                                {% endif %}
+                                            </div>
                                         </div>
+<<<<<<< Updated upstream
                                     </div>
                                 </details>
                             {% endfor %}
@@ -256,12 +345,15 @@
                             <p>2</p>
                             <p>1</p>
                             <p>&nbsp;</p>
+=======
+                                    </details>
+                                {% endfor %}
+                            </section>
+>>>>>>> Stashed changes
                         </div>
                     </div>
-                    <div class="absolute bottom-0 m-[-18px]" style="width: calc(100% + 38px); height: calc(100% + 38px);">
-                        <canvas id="risk"></canvas>
-                    </div>
                 </div>
+<<<<<<< Updated upstream
             </div>
                 <div class="stats shadow w-full pb-4">
                     <div class="stat overflow-hidden">
@@ -271,12 +363,54 @@
                         <section class="flex flex-col gap-6 mt-6">
                             <p>
                                 {{ diagnosticRisk.content }}
+=======
+                <div class="w-full flex flex-col gap-6">
+                    <div class="stats shadow w-full">
+                        <div class="stat relative aspect-square overflow-hidden">
+                            <p class="text-neutral-500 font-bold text-lg">
+                                Courbe risques
+>>>>>>> Stashed changes
                             </p>
-                            {% for reason in diagnosticRiskReasons %}
-                                <details class="bg-base-200 w-full rounded-xl group [&_summary::-webkit-details-marker]:hidden">
-                                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900">
-                                        <div class="font-bold text-neutral-600 flex gap-4 items-start">
-                                            <div>
+                            <div class="absolute bottom-0 m-[-10px]"
+                                 style="width: calc(100% + 30px); height: calc(100% + 30px);">
+                                <div class="h-full pr-10 font-bold flex flex-col items-end justify-between"
+                                     style="color:rgba(131,43,13,0.5)">
+                                    <p>10</p>
+                                    <p>10</p>
+                                    <p>9</p>
+                                    <p>8</p>
+                                    <p>7</p>
+                                    <p>6</p>
+                                    <p>5</p>
+                                    <p>4</p>
+                                    <p>3</p>
+                                    <p>2</p>
+                                    <p>1</p>
+                                    <p>0</p>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-0 m-[-18px]"
+                                 style="width: calc(100% + 38px); height: calc(100% + 38px);">
+                                <canvas id="risk"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats shadow w-full pb-4">
+                        <div class="stat overflow-hidden">
+                            <p class="text-neutral-500 font-bold text-lg">
+                                Diagnostic risques
+                            </p>
+                            <section class="flex flex-col gap-6 mt-6">
+                                <p>
+                                    {{ diagnosticRisk.content }}
+                                </p>
+                                {% for reason in diagnosticRiskReasons %}
+                                    <details
+                                            class="bg-base-200 w-full rounded-xl group [&_summary::-webkit-details-marker]:hidden">
+                                        <summary
+                                                class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900">
+                                            <div class="font-bold text-neutral-600 flex gap-4 items-start">
+                                                <div>
                                                 <span class=" material-symbols-rounded">
                                                     {% if reason['severity'] == 1 %}
                                                         flag
@@ -286,7 +420,10 @@
                                                         dangerous
                                                     {% endif %}
                                                 </span>
+                                                </div>
+                                                <p>{{ reason['title'] }}</p>
                                             </div>
+<<<<<<< Updated upstream
                                             <p>{{ reason['title'] }}</p>
                                         </div>
                                         <svg class="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -315,38 +452,68 @@
                                             {% else %}
                                                 <p class="mb-6">
                                                     {{ reason['source'] }}
+=======
+                                            <svg class="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180"
+                                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M19 9l-7 7-7-7"/>
+                                            </svg>
+                                        </summary>
+                                        <div class="mt-4 px-4 leading-relaxed text-gray-500">
+                                            <div class="mb-6">
+                                                <p class="font-bold text-sm mb-2 text-neutral-700">Diagnostic</p>
+                                                <p>
+                                                    {{ reason['conclusion'] }}
+>>>>>>> Stashed changes
                                                 </p>
-                                            {% endif %}
+                                            </div>
+                                            <div class="mb-6">
+                                                <p class="font-bold text-sm my-2 text-neutral-700">Source</p>
+                                                {% if reason['type'] == 'image' %}
+                                                    <img src="{{ reason['path'] }}" alt="{{ reason['title'] }}"
+                                                         class="w-full rounded-xl">
+                                                {% elseif reason['type'] == 'audio' %}
+                                                    <audio controls class="w-full rounded-xl">
+                                                        <source src="{{ reason['path'] }}" type="audio/mpeg">
+                                                        Your browser does not support the audio element.
+                                                    </audio>
+                                                {% else %}
+                                                    <p class="mb-6">
+                                                        {{ reason['source'] }}
+                                                    </p>
+                                                {% endif %}
+                                            </div>
                                         </div>
-                                    </div>
-                                </details>
-                            {% endfor %}
-                        </section>
+                                    </details>
+                                {% endfor %}
+                            </section>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </div>
+            </section>
+        </div>
+    </section>
     <script>
         let chartsLabels = [{% for date in patientMentalHealDiagnosticsGraph['dates'] %}"{{ date|date('d/m') }}", {% endfor %}];
-        let patientMentalHealDiagnosticsValues = [{{patientMentalHealDiagnosticsGraph['values']|join(', ')}}];
-        let patientRiskDiagnosticsValues = [{{patientRisksDiagnoticsGraph['values']|join(', ')}}];
+        let patientMentalHealDiagnosticsValues = [{{ patientMentalHealDiagnosticsGraph['values']|join(', ') }}];
+        let patientRiskDiagnosticsValues = [{{ patientRisksDiagnoticsGraph['values']|join(', ') }}];
         let currentMentalHealthDiagnostic = [
             {% for  date in patientMentalHealDiagnosticsGraph['dates'] %}
-                {% if date == diagnosticMentalHealth.current[0].createdAt %}
-                    {{ diagnosticMentalHealth.current[0].value }},
-                {% else %}
-                    ,
-                {% endif %}
+            {% if date == diagnosticMentalHealth.current[0].createdAt %}
+            {{ diagnosticMentalHealth.current[0].value }},
+            {% else %}
+            ,
+            {% endif %}
             {% endfor %}
         ];
         let currentRiskDiagnostic = [
             {% for  date in patientRisksDiagnoticsGraph['dates'] %}
-                {% if date == diagnosticRisk.createdAt %}
-                    {{ diagnosticRisk.value }},
-                {% else %}
-                    ,
-                {% endif %}
+            {% if date == diagnosticRisk.createdAt %}
+            {{ diagnosticRisk.value }},
+            {% else %}
+            ,
+            {% endif %}
             {% endfor %}
         ];
     </script>

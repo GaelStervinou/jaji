@@ -14,7 +14,7 @@
         {% endblock %}
     </head>
     <body class="flex">
-        <header class="h-[100dvh] w-28 flex flex-col justify-between items-center max-sm:hidden fixed">
+        <header class="h-[100dvh] w-28 flex flex-col justify-between items-center max-sm:hidden fixed print:hidden">
             <nav class="flex flex-col gap-12 items-center p-3">
                 <div class="flex items-center flex-shrink-0 text-white p-6">
                     <a href="{{ path('app_patient_index') }}">
@@ -50,7 +50,7 @@
                 {% block body %}{% endblock %}
             </div>
         </main>
-        <div class="btm-nav md:hidden visible">
+        <div class="btm-nav md:hidden visible print:hidden">
             <a href="{{ path('app_patient_index') }}" class="">
                 <button class="text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">
                     <span class=" material-symbols-rounded p-4 mb-8 text-neutral-600 cursor-pointer hover:text-primary-cm transition-colors duration-300">

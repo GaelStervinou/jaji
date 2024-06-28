@@ -31,6 +31,8 @@
         "tailwind-build": "tailwindcss -i ./assets/styles/input.css -o ./assets/styles/output.css"
     },
     "dependencies": {
-        "chart.js": "^4.4.3"
+        "chart.js": "^4.4.3",
+        "html2canvas-pro": "^1.5.0",
+        "html2pdf.js": "github:ThibautSembeni/html2pdf.js"
     }
 }

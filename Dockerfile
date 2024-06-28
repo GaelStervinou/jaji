@@ -93,3 +93,13 @@ RUN set -eux; \
 	composer dump-env prod; \
 	composer run-script --no-dev post-install-cmd; \
 	chmod +x bin/console; sync;
+
+RUN apk add --no-cache \
+    weasyprint \
+    # used to find and configure fonts
+    fontconfig \
+    # used to render TrueType fonts
+    freetype \
+    # used as a default font
+    ttf-dejavu \
+    ;

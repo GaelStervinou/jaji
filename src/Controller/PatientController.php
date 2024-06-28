@@ -12,11 +12,17 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/patient')]
 class PatientController extends AbstractController
 {
+
+    public function __construct()
+    {
+
+    }
     #[Route('/', name: 'app_patient_index', methods: ['GET'])]
     public function index(Request $request, PatientRepository $patientRepository, DiagnosticRisksRepository $diagnosticRisksRepository): Response
     {
@@ -110,6 +116,54 @@ class PatientController extends AbstractController
         ]);
     }
 
+<<<<<<< Updated upstream
+=======
+    #[Route('/{id}/{mentalHealthDiagnosticId}/export', name: 'app_patient_show_details_export', methods: ['GET'])]
+    public function exportShowPatient(Patient $patient, DiagnosticMentalHealth $mentalHealthDiagnosticId, DiagnosticMentalHealthRepository $diagnosticMentalHealthRepository, DiagnosticRisksRepository $diagnosticRisksRepository): Response
+    {
+        $diagnosticMentalHealth = $diagnosticMentalHealthRepository->findListDiagnosticMentalHealth(['id' => $mentalHealthDiagnosticId->getId()]);
+        $diagnosticRisk = $diagnosticRisksRepository->findOneBy(['patient' => $patient->getId(), 'createdAt' => $mentalHealthDiagnosticId->getCreatedAt()]);
+        $lastDiagnosticRisk = $diagnosticRisksRepository->findLastDiagnosticRiskByCurrentDiagnostic($mentalHealthDiagnosticId);
+
+        $patientMentalHealDiagnosticsGraph = $diagnosticMentalHealthRepository->findDatesAndValuesByPatient($patient);
+        $patientRisksDiagnoticsGraph = $diagnosticRisksRepository->findDatesAndValuesByPatient($patient);
+
+        $diagnosticMentalHealthReasons = json_decode($diagnosticMentalHealth['current'][0]->getReasons(), true);
+        $diagnosticRiskReasons = json_decode($diagnosticRisk->getReasons(), true);
+
+        $html = $this->render('patient/show.html.twig', [
+            'patient' => $patient,
+            'diagnosticMentalHealth' => $diagnosticMentalHealth,
+            'diagnosticMentalHealthReasons' => $diagnosticMentalHealthReasons,
+            'diagnosticRiskReasons' => $diagnosticRiskReasons,
+            'diagnosticRisk' => $diagnosticRisk,
+            'lastDiagnosticRisk' => $lastDiagnosticRisk,
+            'patientMentalHealDiagnosticsGraph' => $patientMentalHealDiagnosticsGraph,
+            'patientRisksDiagnoticsGraph' => $patientRisksDiagnoticsGraph,
+        ]);
+
+        return $html;
+    }
+
+    #[Route('/{id}/edit', name: 'app_patient_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(PatientType::class, $patient);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_patient_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('patient/edit.html.twig', [
+            'patient' => $patient,
+            'form' => $form,
+        ]);
+    }
+
+>>>>>>> Stashed changes
     #[Route('/{id}', name: 'app_patient_delete', methods: ['POST'])]
     public function delete(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
     {

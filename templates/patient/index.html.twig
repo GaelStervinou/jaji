@@ -109,12 +109,15 @@
                     <td>
                         <div class="flex justify-end">
                             <div class="flex items-center gap-2 rounded-xl shadow bg-primary-cm-200 p-2">
-                                <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
-                                   href="{{ path('app_patient_show_details', {'id': patient.id, 'mentalHealthDiagnosticId': patient.lastDiagnoticMentalHealth.id}) }}">
+                                {% if patient.iaEnabled %}
+                                    <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
+                                       href="{{ path('app_patient_show_details', {'id': patient.id, 'mentalHealthDiagnosticId': patient.lastDiagnoticMentalHealth.id}) }}">
                                     <span class="material-symbols-rounded font-bold">
                                         visibility
                                     </span>
-                                </a>
+                                    </a>
+                                {% endif %}
+
                                 <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
                                    href="{{ path('app_patient_edit', {'id': patient.id}) }}">
                                     <span class="material-symbols-rounded font-bold">

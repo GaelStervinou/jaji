@@ -110,34 +110,64 @@
                     <div class="stat overflow-hidden">
                         <div class="stat-title">Santé mentale</div>
                         <div class="stat-value flex gap-6 items-center">
+                            {% set currentDiagnosticMentalHealthScore = diagnosticMentalHealth.current[0].value / 10 * 100 %}
+                            {% set mentalHealthScoreGap = currentDiagnosticMentalHealthScore - (diagnosticMentalHealth.last[0].value / 10 * 100) %}
                             <p>
-                                {% set lastDiagnosticMentalHealthScore = diagnosticMentalHealth.current[0].value / 10 * 100 %}
-                                {{ lastDiagnosticMentalHealthScore }}%
+                                {{ currentDiagnosticMentalHealthScore }}%
                             </p>
                             <div>
                             <span class="material-symbols-rounded font-bold">
-                                trending_up
+                                {% if mentalHealthScoreGap < 0 %}
+                                    trending_down
+                                {% elseif mentalHealthScoreGap > 0 %}
+                                    trending_up
+                                {% else %}
+                                    trending_flat
+                                {% endif %}
                             </span>
                             </div>
                         </div>
-                        <div class="stat-desc">21% more than last month</div>
+                        <div class="stat-desc">
+                            {% if mentalHealthScoreGap < 0 %}
+                                {{ mentalHealthScoreGap|abs }}% de moins que le dernier diagnostique
+                            {% elseif mentalHealthScoreGap > 0 %}
+                                {{ mentalHealthScoreGap }}% de plus que le dernier diagnostique
+                            {% else %}
+                                Aucune évolution
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div class="stats shadow w-1/3 max-lg:w-full">
                     <div class="stat overflow-hidden">
                         <div class="stat-title">Risques</div>
                         <div class="stat-value flex gap-6 items-center">
+                            {% set currentDiagnosticRisksScore = diagnosticRisk.value / 10 * 100 %}
+                            {% set riskScoreGap = currentDiagnosticRisksScore - (lastDiagnosticRisk[0].value / 10 * 100) %}
                             <p>
-                                {% set lastDiagnosticRisksScore = lastDiagnosticRisk[0].value / 10 * 100 %}
-                                {{ lastDiagnosticRisksScore }}%
+                                {{ currentDiagnosticRisksScore }}%
                             </p>
                             <div>
                             <span class="material-symbols-rounded font-bold">
-                                trending_down
+                                {% if riskScoreGap < 0 %}
+                                    trending_down
+                                {% elseif riskScoreGap > 0 %}
+                                    trending_up
+                                {% else %}
+                                    trending_flat
+                                {% endif %}
                             </span>
                             </div>
                         </div>
-                        <div class="stat-desc">21% more than last month</div>
+                        <div class="stat-desc">
+                            {% if riskScoreGap < 0 %}
+                                {{ riskScoreGap|abs }}% de moins que le dernier diagnostique
+                            {% elseif riskScoreGap > 0 %}
+                                {{ riskScoreGap }}% de plus que le dernier diagnostique
+                            {% else %}
+                                Aucune évolution
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </section>

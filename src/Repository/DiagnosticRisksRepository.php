@@ -18,12 +18,14 @@ class DiagnosticRisksRepository extends ServiceEntityRepository
         parent::__construct($registry, DiagnosticRisks::class);
     }
 
-    public function findLastDiagnosticRiskByCurrentDiagnostic(DiagnosticMentalHealth $diagnostic): array
+    public function findLastDiagnosticRiskByCurrentDiagnostic(DiagnosticMentalHealth $diagnostic, Patient $patient): array
     {
         return $this->createQueryBuilder('dr')
             ->select('dr')
-            ->where('dr.id = :diagnoticId')
-            ->setParameter('diagnoticId', $diagnostic->getId())
+            ->andWhere('dr.createdAt < :diagnosticDate')
+            ->andWhere('dr.patient = :patient')
+            ->setParameter('diagnosticDate', $diagnostic->getCreatedAt())
+            ->setParameter('patient', $patient->getId())
             ->orderBy('dr.createdAt', 'DESC')
             ->setMaxResults(1)
             ->getQuery()

@@ -18,11 +18,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/patient')]
 class PatientController extends AbstractController
 {
-
-    public function __construct()
-    {
-
-    }
     #[Route('/', name: 'app_patient_index', methods: ['GET'])]
     public function index(Request $request, PatientRepository $patientRepository, DiagnosticRisksRepository $diagnosticRisksRepository): Response
     {
@@ -96,7 +91,7 @@ class PatientController extends AbstractController
     {
         $diagnosticMentalHealth = $diagnosticMentalHealthRepository->findListDiagnosticMentalHealth(['id' => $mentalHealthDiagnosticId->getId()]);
         $diagnosticRisk = $diagnosticRisksRepository->findOneBy(['patient' => $patient->getId(), 'createdAt' => $mentalHealthDiagnosticId->getCreatedAt()]);
-        $lastDiagnosticRisk = $diagnosticRisksRepository->findLastDiagnosticRiskByCurrentDiagnostic($mentalHealthDiagnosticId);
+        $lastDiagnosticRisk = $diagnosticRisksRepository->findLastDiagnosticRiskByCurrentDiagnostic($mentalHealthDiagnosticId, $patient);
 
         $patientMentalHealDiagnosticsGraph = $diagnosticMentalHealthRepository->findDatesAndValuesByPatient($patient);
         $patientRisksDiagnoticsGraph = $diagnosticRisksRepository->findDatesAndValuesByPatient($patient);
@@ -114,33 +109,6 @@ class PatientController extends AbstractController
             'patientMentalHealDiagnosticsGraph' => $patientMentalHealDiagnosticsGraph,
             'patientRisksDiagnoticsGraph' => $patientRisksDiagnoticsGraph,
         ]);
-    }
-
-    #[Route('/{id}/{mentalHealthDiagnosticId}/export', name: 'app_patient_show_details_export', methods: ['GET'])]
-    public function exportShowPatient(Patient $patient, DiagnosticMentalHealth $mentalHealthDiagnosticId, DiagnosticMentalHealthRepository $diagnosticMentalHealthRepository, DiagnosticRisksRepository $diagnosticRisksRepository): Response
-    {
-        $diagnosticMentalHealth = $diagnosticMentalHealthRepository->findListDiagnosticMentalHealth(['id' => $mentalHealthDiagnosticId->getId()]);
-        $diagnosticRisk = $diagnosticRisksRepository->findOneBy(['patient' => $patient->getId(), 'createdAt' => $mentalHealthDiagnosticId->getCreatedAt()]);
-        $lastDiagnosticRisk = $diagnosticRisksRepository->findLastDiagnosticRiskByCurrentDiagnostic($mentalHealthDiagnosticId);
-
-        $patientMentalHealDiagnosticsGraph = $diagnosticMentalHealthRepository->findDatesAndValuesByPatient($patient);
-        $patientRisksDiagnoticsGraph = $diagnosticRisksRepository->findDatesAndValuesByPatient($patient);
-
-        $diagnosticMentalHealthReasons = json_decode($diagnosticMentalHealth['current'][0]->getReasons(), true);
-        $diagnosticRiskReasons = json_decode($diagnosticRisk->getReasons(), true);
-
-        $html = $this->render('patient/show.html.twig', [
-            'patient' => $patient,
-            'diagnosticMentalHealth' => $diagnosticMentalHealth,
-            'diagnosticMentalHealthReasons' => $diagnosticMentalHealthReasons,
-            'diagnosticRiskReasons' => $diagnosticRiskReasons,
-            'diagnosticRisk' => $diagnosticRisk,
-            'lastDiagnosticRisk' => $lastDiagnosticRisk,
-            'patientMentalHealDiagnosticsGraph' => $patientMentalHealDiagnosticsGraph,
-            'patientRisksDiagnoticsGraph' => $patientRisksDiagnoticsGraph,
-        ]);
-
-        return $html;
     }
 
     #[Route('/{id}', name: 'app_patient_delete', methods: ['POST'])]

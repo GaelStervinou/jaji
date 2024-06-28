@@ -32,7 +32,7 @@
                             {% set lastDiagnosticMentalHealthSortByArrow = 'arrow_drop_down' %}
                         {% endif %}
                         <a href="{{ path('app_patient_index', { lastDiagnosticMentalHealthSortBy: lastDiagnosticMentalHealthSortByValue }) }}" class="items-center flex gap-1">
-                            Santé mentale à risque
+                            Risque de santé mentale
                             <span class="material-symbols-rounded font-bold">
                                 {{ lastDiagnosticMentalHealthSortByArrow }}
                             </span>
@@ -46,7 +46,7 @@
                             {% set lastDiagnosticRisksSortByArrow = 'arrow_drop_down' %}
                         {% endif %}
                         <a href="{{ path('app_patient_index', { lastDiagnosticRisksSortBy: lastDiagnosticRisksSortByValue }) }}" class="items-center flex gap-1">
-                            Santé physique à risque
+                            Risque de santé physique
                             <span class="material-symbols-rounded font-bold">
                                 {{ lastDiagnosticRisksSortByArrow }}
                             </span>
@@ -91,7 +91,7 @@
                         </div>
                     </td>
                     <td>
-                        {% if patient.lastDiagnosticMentalHealthScore and patient.iaEnabled %}
+                        {% if (patient.lastDiagnosticMentalHealthScore == 0 or patient.lastDiagnosticMentalHealthScore != null) and patient.iaEnabled %}
                             {% set lastDiagnosticMentalHealthScore = patient.lastDiagnosticMentalHealthScore / 10 * 100 %}
                             <div class="radial-progress text-sm {% if lastDiagnosticMentalHealthScore > 70 %}text-error{% elseif lastDiagnosticMentalHealthScore > 40 %}text-warning{% else %}text-success{% endif %}" style="--value:{{ lastDiagnosticMentalHealthScore }}; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">{{ lastDiagnosticMentalHealthScore }}%</div>
                         {% else %}
@@ -99,7 +99,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if patient.lastDiagnosticRisksScore and patient.iaEnabled %}
+                        {% if (patient.lastDiagnosticRisksScore == 0 or patient.lastDiagnosticRisksScore != null) and patient.iaEnabled %}
                             {% set lastDiagnosticRisksScore = patient.lastDiagnosticRisksScore / 10 * 100 %}
                             <div class="radial-progress text-sm {% if lastDiagnosticRisksScore > 70 %}text-error{% elseif lastDiagnosticRisksScore > 40 %}text-warning{% else %}text-success{% endif %}" style="--value:{{ lastDiagnosticRisksScore }}; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">{{ lastDiagnosticRisksScore }}%</div>
                         {% else %}
@@ -113,7 +113,7 @@
                                     <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
                                        href="{{ path('app_patient_show_details', {'id': patient.id, 'mentalHealthDiagnosticId': patient.lastDiagnoticMentalHealth.id}) }}">
                                     <span class="material-symbols-rounded font-bold">
-                                        Visibilité
+                                        visibility
                                     </span>
                                     </a>
                                 {% endif %}
@@ -121,7 +121,7 @@
                                 <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
                                    href="{{ path('app_patient_edit', {'id': patient.id}) }}">
                                     <span class="material-symbols-rounded font-bold">
-                                        Modifier
+                                        edit
                                     </span>
                                 </a>
                             </div>

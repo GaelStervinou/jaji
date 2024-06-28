@@ -28,7 +28,7 @@ class PatientRepository extends ServiceEntityRepository
 
         $searchQuery = '';
         if ($search) {
-            $searchQuery = sprintf(" WHERE (p.firstname LIKE '%s' OR p.lastname LIKE '%s' OR CONCAT(p.firstname, ' ', p.lastname) LIKE '%s' OR p.ipp LIKE '%s' OR p.email LIKE '%s')", '%' . $search . '%', '%' . $search . '%', '%' . $search . '%', '%' . $search . '%', '%' . $search . '%');
+            $searchQuery = sprintf("WHERE (p.firstname LIKE '%s' OR p.lastname LIKE '%s' OR CONCAT(p.firstname, ' ', p.lastname) LIKE '%s' OR p.ipp LIKE '%s' OR p.email LIKE '%s')", '%' . $search . '%', '%' . $search . '%', '%' . $search . '%', '%' . $search . '%', '%' . $search . '%');
         }
         if ($lastDiagnosticRisksSortBy) {
             $conn = $this->getEntityManager()->getConnection();
@@ -41,7 +41,7 @@ JOIN LATERAL (
          WHERE d1.id = (
              SELECT d2.id
              FROM diagnostic_risks d2
-             WHERE d2.patient_id = p.id
+             WHERE d2.patient_id = p.id AND p.ia_enabled = true
              ORDER BY d2.created_at DESC
              LIMIT 1
          )
@@ -78,7 +78,7 @@ JOIN LATERAL (
          WHERE d1.id = (
              SELECT d2.id
              FROM diagnostic_mental_health d2
-             WHERE d2.patient_id = p.id
+             WHERE d2.patient_id = p.id AND p.ia_enabled = true
              ORDER BY d2.created_at DESC
              LIMIT 1
          )

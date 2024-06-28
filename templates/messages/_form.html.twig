@@ -2,3 +2,24 @@
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+<script>
+    document.getElementById('messages_media').addEventListener('change', function() {
+        var text = document.getElementById('messages_media_0');
+        if (text.checked) {
+            document.querySelector('label[for="messages_content"]').style.display = 'block';
+            document.querySelector('label[for="messages_subject"]').style.display = 'block';
+
+            document.getElementById('messages_content').style.display = 'block';
+            document.getElementById('messages_subject').style.display = 'block';
+        } else {
+            document.querySelector('label[for="messages_content"]').style.display = 'none';
+            document.querySelector('label[for="messages_subject"]').style.display = 'none';
+
+            document.getElementById('messages_content').style.display = 'none';
+            document.getElementById('messages_subject').style.display = 'none';
+        }
+    });
+
+    document.getElementById('messages_media').dispatchEvent(new Event('change'));
+</script>

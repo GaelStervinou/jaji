@@ -14,7 +14,11 @@ class WeightsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('value')
+            ->add('value', null, [
+                'attr' => [
+                    'placeholder' => 'Enter the weight value...',
+                ],
+            ])
             ->add('date', null, [
                 'widget' => 'single_text',
             ])

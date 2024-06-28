@@ -116,8 +116,6 @@ class PatientController extends AbstractController
         ]);
     }
 
-<<<<<<< Updated upstream
-=======
     #[Route('/{id}/{mentalHealthDiagnosticId}/export', name: 'app_patient_show_details_export', methods: ['GET'])]
     public function exportShowPatient(Patient $patient, DiagnosticMentalHealth $mentalHealthDiagnosticId, DiagnosticMentalHealthRepository $diagnosticMentalHealthRepository, DiagnosticRisksRepository $diagnosticRisksRepository): Response
     {
@@ -145,25 +143,6 @@ class PatientController extends AbstractController
         return $html;
     }
 
-    #[Route('/{id}/edit', name: 'app_patient_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(PatientType::class, $patient);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_patient_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('patient/edit.html.twig', [
-            'patient' => $patient,
-            'form' => $form,
-        ]);
-    }
-
->>>>>>> Stashed changes
     #[Route('/{id}', name: 'app_patient_delete', methods: ['POST'])]
     public function delete(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
     {

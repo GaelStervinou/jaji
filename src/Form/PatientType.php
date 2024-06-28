@@ -12,17 +12,49 @@ class PatientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('ipp')
-            ->add('firstname')
-            ->add('lastname')
-            ->add('phone')
-            ->add('email')
-            ->add('gender')
+            ->add('ipp', null, [
+                'attr' => [
+                    'placeholder' => 'Enter the IPP...',
+                ],
+            ])
+            ->add('firstname', null, [
+                'attr' => [
+                    'placeholder' => 'Enter the firstname...',
+                ],
+            ])
+            ->add('lastname', null, [
+                'attr' => [
+                    'placeholder' => 'Enter the lastname...',
+                ],
+            ])
+            ->add('phone', null, [
+                'attr' => [
+                    'placeholder' => 'Enter the phone number...',
+                ],
+            ])
+            ->add('email', null, [
+                'attr' => [
+                    'placeholder' => 'Enter the email...',
+                ],
+            ])
+            ->add('gender', null, [
+                'attr' => [
+                    'placeholder' => 'Enter the gender... (M/F/X)',
+                ],
+            ])
             ->add('birthDate', null, [
                 'widget' => 'single_text',
             ])
-            ->add('iaEnabled')
-            ->add('observation')
+            ->add('iaEnabled', null, [
+                'attr' => [
+                    'placeholder' => 'Do the patient accept the IA usage...',
+                ],
+            ])
+            ->add('observation', null, [
+                'attr' => [
+                    'placeholder' => 'Enter the observation...',
+                ],
+            ])
         ;
     }
 

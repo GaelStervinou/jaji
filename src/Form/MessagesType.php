@@ -30,8 +30,16 @@ class MessagesType extends AbstractType
             ])
             ->add('content', null, [
                 'required' => false,
+                'attr' => [
+                    'placeholder' => 'Enter your message here...',
+                ],
             ])
-            ->add('subject')
+            ->add('subject', null, [
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Enter the subject of the message...',
+                ],
+            ])
             ->add('file', FileType::class, [
                 'mapped' => false,
                 'required' => false,

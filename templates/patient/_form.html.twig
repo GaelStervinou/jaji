@@ -1,4 +1,38 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="w-full btn bg-primary-cm-200 text-primary-cm transition-colors duration-300 hover:bg-primary-cm hover:text-white">{{ button_label|default('Enregister') }}</button>
-{{ form_end(form) }}
+{# {{ form_start(form) }} #}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="col-span-1">
+            {{ form_row(form.ipp) }}
+        </div>
+        <div class="flex flex-wrap gap-4">
+            <div class="w-full md:w-1/2">
+                {{ form_row(form.firstname) }}
+            </div>
+            <div class="w-full md:w-1/2">
+                {{ form_row(form.lastname) }}
+            </div>
+        </div>
+        <div class="col-span-1">
+            {{ form_row(form.email) }}
+        </div>
+        <div class="flex flex-wrap gap-4">
+            <div class="w-full md:w-1/3">
+                {{ form_row(form.phone) }}
+            </div>
+            <div class="w-full md:w-1/3">
+                {{ form_row(form.gender) }}
+            </div>
+            <div class="w-full md:w-1/3">
+                {{ form_row(form.birthDate) }}
+            </div>
+        </div>
+        <div class="col-span-1">
+            {{ form_row(form.observation) }}
+        </div>
+        <div class="col-span-1">
+            {{ form_row(form.iaEnabled) }}
+        </div>
+    </div>
+    <div class="mt-4">
+        <button class="w-full btn bg-primary-cm-200 text-primary-cm transition-colors duration-300 hover:bg-primary-cm hover:text-white">{{ button_label|default('Save') }}</button>
+    </div>
+{# {{ form_end(form) }} #}

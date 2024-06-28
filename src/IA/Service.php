@@ -122,6 +122,7 @@ final class Service
                 ->setPatient($patient)
                 ->setCreatedAt($currentDate);
         } catch (\Throwable $e) {
+            dd($e, $token);
             throw new \RuntimeException('Unable to decode response', 0, $e);
         }
 

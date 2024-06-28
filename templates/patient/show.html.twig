@@ -19,10 +19,9 @@
                         download
                     </span>
                 </button>
-                </span>
-                {#            </a> #}
-                <a href="{{ path('app_patient_edit', {'id': patient.id}) }}" class="">
-                    <button class="w-full btn bg-primary-cm-200 rounded-xl text-primary-cm p-4 h-fit transition-colors duration-300 hover:bg-primary-cm hover:text-white">
+            </a>
+            <a href="{{ path('app_diagnostic_generate', {'patient': patient.id}) }}" onclick="alert('La génération du diagnostic se lancera lorsque vous fermerez cette alerte')">
+                <button class="w-full btn bg-primary-cm-200 rounded-xl text-primary-cm p-4 h-fit transition-colors duration-300 hover:bg-primary-cm hover:text-white">
                     <span class="material-symbols-rounded font-bold">
                         restart_alt
                     </span>

@@ -91,7 +91,7 @@
                         </div>
                     </td>
                     <td>
-                        {% if patient.lastDiagnosticMentalHealthScore %}
+                        {% if patient.lastDiagnosticMentalHealthScore and patient.iaEnabled %}
                             {% set lastDiagnosticMentalHealthScore = patient.lastDiagnosticMentalHealthScore / 10 * 100 %}
                             <div class="radial-progress text-sm {% if lastDiagnosticMentalHealthScore > 70 %}text-error{% elseif lastDiagnosticMentalHealthScore > 40 %}text-warning{% else %}text-success{% endif %}" style="--value:{{ lastDiagnosticMentalHealthScore }}; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">{{ lastDiagnosticMentalHealthScore }}%</div>
                         {% else %}
@@ -99,7 +99,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if patient.lastDiagnosticRisksScore %}
+                        {% if patient.lastDiagnosticRisksScore and patient.iaEnabled %}
                             {% set lastDiagnosticRisksScore = patient.lastDiagnosticRisksScore / 10 * 100 %}
                             <div class="radial-progress text-sm {% if lastDiagnosticRisksScore > 70 %}text-error{% elseif lastDiagnosticRisksScore > 40 %}text-warning{% else %}text-success{% endif %}" style="--value:{{ lastDiagnosticRisksScore }}; --size:2.6rem; --thickness: 0.3rem;" role="progressbar">{{ lastDiagnosticRisksScore }}%</div>
                         {% else %}

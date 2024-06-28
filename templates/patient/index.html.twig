@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Patient index{% endblock %}
+{% block title %}Liste des patients{% endblock %}
 
 {% block body %}
     <div class="flex gap-6 mb-12">
         <div class="flex flex-grow">
             <form class="relative w-full">
-                    <input value="{{ app.request.get('search') }}" class="w-full h-full rounded-lg bg-neutral-100 border-0" name="search" type="text" placeholder="Rechercher un nom, un prénom, un email, un nuémro de téléphone, ou un IPP" />
+                    <input value="{{ app.request.get('search') }}" class="w-full h-full rounded-lg bg-neutral-100 border-0" name="search" type="text" placeholder="Rechercher un nom, un prénom, un email, un numéro de téléphone, ou un IPP" />
                 <button class="absolute top-0 right-0 rounded-l-none btn">
                     {{ include('/icons/icon-search.html.svg', {size: '14'} ) }}
                 </button>
@@ -113,7 +113,7 @@
                                     <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
                                        href="{{ path('app_patient_show_details', {'id': patient.id, 'mentalHealthDiagnosticId': patient.lastDiagnoticMentalHealth.id}) }}">
                                     <span class="material-symbols-rounded font-bold">
-                                        visibility
+                                        Visibilité
                                     </span>
                                     </a>
                                 {% endif %}
@@ -121,7 +121,7 @@
                                 <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white"
                                    href="{{ path('app_patient_edit', {'id': patient.id}) }}">
                                     <span class="material-symbols-rounded font-bold">
-                                        edit
+                                        Modifier
                                     </span>
                                 </a>
                             </div>
@@ -131,7 +131,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="11">no records found</td>
+                    <td colspan="11">Aucun résultat trouvé</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -140,7 +140,7 @@
 
     <div class="flex justify-between py-6 items-center">
         <div>
-            <span class="text-sm text-neutral-500">Showing 1 to 10 of {{ total }} entries</span>
+            <span class="text-sm text-neutral-500">Affichage des résultats 1 à 10 / {{ total }}</span>
         </div>
         <div class="join">
 

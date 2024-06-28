@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Weights{% endblock %}
+{% block title %}Nouveau poids{% endblock %}
 
 {% block body %}
-    <h1>Create new Weights</h1>
+    <a class="mb-5" href="{{ path('app_weights_index') }}">Retour à la liste</a>
+    
+    <h1>Ajouter un nouveau poids</h1>
 
     {{ include('weights/_form.html.twig') }}
 
-    <a href="{{ path('app_weights_index') }}">back to list</a>
 {% endblock %}

@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Weights index{% endblock %}
+{% block title %}Liste poids{% endblock %}
 
 {% block body %}
-    <h1>Weights index</h1>
+    <h1>Liste des poids</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Value</th>
+                <th>Valeur</th>
                 <th>Date</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -20,18 +20,18 @@
                 <td>{{ weight.id }}</td>
                 <td>{{ weight.value }}</td>
                 <td>{{ weight.date ? weight.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_weights_show', {'id': weight.id}) }}">show</a>
-                    <a href="{{ path('app_weights_edit', {'id': weight.id}) }}">edit</a>
+                <div class="flex flex-col gap-5">
+                    <a href="{{ path('app_weights_show', {'id': weight.id}) }}">détail</a>
+                    <a href="{{ path('app_weights_edit', {'id': weight.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Aucun résultat</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_weights_new') }}">Create new</a>
+    <a href="{{ path('app_weights_new') }}">Ajouter un nouveau poids</a>
 {% endblock %}

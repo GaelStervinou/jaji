@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Weights{% endblock %}
+{% block title %}Poids{% endblock %}
 
 {% block body %}
-    <h1>Weights</h1>
+    <a class="mb-5" href="{{ path('app_weights_index') }}">Retour à la liste</a>
+    
+    <h1>Poids</h1>
 
     <table class="table">
         <tbody>
@@ -12,7 +14,7 @@
                 <td>{{ weight.id }}</td>
             </tr>
             <tr>
-                <th>Value</th>
+                <th>Valeur</th>
                 <td>{{ weight.value }}</td>
             </tr>
             <tr>
@@ -22,9 +24,8 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_weights_index') }}">back to list</a>
 
-    <a href="{{ path('app_weights_edit', {'id': weight.id}) }}">edit</a>
+    <a href="{{ path('app_weights_edit', {'id': weight.id}) }}">Modifier</a>
 
     {{ include('weights/_delete_form.html.twig') }}
 {% endblock %}

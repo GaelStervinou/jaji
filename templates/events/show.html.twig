@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Events{% endblock %}
+{% block title %}Évènement{% endblock %}
 
 {% block body %}
-    <h1>Events</h1>
+    <a class="mb-5" href="{{ path('app_events_index') }}">Retour à la liste</a>
+
+    <h1>Évènement</h1>
 
     <table class="table">
         <tbody>
@@ -12,7 +14,7 @@
                 <td>{{ event.id }}</td>
             </tr>
             <tr>
-                <th>Value</th>
+                <th>Valeur</th>
                 <td>{{ event.value }}</td>
             </tr>
             <tr>
@@ -26,9 +28,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_events_index') }}">back to list</a>
-
-    <a href="{{ path('app_events_edit', {'id': event.id}) }}">edit</a>
+    <a href="{{ path('app_events_edit', {'id': event.id}) }}">Modifier</a>
 
     {{ include('events/_delete_form.html.twig') }}
 {% endblock %}

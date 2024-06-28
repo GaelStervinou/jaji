@@ -16,7 +16,7 @@ class WeightsType extends AbstractType
         $builder
             ->add('value', null, [
                 'attr' => [
-                    'placeholder' => 'Enter the weight value...',
+                    'placeholder' => 'Ajouter le poids...',
                 ],
             ])
             ->add('date', null, [

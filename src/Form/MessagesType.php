@@ -21,7 +21,7 @@ class MessagesType extends AbstractType
         $builder
             ->add('media', ChoiceType::class, [
                 'choices' => [
-                    'Text' => MessageMedia::TEXT,
+                    'Texte' => MessageMedia::TEXT,
                     'Image' => MessageMedia::IMAGE,
                     'Audio' => MessageMedia::AUDIO,
                 ],
@@ -31,13 +31,13 @@ class MessagesType extends AbstractType
             ->add('content', null, [
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Enter your message here...',
+                    'placeholder' => 'Ajouter le contenu du message...',
                 ],
             ])
             ->add('subject', null, [
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Enter the subject of the message...',
+                    'placeholder' => 'Ajouter le sujet du message...',
                 ],
             ])
             ->add('file', FileType::class, [
@@ -46,7 +46,7 @@ class MessagesType extends AbstractType
                 'constraints' => [
                     new File([
                         'mimeTypes' => ['audio/mpeg', 'image/png', 'image/jpeg'],
-                        'mimeTypesMessage' => 'Please upload a valid audio or image file',
+                        'mimeTypesMessage' => 'Ajouter un fichier valide (audio ou image)',
                     ])
                 ],
             ])

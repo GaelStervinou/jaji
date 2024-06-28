@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Events index{% endblock %}
+{% block title %}Liste événements{% endblock %}
 
 {% block body %}
-    <h1>Events index</h1>
+    <h1>Liste des événements</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Value</th>
+                <th>Valeur</th>
                 <th>Type</th>
                 <th>Date</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -22,18 +22,18 @@
                 <td>{{ event.value }}</td>
                 <td>{{ event.type }}</td>
                 <td>{{ event.date ? event.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_events_show', {'id': event.id}) }}">show</a>
-                    <a href="{{ path('app_events_edit', {'id': event.id}) }}">edit</a>
+                <td class="flex flex-col gap-1">
+                    <a href="{{ path('app_events_show', {'id': event.id}) }}">détail</a>
+                    <a href="{{ path('app_events_edit', {'id': event.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Aucun résultat</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_events_new') }}">Create new</a>
+    <a href="{{ path('app_events_new') }}">Ajouter un nouvel événement</a>
 {% endblock %}

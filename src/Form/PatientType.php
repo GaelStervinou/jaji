@@ -14,32 +14,32 @@ class PatientType extends AbstractType
         $builder
             ->add('ipp', null, [
                 'attr' => [
-                    'placeholder' => 'Enter the IPP...',
+                    'placeholder' => 'Renseigner l\'IPP...',
                 ],
             ])
             ->add('firstname', null, [
                 'attr' => [
-                    'placeholder' => 'Enter the firstname...',
+                    'placeholder' => 'Ajouter le prénom...',
                 ],
             ])
             ->add('lastname', null, [
                 'attr' => [
-                    'placeholder' => 'Enter the lastname...',
+                    'placeholder' => 'Ajouter le nom...',
                 ],
             ])
             ->add('phone', null, [
                 'attr' => [
-                    'placeholder' => 'Enter the phone number...',
+                    'placeholder' => 'Ajouter le numéro de téléphone...',
                 ],
             ])
             ->add('email', null, [
                 'attr' => [
-                    'placeholder' => 'Enter the email...',
+                    'placeholder' => 'Ajouter l\'adresse email...',
                 ],
             ])
             ->add('gender', null, [
                 'attr' => [
-                    'placeholder' => 'Enter the gender... (M/F/X)',
+                    'placeholder' => 'Ajouter le genre (H/F/X)...',
                 ],
             ])
             ->add('birthDate', null, [
@@ -47,12 +47,12 @@ class PatientType extends AbstractType
             ])
             ->add('iaEnabled', null, [
                 'attr' => [
-                    'placeholder' => 'Do the patient accept the IA usage...',
+                    'placeholder' => 'Est-ce que le patient accepte l\'IA ?...',
                 ],
             ])
             ->add('observation', null, [
                 'attr' => [
-                    'placeholder' => 'Enter the observation...',
+                    'placeholder' => 'Ajouter une observation...',
                 ],
             ])
         ;

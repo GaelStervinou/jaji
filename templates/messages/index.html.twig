@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MessagesController!{% endblock %}
+{% block title %}Liste des messages{% endblock %}
 
 {% block body %}
-    <h1>Messages index</h1>
+    <h1>Liste des messages</h1>
 
 
     <table class="table">
         <thead>
         <tr>
             <th>Id</th>
-            <th>Content</th>
+            <th>Contenu</th>
             <th>Patient</th>
-            <th>Created At</th>
+            <th>Créé à</th>
         </tr>
         </thead>
         <tbody>
@@ -22,17 +22,19 @@
                 <td>{{ message.content }}</td>
                 <td>{{ message.patient.firstname }} {{ message.patient.lastname }}</td>
                 <td>
-                    <a href="{{ path('app_messages_show', {'id': message.id}) }}">show</a>
-                    <a href="{{ path('app_messages_edit', {'id': message.id}) }}">edit</a>
+                    <a href="{{ path('app_messages_show', {'id': message.id}) }}">détail</a>
+                </td>
+                <td>
+                    <a href="{{ path('app_messages_edit', {'id': message.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="11">no records found</td>
+                <td colspan="11">Aucun résultat</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_messages_new') }}">Create new</a>
+    <a href="{{ path('app_messages_new') }}">Créer un nouveau message</a>
 {% endblock %}

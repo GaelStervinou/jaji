@@ -137,7 +137,7 @@ final class Service
             throw new NotFoundHttpException('Message not found');
         }
         if ($message->getMedia() === MessageMedia::IMAGE) {
-            $filePath = $this->params->get('kernel.project_dir') . '/public/uploads/' . $message->getPath();
+            $filePath = $this->params->get('kernel.project_dir') . '/public' . $message->getPath();
             if (file_exists($filePath)) {
                 $fileContent = file_get_contents($filePath);
                 $base64Image = base64_encode($fileContent);
@@ -169,7 +169,7 @@ final class Service
                 throw new \Exception('File not found');
             }
         } else if ($message->getMedia() === MessageMedia::AUDIO) {
-            $filePath = $this->params->get('kernel.project_dir') . '/public/uploads/' . $message->getPath();
+            $filePath = $this->params->get('kernel.project_dir') . '/public' . $message->getPath();
             if (file_exists($filePath)) {
                 try {
                     $url = 'https://api.openai.com/v1/audio/transcriptions';

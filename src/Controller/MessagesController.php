@@ -41,7 +41,7 @@ class MessagesController extends AbstractController
                 $file = $form->get('file')->getData();
                 $fileName = md5(uniqid()) . '.' . $file->guessExtension();
                 $file->move($this->getParameter('kernel.project_dir') . '/public/uploads', $fileName);
-                $message->setPath($fileName);
+                $message->setPath('/uploads/'.$fileName);
             }
             $entityManager->persist($message);
             $entityManager->flush();

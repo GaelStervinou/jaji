@@ -3,29 +3,70 @@
 {% block title %}Message{% endblock %}
 
 {% block body %}
-    <a class="mb-5" href="{{ path('app_messages_index') }}">Retour à la liste</a>
+    <div class="flex justify-between flex-row items-center mb-12 max-lg:flex-col max-lg:mb-6">
+        <h1 class="text-2xl font-bold max-lg:w-full">Message</h1>
+        <div class="flex gap-4">
+            <a href="{{ path('app_messages_index') }}">
+                <button class="btn bg-primary-cm-200 text-primary-cm transition-colors duration-300 hover:bg-primary-cm hover:text-white">Retour à la liste</button>
+            </a>
+            {{ include('messages/_delete_form.html.twig') }}
+        </div>
+    </div>
 
-    <h1>Message</h1>
+    <div class="overflow-x-auto rounded-xl shadow">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ message.id }}</td>
+                </tr>
+                <tr>
+                    <th>
+                        <div class="flex gap-4">
+                            <p>Source</p>
+                            <div>
+                                {% if message.isAudio() %}
+                                    <span class="material-symbols-rounded text-primary-cm-200">audiotrack</span>
+                                {% elseif message.isImage() %}
+                                    <span class="material-symbols-rounded tex-primary-cm-200">image</span>
+                                {% elseif message.isText() %}
+                                    <span class="material-symbols-rounded text-primary-cm-200">textsms</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </th>
+                    <td>
+                        {% if message.isImage() %}
+                            <img src="{{ message.path }}" alt="{{ message.content }}"
+                                 class="w-full rounded-xl">
+                        {% elseif message.isAudio() %}
+                            <audio controls class="w-full rounded-xl">
+                                <source src="{{ message.path }}" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                            <p class="">
+                                {{ message.path }}
+                            </p>
+                        {% else %}
+                            <p class="">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ message.id }}</td>
-            </tr>
-            <tr>
-                <th>Contenu</th>
-                <td>{{ message.content }}</td>
-            </tr>
-            <tr>
-                <th>Patient ID</th>
-                <td>{{ message.patient.firstname }} {{ message.patient.lastname }}</td>
-            </tr>
-        </tbody>
-    </table>
+                            </p>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Contenu</th>
+                    <td>{{ message.content }}</td>
+                </tr>
+                <tr>
+                    <th>Patient ID</th>
+                    <td>{{ message.patient.firstname }} {{ message.patient.lastname }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-
-    <a href="{{ path('app_messages_edit', {'id': message.id}) }}">Modifier</a>
-
-    {{ include('messages/_delete_form.html.twig') }}
+    <a href="{{ path('app_messages_edit', {'id': message.id}) }}">
+        <button class="btn w-full mb-6 bg-primary-cm-200 text-primary-cm transition-colors duration-300 hover:bg-primary-cm hover:text-white">Modifier</button>
+    </a>
 {% endblock %}

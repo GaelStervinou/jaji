@@ -3,10 +3,15 @@
 {% block title %}Liste événements{% endblock %}
 
 {% block body %}
-    <h1>Liste des événements</h1>
-
-    <table class="table">
-        <thead>
+    <div class="flex justify-between flex-row items-center mb-12 max-lg:flex-col max-lg:mb-6">
+        <h1 class="text-2xl font-bold max-lg:w-full">Liste des événements</h1>
+        <a href="{{ path('app_events_new') }}">
+            <button class="btn bg-primary-cm-200 text-primary-cm transition-colors duration-300 hover:bg-primary-cm hover:text-white">Ajouter un nouvel événement</button>
+        </a>
+    </div>
+    <div class="overflow-x-auto rounded-xl shadow">
+        <table class="table">
+        <thead class="tep-3">
             <tr>
                 <th>Id</th>
                 <th>Valeur</th>
@@ -22,9 +27,21 @@
                 <td>{{ event.value }}</td>
                 <td>{{ event.type }}</td>
                 <td>{{ event.date ? event.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td class="flex flex-col gap-1">
-                    <a href="{{ path('app_events_show', {'id': event.id}) }}">détail</a>
-                    <a href="{{ path('app_events_edit', {'id': event.id}) }}">modifier</a>
+                <td>
+                    <div class="flex justify-end">
+                        <div class="flex items-center gap-2 rounded-xl shadow bg-primary-cm-200 p-2">
+                            <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white" href="{{ path('app_events_show', {'id': event.id}) }}">
+                                <span class="material-symbols-rounded font-bold">
+                                    visibility
+                                </span>
+                            </a>
+                            <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white" href="{{ path('app_events_edit', {'id': event.id}) }}">
+                                <span class="material-symbols-rounded font-bold">
+                                    edit
+                                </span>
+                            </a>
+                        </div>
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -34,6 +51,6 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 
-    <a href="{{ path('app_events_new') }}">Ajouter un nouvel événement</a>
 {% endblock %}

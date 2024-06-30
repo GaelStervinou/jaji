@@ -3,7 +3,12 @@
 {% block title %}Nouveau patient Patient{% endblock %}
 
 {% block body %}
-    <h1 class="text-2xl mb-6 font-bold max-lg:w-full">Ajouter un nouveau patient</h1>
+    <div class="flex justify-between flex-row items-center mb-12 max-lg:flex-col max-lg:mb-6">
+        <h1 class="text-2xl mb-6 font-bold max-lg:w-full">Ajouter un nouveau patient</h1>
+        <a href="{{ path('app_patient_index') }}">
+            <button class="btn bg-primary-cm-200 text-primary-cm transition-colors duration-300 hover:bg-primary-cm hover:text-white">Retour à la liste</button>
+        </a>
+    </div>
 
     {{ include('patient/_form.html.twig') }}
 {% endblock %}

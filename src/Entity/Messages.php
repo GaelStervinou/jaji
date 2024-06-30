@@ -128,4 +128,19 @@ class Messages
 
         return $this;
     }
+
+    public function isText(): bool
+    {
+        return $this->media === MessageMedia::TEXT;
+    }
+
+    public function isImage(): bool
+    {
+        return $this->media === MessageMedia::IMAGE;
+    }
+
+    public function isAudio(): bool
+    {
+        return $this->media === MessageMedia::AUDIO;
+    }
 }

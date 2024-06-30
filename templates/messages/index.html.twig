@@ -3,29 +3,56 @@
 {% block title %}Liste des messages{% endblock %}
 
 {% block body %}
-    <h1>Liste des messages</h1>
+    <div class="flex justify-between flex-row items-center mb-12 max-lg:flex-col max-lg:mb-6">
+        <h1 class="text-2xl font-bold max-lg:w-full">Liste des messages</h1>
+        <a href="{{ path('app_messages_new') }}">
+            <button class="btn bg-primary-cm-200 text-primary-cm transition-colors duration-300 hover:bg-primary-cm hover:text-white">Créer un nouveau message</button>
+        </a>
+    </div>
 
-
+<div class="overflow-x-auto rounded-xl shadow">
     <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Contenu</th>
-            <th>Patient</th>
-            <th>Créé à</th>
-        </tr>
+        <thead class="tep-3">
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Contenu</th>
+                <th>Patient</th>
+                <th>Créé à</th>
+                <th>Actions</th>
+            </tr>
         </thead>
         <tbody>
         {% for message in messages %}
             <tr>
                 <td>{{ message.id }}</td>
+                <td>
+                    {% if message.isAudio() %}
+                        <span class="material-symbols-rounded text-primary-cm-200">audiotrack</span>
+                    {% elseif message.isImage() %}
+                        <span class="material-symbols-rounded tex-primary-cm-200">image</span>
+                    {% elseif message.isText() %}
+                        <span class="material-symbols-rounded text-primary-cm-200">textsms</span>
+                    {% endif %}
+                </td>
                 <td>{{ message.content }}</td>
                 <td>{{ message.patient.firstname }} {{ message.patient.lastname }}</td>
+                <td>{{ message.createdAt|date('d/m/Y H:i') }}</td>
                 <td>
-                    <a href="{{ path('app_messages_show', {'id': message.id}) }}">détail</a>
-                </td>
-                <td>
-                    <a href="{{ path('app_messages_edit', {'id': message.id}) }}">modifier</a>
+                    <div class="flex justify-end">
+                        <div class="flex items-center gap-2 rounded-xl shadow bg-primary-cm-200 p-2">
+                            <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white" href="{{ path('app_messages_show', {'id': message.id}) }}">
+                                <span class="material-symbols-rounded font-bold">
+                                    visibility
+                                </span>
+                            </a>
+                            <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white" href="{{ path('app_messages_edit', {'id': message.id}) }}">
+                                <span class="material-symbols-rounded font-bold">
+                                    edit
+                                </span>
+                            </a>
+                        </div>
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -35,6 +62,5 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_messages_new') }}">Créer un nouveau message</a>
+</div>
 {% endblock %}

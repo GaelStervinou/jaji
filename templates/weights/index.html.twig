@@ -3,35 +3,51 @@
 {% block title %}Liste poids{% endblock %}
 
 {% block body %}
-    <h1>Liste des poids</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Valeur</th>
-                <th>Date</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for weight in weights %}
-            <tr>
-                <td>{{ weight.id }}</td>
-                <td>{{ weight.value }}</td>
-                <td>{{ weight.date ? weight.date|date('Y-m-d H:i:s') : '' }}</td>
-                <div class="flex flex-col gap-5">
-                    <a href="{{ path('app_weights_show', {'id': weight.id}) }}">détail</a>
-                    <a href="{{ path('app_weights_edit', {'id': weight.id}) }}">modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">Aucun résultat</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_weights_new') }}">Ajouter un nouveau poids</a>
+    <div class="flex justify-between flex-row items-center mb-12 max-lg:flex-col max-lg:mb-6">
+        <h1 class="text-2xl font-bold max-lg:w-full">Liste des poids</h1>
+        <a href="{{ path('app_weights_new') }}">
+            <button class="btn bg-primary-cm-200 text-primary-cm transition-colors duration-300 hover:bg-primary-cm hover:text-white">Ajouter un nouveau poids</button>
+        </a>
+    </div>
+    <div class="overflow-x-auto rounded-xl shadow">
+        <table class="table">
+            <thead class="tep-3">
+                <tr>
+                    <th>Id</th>
+                    <th>Valeur</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for weight in weights %}
+                <tr>
+                    <td>{{ weight.id }}</td>
+                    <td>{{ weight.value }}</td>
+                    <td>{{ weight.date ? weight.date|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <div class="flex justify-end">
+                            <div class="flex items-center gap-2 rounded-xl shadow bg-primary-cm-200 p-2">
+                                <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white" href="{{ path('app_weights_show', {'id': weight.id}) }}">
+                                    <span class="material-symbols-rounded font-bold">
+                                        visibility
+                                    </span>
+                                </a>
+                                <a class="text-primary-cm p-2.5 border-r-1 font-normal border-primary-cm-500 flex items-center rounded-xl transition-colors hover:bg-primary-cm-800 hover:text-white" href="{{ path('app_weights_edit', {'id': weight.id}) }}">
+                                    <span class="material-symbols-rounded font-bold">
+                                        edit
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun résultat</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

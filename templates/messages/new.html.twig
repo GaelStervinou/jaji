@@ -3,10 +3,12 @@
 {% block title %}Nouveau Message{% endblock %}
 
 {% block body %}
-    <a class="mb-5" href="{{ path('app_messages_index') }}">Retour à la liste</a>
-
-    <h1>Créer un nouveau Message</h1>
-
+    <div class="flex justify-between flex-row items-center mb-12 max-lg:flex-col max-lg:mb-6">
+        <h1 class="text-2xl font-bold max-lg:w-full">Créer un nouveau Message</h1>
+        <a href="{{ path('app_messages_index') }}">
+            <button class="btn bg-primary-cm-200 text-primary-cm transition-colors duration-300 hover:bg-primary-cm hover:text-white">Retour à la liste</button>
+        </a>
+    </div>
     {{ include('messages/_form.html.twig') }}
 
 {% endblock %}

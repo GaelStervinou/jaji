@@ -3,9 +3,22 @@
 {% block title %}Poids{% endblock %}
 
 {% block body %}
-    <a class="mb-5" href="{{ path('app_weights_index') }}">Retour à la liste</a>
-    
-    <h1>Poids</h1>
+    <div class="flex justify-between flex-row items-center mb-12 max-lg:flex-col max-lg:mb-6">
+        <h1 class="text-2xl font-bold max-lg:w-full">Poids</h1>
+        <div class="flex gap-4">
+            <a href="{{ path('app_weights_index') }}">
+                <button class="btn bg-primary-cm-200 text-primary-cm transition-colors duration-300 hover:bg-primary-cm hover:text-white">Retour à la liste</button>
+            </a>
+            <a href="{{ path('app_weights_edit', {'id': weight.id}) }}">
+                <button class="btn bg-primary-cm-200 text-primary-cm transition-colors duration-300 hover:bg-primary-cm hover:text-white">
+                    <span class="material-symbols-rounded">
+                        edit
+                    </span>
+                </button>
+            </a>
+            {{ include('weights/_delete_form.html.twig') }}
+        </div>
+    </div>
 
     <table class="table">
         <tbody>
@@ -24,8 +37,4 @@
         </tbody>
     </table>
 
-
-    <a href="{{ path('app_weights_edit', {'id': weight.id}) }}">Modifier</a>
-
-    {{ include('weights/_delete_form.html.twig') }}
 {% endblock %}
